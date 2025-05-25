@@ -1,3 +1,5 @@
+import Button from '@mui/material/Button';
+
 const App = () => {
   return (
     <>
@@ -5,12 +7,19 @@ const App = () => {
       <h2>I am developer Wahid </h2>
       <p>welcome to jewelry store</p>
       </div>
-      <div>
+      <div className='flex flex-col  justify-center items-center'>
         <p>Techs I installed for this projects for now</p>
-        <ul>
-          <li></li>
+        <ul className="text-center text-xl gap-2 text-teal-500 ">
+          <li>tailwind</li>
+          <li>mui</li>
+          <li>redux toolkit</li>
+          <li>router</li>
+          <li>react-hook-form</li>
+          <li>tanstack query</li>
+          <li>icons</li>
+          <li>toasts</li>
         </ul>
-        <p>what is next ?</p>
+        <Button>Get Started</Button>
       </div>
     </>
   )
