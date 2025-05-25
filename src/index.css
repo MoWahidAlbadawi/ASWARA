@@ -1,0 +1,20 @@
+@import "tailwindcss";
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin : 0;
+}
+body {
+  font-family: sans-serif;
+}
+.test-app {
+  display: grid;
+  place-items: center;
+  margin-top: 50px;
+  color: teal;
+  font-size: 24px; 
+  text-transform:  uppercase;
+}
+.test-app h2 {
+  margin-bottom: 5px;
+}
