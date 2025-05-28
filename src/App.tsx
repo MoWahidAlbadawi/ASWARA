@@ -1,8 +1,9 @@
-import Button from '@mui/material/Button';
+import {Button} from '@/components/ui/button';
 
 const App = () => {
   return (
     <>
+
     <div className="test-app">
       <h2>I am developer Wahid </h2>
       <p>welcome to jewelry store</p>
@@ -17,9 +18,9 @@ const App = () => {
           <li>react-hook-form</li>
           <li>tanstack query</li>
           <li>icons</li>
-          <li>toasts</li>
+          <li className='mt-12'>toasts</li>
         </ul>
-        <Button>Get Started</Button>
+        <Button className='p-12'>Get Started</Button>
       </div>
     </>
   )
