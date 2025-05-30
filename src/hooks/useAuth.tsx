@@ -33,7 +33,7 @@ export const useRegister = () => {
     const navigate = useNavigate();
     const cookies = Cookie();
     return useMutation(((data : RegisterData) => {
-        return axios.post(`${BASE_URL}/ap/${REGISTER}`,data).then(res => res.data);
+        return axios.post(`${BASE_URL}/api/${REGISTER}`,data).then(res => res.data);
     } ),{
          onSuccess : (data : any ) => {
             console.log('register successfully!');
