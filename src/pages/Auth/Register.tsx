@@ -1,10 +1,13 @@
-  import Jewelry_Image from '@/assets/Jewelry shop-pana.png';
-
+//auth image
+import Jewelry_Image from '@/assets/Jewelry_Auth.png';
+// use from to handle form with react-hook-form
   import { useForm } from 'react-hook-form';
+  // components from mui
   import {
     Button,
     TextField,
     Typography,
+    Container,
   } from '@mui/material';
 
   const Register = () => {
@@ -14,13 +17,13 @@
     const onSubmit = (data: any) => {
       console.log(data);
     };
-
     return (
-        <div className='flex justify-center lg:justify-evenly items-center w-full min-h-screen'>
+      <Container>
+        <div className='flex justify-center lg:justify-between gap-20 items-center w-full min-h-screen'>
           {/* Form section */}  
-          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-xl lg:max-w-md xl:max-w-xl  rounded-lg' style={{padding : '50px'}}>
+          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !py-12 !px-6 sm:!px-12'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography component="h2" variant="h5" color="primary.dark">
+            <Typography component="h2" variant="h5" color="primary.dark" >
               Register Now
               </Typography>
                 <TextField
@@ -85,6 +88,7 @@
             <img src={Jewelry_Image} width={800}/>
           </div>
         </div>
+        </Container>
     );
   };
 
