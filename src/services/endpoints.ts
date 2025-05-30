@@ -1,0 +1,3 @@
+export const BASE_URL = 'https://jewelrystore-production.up.railway.app';
+export const REGISTER = 'register';
+export const LOGIN = 'login';

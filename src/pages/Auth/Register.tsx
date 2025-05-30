@@ -1,3 +1,5 @@
+// router
+import { Link } from 'react-router-dom';
 //auth image
 import Jewelry_Image from '@/assets/Jewelry_Auth.png';
 // use from to handle form with react-hook-form
@@ -8,78 +10,148 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
     TextField,
     Typography,
     Container,
+    InputAdornment,
+    IconButton,
+    CircularProgress,
+    Alert
   } from '@mui/material';
+  // icons
+  import { FaEye , FaEyeSlash } from "react-icons/fa6";
+  // interfaces 
+  import { type RegisterData } from '@/services/types/Auth';
+  // from react
+  import { useState } from 'react';
+import { useRegister } from '@/hooks/useAuth';
 
   const Register = () => {
-
-    const { register , handleSubmit , formState , watch} = useForm();
-    const {errors} = formState; 
-    const onSubmit = (data: any) => {
-      console.log(data);
+    // states
+    const [ showPassword , setShowPassword ] = useState(false);
+    const [ showConfirmPassword , setShowConfirmPassword ] = useState(false);
+    // hook form
+    const { register , handleSubmit , reset , formState , watch} = useForm<RegisterData>({
+      defaultValues : {
+        name : '',
+        email : '',
+        password : '',
+        password_confirmation : '',
+        phone : ''
+      }
+      
+    });
+    const {errors} = formState;
+    // react query 
+    const {mutate , isLoading , error} = useRegister(); 
+    // submit data
+    const onSubmit = (data: RegisterData) => {
+      mutate(data);
+      reset();
     };
     return (
       <Container>
-        <div className='flex justify-center lg:justify-between gap-20 items-center w-full min-h-screen'>
+        <div className='flex justify-center !-mt-8 sm:!-mt-0 lg:justify-between gap-20 items-center w-full min-h-screen'>
           {/* Form section */}  
           <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !py-8 !px-6 sm:!px-12'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography component="h2" variant="h5" color="primary.dark" className='!mb-3'>
+            <Typography component="h2" variant="h5" color="secondary" className='!mb-3'>
               Register Now
               </Typography>
                 <TextField
                   className='!mb-3'
                   fullWidth
                   label="Name"
-                  {...register('name', { required: 'الاسم مطلوب' })}
+                  placeholder='Enter your name'
+                  {...register('name', { required: 'name is required' })}
                   error={!!errors.name}
-                  // helperText={errors.name?.message}
+                  helperText={errors.name?.message}
                 />
                 <TextField
                   className='!mb-3'
                   fullWidth
                   label="Email"
                   type="email"
-                  {...register('email', { required: 'البريد الإلكتروني مطلوب' })}
+                  placeholder='Enter your email'
+                  {...register('email', { required: 'email is required' , 
+                    validate : (value : string) => {
+                      return value.includes('@') || 'please enter a valid email';
+                    }
+                   })}
                   error={!!errors.email}
-                  // helperText={errors.email?.message}
-                />
-                <TextField
-                className='!mb-3'
-                  fullWidth
-                  label="Phone"
-                  {...register('phone', { required: 'رقم الهاتف مطلوب' })}
-                  error={!!errors.phone}
-                  // helperText={errors.phone?.message}
+                  helperText={errors.email?.message}
                 />
                 <TextField
                   className='!mb-3'
                   fullWidth
                   label="Password"
-                  type="password"
-                  {...register('password', { required: 'كلمة المرور مطلوبة' })}
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='Enter your password'
+                  {...register('password', { required: 'password is required' ,
+                    validate : (value : string) => {
+                      return value.length >=8 || 'password must be 8 characters  or more';
+                    }
+                  })}
                   error={!!errors.password}
-                  // helperText={errors.password?.message}
+                  helperText={errors.password?.message}
+                  InputProps={{
+                    endAdornment : (
+                      <InputAdornment position='end'>
+                        <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                          {showPassword ? <FaEyeSlash/> : <FaEye />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
+                />
+                <TextField
+                className='!mb-3'
+                  fullWidth
+                  label="Confirm Password"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder='Confirm the password'
+                  {...register('password_confirmation', {
+                    required: 'confirm password is required',
+                    validate: (value : string) => {
+                      return value === watch('password') || 'value must be same the original password'
+                    }
+                    })}
+                  error={!!errors.password_confirmation}
+                  helperText={errors.password_confirmation?.message}
+                    InputProps={{
+                    endAdornment : (
+                      <InputAdornment position='end'>
+                        <IconButton onClick={() => setShowConfirmPassword(prev => !prev)}>
+                          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                        </IconButton>
+                      </InputAdornment>
+                    )
+                  }}
                 />
                 <TextField
                   fullWidth
-                  label="Confirm Password"
-                  type="password"
-                  {...register('confirmPassword', {
-                    required: 'تأكيد كلمة المرور مطلوب',
-                    validate: value => value === watch('password') || 'كلمتا المرور غير متطابقتين'
+                  label="Phone"
+                  placeholder="Enter your phone number"
+                  {...register('phone', {
+                    required: 'phone number is required',
+                    pattern: {
+                      value: /^09\d{8}$/,
+                      message: 'phone number must start with 09 and be exactly 10 digits',
+                    },
                   })}
-                  error={!!errors.confirmPassword}
-                  // helperText={errors.confirmPassword?.message}
+                  error={!!errors.phone}
+                  helperText={errors.phone?.message}
                 />
                 <Button
                   type="submit"
                   fullWidth
                   variant="contained"
                   color="primary"
-                  sx={{ mt: 3, mb: 2 , color : 'white'}}
+                  sx={{ mt: 3, mb : 1 , color : 'white'}}
                 >
-                    Register
+                    { isLoading ? <CircularProgress color='secondary'/> : 'Register' }
                 </Button>
+                  <Typography variant='body2' className='text-center' color='secondary'>Already have an account ? 
+                    <Link to='/login' className='hover:text-gray-800'>Sign in</Link>
+                  </Typography>
+                  {error && <Alert severity="error" variant='filled' className='!mt-4 rounded'>{error}</Alert>}
           </form>
           </div>
           {/* Image section */}
