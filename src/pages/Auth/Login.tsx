@@ -21,7 +21,7 @@ import { useForm } from 'react-hook-form';
       <Container>
         <div className='flex justify-center lg:justify-between gap-20 items-center w-full min-h-screen'>
           {/* Form section */}  
-          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !pt-20 !pb-48 !px-6 sm:!px-12'>
+          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !pt-16 !pb-32 !px-6 sm:!px-12'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Typography component="h2" variant="h5" color="primary.dark">
                 Sign in

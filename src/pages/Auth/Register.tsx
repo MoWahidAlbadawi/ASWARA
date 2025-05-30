@@ -21,13 +21,13 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
       <Container>
         <div className='flex justify-center lg:justify-between gap-20 items-center w-full min-h-screen'>
           {/* Form section */}  
-          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !py-12 !px-6 sm:!px-12'>
+          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !py-8 !px-6 sm:!px-12'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography component="h2" variant="h5" color="primary.dark" >
+            <Typography component="h2" variant="h5" color="primary.dark" className='!mb-3'>
               Register Now
               </Typography>
                 <TextField
-                  margin="normal"
+                  className='!mb-3'
                   fullWidth
                   label="Name"
                   {...register('name', { required: 'الاسم مطلوب' })}
@@ -35,7 +35,7 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
                   // helperText={errors.name?.message}
                 />
                 <TextField
-                  margin="normal"
+                  className='!mb-3'
                   fullWidth
                   label="Email"
                   type="email"
@@ -44,7 +44,7 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
                   // helperText={errors.email?.message}
                 />
                 <TextField
-                  margin="normal"
+                className='!mb-3'
                   fullWidth
                   label="Phone"
                   {...register('phone', { required: 'رقم الهاتف مطلوب' })}
@@ -52,7 +52,7 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
                   // helperText={errors.phone?.message}
                 />
                 <TextField
-                  margin="normal"
+                  className='!mb-3'
                   fullWidth
                   label="Password"
                   type="password"
@@ -61,7 +61,6 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
                   // helperText={errors.password?.message}
                 />
                 <TextField
-                  margin="normal"
                   fullWidth
                   label="Confirm Password"
                   type="password"
@@ -85,7 +84,7 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
           </div>
           {/* Image section */}
           <div className='hidden lg:block'>
-            <img src={Jewelry_Image} width={800}/>
+            <img src={Jewelry_Image} width={600}/>
           </div>
         </div>
         </Container>
