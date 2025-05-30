@@ -1,7 +1,4 @@
 @import "tailwindcss";
-@import "tw-animate-css";
-
-@custom-variant dark (&:is(.dark *));
 * {
   box-sizing: border-box;
   padding: 0;
@@ -10,7 +7,8 @@
 body {
   font-family: sans-serif;
 }
-
 @theme {
-  --color-primary-color: #D4AF37;
+  --color-primary-main : #D4AF37;
+  --color-primary-light : #F1E5AC;
+  --color-primary-dark : #A88629;
 }
