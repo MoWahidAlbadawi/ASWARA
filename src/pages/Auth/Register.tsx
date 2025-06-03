@@ -52,7 +52,7 @@ import { useRegister } from '@/hooks/useAuth';
       <Container className='min-h-screen grid items-center'>
         <div className='grid grid-cols-1 lg:grid-cols-2 place-items-center gap-12'>
           {/* Form section */}  
-          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md  !-mt-8 sm:!-mt-0 !py-8 !px-6 sm:!px-12'>
+          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md  !-mt-10 sm:!-mt-0 !py-8 !px-6 sm:!px-12'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Typography component="h3" variant='h5' color="primary" fontWeight='bold'>
               Create Your Account
