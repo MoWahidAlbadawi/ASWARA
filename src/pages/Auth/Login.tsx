@@ -1,116 +1,121 @@
-// router
 import { Link } from 'react-router-dom';
-//auth image
 import Jewelry_Image from '@/assets/Jewelry_Auth.png';
-// use from to handle form with react-hook-form
+import Jewelry_Welcome from '@/assets/Jewelry_Welcome.png';
 import { useForm } from 'react-hook-form';
-// components from mui
-  import {
-    Button,
-    TextField,
-    Typography,
-    Container,
-    InputAdornment,
-    IconButton,
-    CircularProgress,
-    Alert
-  } from '@mui/material';
-  // icons
-  import { FaEye , FaEyeSlash} from "react-icons/fa6";
-  // import { IoMdEyeOff } from "react-icons/io";
-//  interfaces
-import { type LoginData } from '@/services/types/Auth';
-// from react
+import {
+  Button,
+  TextField,
+  Typography,
+  Container,
+  InputAdornment,
+  IconButton,
+  CircularProgress,
+  Alert
+} from '@mui/material';
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { useState } from 'react';
 import { useLogin } from '@/hooks/useAuth';
+import { type LoginData } from '@/services/types/Auth';
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const { register, handleSubmit, reset, formState } = useForm<LoginData>({
+    defaultValues: {
+      email: '',
+      password: ''
+    }
+  });
+  const { errors } = formState;
+  const { mutate, isLoading, error } = useLogin();
 
-  // states
-const [showPassword , setShowPassword] = useState(false);
-    // hook form
-    const { register , handleSubmit , reset , formState } = useForm<LoginData>({
-        defaultValues : {
-            email : '',
-            password : ''
-        }
-    });
-    const {errors} = formState; 
-    // tanstack query
-    const { mutate , isLoading , error } = useLogin();
-    // submit data
-    const onSubmit = (data: LoginData) => {
-      mutate(data);
+  const onSubmit = (data: LoginData) => {
+    mutate(data);
       reset();
-    };
-    return (
-      <Container>
-        <div className='flex justify-center !-mt-8 sm:!-mt-0 lg:justify-between gap-20 items-center w-full min-h-screen'>
-          {/* Form section */}  
-          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !pt-16 !pb-32 !px-6 sm:!px-12'>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography component="h2" variant="h5" color="secondary">
-                Sign in
-              </Typography>
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  label="Email"
-                  type="email"
-                  placeholder='Enter your email'
-                  {...register('email', { required: 'email is required' ,
-                    validate : (value : string) => {
-                        return value.includes('@') || 'please enter a valid email';
-                    }
-                  })}
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
-                />
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  label="Password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder='Enter your password'
-                  {...register('password', { required: 'password is required' , 
-                    validate : (value : string) => {
-                        return value.length  >= 8 || 'password must be 8 characters or more'
-                    }
-                   })}
-                  error={!!errors.password}
-                  helperText={errors.password?.message}
-                   InputProps={{
-                    endAdornment : (
-                      <InputAdornment position='end'>
-                        <IconButton onClick={() => setShowPassword(prev => !prev)}>
-                          {showPassword ? <FaEyeSlash /> : <FaEye />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                   }}
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  sx={{ mt: 3, mb: 1 , color : 'white'}}
-                >
-              { isLoading ? <CircularProgress color='secondary'/> : 'Login' }
-                </Button>
-                 <Typography variant='body2' className='text-center' color='secondary'>you don't have an account ? 
-                    <Link to='/register' className='hover:text-gray-800'>Sign up</Link>
-                  </Typography>
-              {error && <Alert severity="error" variant='filled' className='!mt-4 rounded'>{error}</Alert>}
-          </form>
-          </div>
-          {/* Image section */}
-          <div className='hidden lg:block'>
-            <img src={Jewelry_Image} width={800}/>
-          </div>
-        </div>
-        </Container>
-    );
   };
 
-  export default Login;
+  return (
+    <Container className='min-h-screen grid items-center'>
+      <div
+      className='grid grid-cols-1 lg:grid-cols-2 gap-12 place-items-center'>
+        {/* Form section */}
+        <div  className='max-w-lg lg:max-w-md lg:max-w-lg !p-8 rounded-lg bg-gradient-to-b from-white to-primary-light shadow-lg'>
+          {/* Welcome message */}
+          <div className='flex flex-col justify-center items-center'>
+            <img src={Jewelry_Welcome} alt="Welcome" width={80}/>
+            <h3 className='text-center font-bold text-primary-main  text-md sm:text-lg'>
+              Welcome Back to Jewelry Store
+            </h3>
+            <p className='text-center text-gray-500'>
+              Please login to continue
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Email"
+              type="email"
+              placeholder="Enter your email"
+              {...register('email', {
+                required: 'Email is required',
+                validate: (value: string) => value.includes('@') || 'Please enter a valid email'
+              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your password"
+              {...register('password', {
+                required: 'Password is required',
+                validate: (value: string) => value.length >= 8 || 'Password must be 8 characters or more'
+              })}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3, mb: 1, color: 'white' }}
+            >
+              {isLoading ? <CircularProgress color="secondary" size={24} /> : 'Login'}
+            </Button>
+
+            <Typography variant="body2" className='text-center text-gray-500'>
+              Don't have an account?{' '}
+              <Link to="/register" className="hover:text-gray-800">Sign up</Link>
+            </Typography>
+
+            {error && (
+              <Alert severity="error" variant="filled" className='!mt-4 rounded'>
+               Login failed try later !
+              </Alert>
+            )}
+          </form>
+        </div>
+
+        {/* Image section */}
+        <div className='hidden lg:block'>
+          <img src={Jewelry_Image} alt="Jewelry Auth"  width={700}/>
+        </div>
+      </div>
+    </Container>
+  );
+};
+
+export default Login;

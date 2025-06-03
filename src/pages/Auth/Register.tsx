@@ -44,19 +44,21 @@ import { useRegister } from '@/hooks/useAuth';
     // submit data
     const onSubmit = (data: RegisterData) => {
       mutate(data);
+      if(!isLoading) {
       reset();
+      }
     };
     return (
-      <Container>
-        <div className='flex justify-center !-mt-8 sm:!-mt-0 lg:justify-between gap-20 items-center w-full min-h-screen'>
+      <Container className='min-h-screen grid items-center'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 place-items-center gap-12'>
           {/* Form section */}  
-          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-lg !py-8 !px-6 sm:!px-12'>
+          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md !py-8 !px-6 sm:!px-12'>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography component="h2" variant="h5" color="secondary" className='!mb-3'>
-              Register Now
+            <Typography component="h3" variant='h5' color="primary" fontWeight='bold'>
+              Create Your Account
               </Typography>
                 <TextField
-                  className='!mb-3'
+                  className='!my-3'
                   fullWidth
                   label="Name"
                   placeholder='Enter your name'
@@ -148,10 +150,13 @@ import { useRegister } from '@/hooks/useAuth';
                 >
                     { isLoading ? <CircularProgress color='secondary'/> : 'Register' }
                 </Button>
-                  <Typography variant='body2' className='text-center' color='secondary'>Already have an account ? 
+                  <Typography variant='body2'  className='text-center text-gray-500'>
+                    Already have an account ? 
                     <Link to='/login' className='hover:text-gray-800'>Sign in</Link>
                   </Typography>
-                  {error && <Alert severity="error" variant='filled' className='!mt-4 rounded'>{error}</Alert>}
+                  {error && <Alert severity="error" variant='filled' className='!mt-4 rounded'>
+                  Login failed try later !
+                  </Alert>}
           </form>
           </div>
           {/* Image section */}
