@@ -20,7 +20,7 @@ import Jewelry_Image from '@/assets/Jewelry_Auth.png';
   // interfaces 
   import { type RegisterData } from '@/services/types/Auth';
   // from react
-  import { useState } from 'react';
+  import { useState , useEffect} from 'react';
 import { useRegister } from '@/hooks/useAuth';
 
   const Register = () => {
@@ -36,23 +36,26 @@ import { useRegister } from '@/hooks/useAuth';
         password_confirmation : '',
         phone : ''
       }
-      
     });
     const {errors} = formState;
     // react query 
-    const {mutate , isLoading , error} = useRegister(); 
+    const {mutate , isLoading , error , isSuccess} = useRegister();
+
+      useEffect(() => {
+        if(isSuccess) {
+          reset();
+        }
+      },[reset,isSuccess])
+
     // submit data
     const onSubmit = (data: RegisterData) => {
       mutate(data);
-      if(!isLoading) {
-      reset();
-      }
     };
     return (
       <Container className='min-h-screen grid items-center'>
         <div className='grid grid-cols-1 lg:grid-cols-2 place-items-center gap-12'>
           {/* Form section */}  
-          <div className='bg-gradient-to-b from-[#fbfaf5] to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md  !-mt-10 sm:!-mt-0 !py-8 !px-6 sm:!px-12'>
+          <div className='bg-gradient-to-b from-white to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md  !-mt-10 sm:!-mt-0 !py-8 !px-6 sm:!px-12'>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Typography component="h3" variant='h5' color="primary" fontWeight='bold'>
               Create Your Account
@@ -154,9 +157,12 @@ import { useRegister } from '@/hooks/useAuth';
                     Already have an account ? 
                     <Link to='/login' className='hover:text-gray-800'>Sign in</Link>
                   </Typography>
-                  {error && <Alert severity="error" variant='filled' className='!mt-4 rounded'>
-                  Login failed try later !
-                  </Alert>}
+
+                  {error && (
+                  <Alert severity="error" variant="filled" className='!mt-4 rounded'>
+                 {error?.status == 401 ? 'username or password incorrect!' : 'something went wrong , please try again later!'}
+              </Alert>
+              )}
           </form>
           </div>
           {/* Image section */}
@@ -168,4 +174,4 @@ import { useRegister } from '@/hooks/useAuth';
     );
   };
 
-  export default Register;
+export default Register;

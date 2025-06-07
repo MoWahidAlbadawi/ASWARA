@@ -13,7 +13,7 @@ import {
   Alert
 } from '@mui/material';
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLogin } from '@/hooks/useAuth';
 import { type LoginData } from '@/services/types/Auth';
 
@@ -26,11 +26,16 @@ const Login = () => {
     }
   });
   const { errors } = formState;
-  const { mutate, isLoading, error } = useLogin();
+  const { mutate, isLoading, error , isSuccess} = useLogin();
+
+  useEffect(() => {
+    if(isSuccess) {
+      reset();
+    }
+  },[reset,isSuccess])
 
   const onSubmit = (data: LoginData) => {
     mutate(data);
-      reset();
   };
 
   return (
@@ -103,7 +108,7 @@ const Login = () => {
 
             {error && (
               <Alert severity="error" variant="filled" className='!mt-4 rounded'>
-               Login failed try later !
+              {error?.status == 401 ? 'username or password incorrect!' : 'something went wrong , please try again later!'}
               </Alert>
             )}
           </form>

@@ -11,7 +11,6 @@ import { BASE_URL, LOGIN , REGISTER } from "@/services/endpoints";
 // interfaces
 import type { LoginData, RegisterData } from "@/services/types/Auth";
 
-
 export const useLogin = () => {
     const navigate = useNavigate();
     const cookies = Cookie();
@@ -21,10 +20,12 @@ export const useLogin = () => {
         onSuccess : (data : any ) => {
             console.log('login successfully!');
             cookies.set('jewely-store',data.data.token);
-            navigate('/');
+            const navigateTo = data.data.user.userType === 'admin' ? '/jewelryDashboard' : '/';
+            navigate(navigateTo);
         },
         onError : (err : any) => {
             console.log(err,'error on send login data');
+            console.log(err?.status,'status');
         }
     })
 }

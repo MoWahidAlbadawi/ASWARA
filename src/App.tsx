@@ -8,6 +8,8 @@ import Register from './pages/Auth/Register';
 // Webiste Pages
 import Home  from './pages/Website/Home';
 // Dashboard pages
+import LayoutDashboard from './pages/Dashboard/LayoutDashboard';
+// create project router
 const router = createBrowserRouter([
   // Auth routes
   {path : '/login' , element : <Login />},
@@ -15,6 +17,9 @@ const router = createBrowserRouter([
   // Website routes
   {path : '/' , element : <Home />},
   // Dashboard route
+  {path : '/jewelryDashboard' , element : <LayoutDashboard /> , children : [
+    // {path : '' , element : }
+  ]}
 ])
 
 const App = () => {
