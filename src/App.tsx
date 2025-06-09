@@ -9,17 +9,27 @@ import Register from './pages/Auth/Register';
 import Home  from './pages/Website/Home';
 // Dashboard pages
 import LayoutDashboard from './pages/Dashboard/LayoutDashboard';
+import Err404 from './pages/Errors/Err404'
+// protecting pages
+import RequireAuth from './pages/Protecting/RequireAuth';
+import RequireBack from './pages/Protecting/RequireBack';
 // create project router
 const router = createBrowserRouter([
   // Auth routes
-  {path : '/login' , element : <Login />},
-  {path : '/register' , element : <Register/>},
+  {element : <RequireBack /> , children : [
+   {path : '/login' , element : <Login />},
+  {path : '/register' , element : <Register/>}
+  ]},
   // Website routes
   {path : '/' , element : <Home />},
   // Dashboard route
+  {element : <RequireAuth  roles={['admin','product_manger']} /> , children : [
   {path : '/jewelryDashboard' , element : <LayoutDashboard /> , children : [
     // {path : '' , element : }
-  ]}
+  ]},
+]},
+// unexist page
+  {path : '*' , element : <Err404 />}
 ])
 
 const App = () => {

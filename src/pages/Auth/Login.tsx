@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import Jewelry_Image from '@/assets/Jewelry_Auth.png';
-import Jewelry_Welcome from '@/assets/Jewelry_Welcome.png';
+// logo
+import logo from '@/assets/LOGO_without_bg.png'
 import { useForm } from 'react-hook-form';
 import {
   Button,
@@ -46,10 +47,7 @@ const Login = () => {
         <div  className='max-w-lg lg:max-w-md lg:max-w-lg !-mt-10 sm:!-mt-0 !p-8 rounded-lg bg-gradient-to-b from-white to-primary-light shadow-lg'>
           {/* Welcome message */}
           <div className='flex flex-col justify-center items-center'>
-            <img src={Jewelry_Welcome} alt="Welcome" width={80}/>
-            <h3 className='text-center font-bold text-primary-main  text-md sm:text-lg'>
-              Welcome Back to Jewelry Store
-            </h3>
+            <img src={logo} alt="Welcome" width={200}/>
             <p className='text-center text-gray-500'>
               Please login to continue
             </p>

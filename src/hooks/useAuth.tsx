@@ -18,8 +18,8 @@ export const useLogin = () => {
         return axios.post(`${BASE_URL}/api/${LOGIN}`,data).then(res => res.data);
     }, {
         onSuccess : (data : any ) => {
-            console.log('login successfully!');
-            cookies.set('jewely-store',data.data.token);
+            console.log('login successfully!',data);
+            cookies.set('jewelry-store',data.data.token);
             const navigateTo = data.data.user.userType === 'admin' ? '/jewelryDashboard' : '/';
             navigate(navigateTo);
         },
@@ -37,8 +37,8 @@ export const useRegister = () => {
         return axios.post(`${BASE_URL}/api/${REGISTER}`,data).then(res => res.data);
     } ),{
          onSuccess : (data : any ) => {
-            console.log('register successfully!');
-            cookies.set('jewely-store',data.data.token);
+            console.log('register successfully!',data);
+            cookies.set('jewelry-store',data.data.token);
             navigate('/');
         },
         onError : (err : any) => {

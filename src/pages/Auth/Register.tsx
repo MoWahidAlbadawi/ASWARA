@@ -2,6 +2,8 @@
 import { Link } from 'react-router-dom';
 //auth image
 import Jewelry_Image from '@/assets/Jewelry_Auth.png';
+// logo
+import logo from '@/assets/LOGO_without_bg.png'
 // use from to handle form with react-hook-form
   import { useForm } from 'react-hook-form';
   // components from mui
@@ -56,8 +58,11 @@ import { useRegister } from '@/hooks/useAuth';
         <div className='grid grid-cols-1 lg:grid-cols-2 place-items-center gap-12'>
           {/* Form section */}  
           <div className='bg-gradient-to-b from-white to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md  !-mt-10 sm:!-mt-0 !py-8 !px-6 sm:!px-12'>
+            <div className='flex justify-center items-center'>
+              <img src={logo} width={200} />
+            </div>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography component="h3" variant='h5' color="primary" fontWeight='bold'>
+            <Typography component="h3" variant='h6' color="primary" fontWeight='bold' className='!mt-4'>
               Create Your Account
               </Typography>
                 <TextField
