@@ -13,6 +13,16 @@ import Err404 from './pages/Errors/Err404'
 // protecting pages
 import RequireAuth from './pages/Protecting/RequireAuth';
 import RequireBack from './pages/Protecting/RequireBack';
+import Users from './pages/Dashboard/Users/Users';
+import AddUser from './pages/Dashboard/Users/AddUser';
+import EditUser from './pages/Dashboard/Users/EditUser';
+import Products from './pages/Dashboard/Products/Products';
+import AddProduct from './pages/Dashboard/Products/AddProduct';
+import EditProduct from './pages/Dashboard/Products/EditProduct';
+import Categories from './pages/Dashboard/Categories/Categories';
+import AddCategory from './pages/Dashboard/Categories/AddCategory';
+import EditCategory from './pages/Dashboard/Categories/EditCategory';
+import Notifications from './pages/Dashboard/Notifications';
 // create project router
 const router = createBrowserRouter([
   // Auth routes
@@ -25,7 +35,20 @@ const router = createBrowserRouter([
   // Dashboard route
   {element : <RequireAuth  roles={['admin','product_manger']} /> , children : [
   {path : '/jewelryDashboard' , element : <LayoutDashboard /> , children : [
-    // {path : '' , element : }
+      // users pages
+    {path : '/jewelryDashboard/users' , element : <Users />},
+    {path : '/jewelryDashboard/user/add' , element : <AddUser />},
+    {path : '/jewelryDashboard/users/:id' , element : <EditUser />},
+    // products pages
+    {path : '/jewelryDashboard/products' , element : <Products />},
+    {path : '/jewelryDashboard/product/add' , element : <AddProduct />},
+    {path : '/jewelryDashboard/products/:id' , element : <EditProduct />},
+    // categories pages
+    {path : '/jewelryDashboard/categories' , element : <Categories />},
+    {path : '/jewelryDashboard/category/add' , element : <AddCategory />},
+    {path : '/jewelryDashboard/categories/:id' , element : <EditCategory />},
+    // notification
+    {path : '/jewelryDashboard/notifications' , element : <Notifications />}
   ]},
 ]},
 // unexist page

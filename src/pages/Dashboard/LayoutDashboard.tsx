@@ -16,13 +16,13 @@ const LayoutDashboard = () => {
                 <Sidebar />
             </Box>
             {/* navbar & page */}
-            <Box className='flex flex-col gap-12 w-full min-h-screen'>
+            <Box className='flex flex-col gap-6 w-full min-h-screen'>
             {/* navbar */}
             <Box className='h-[70px] shadow-md rounded w-full'>
                 <NavBar />
             </Box>
             {/* dynamic page */}
-            <Box className='w-full'> 
+            <Box className='w-[95%] !mx-auto sm:w-full'> 
                 <Outlet />
             </Box>
         </Box>

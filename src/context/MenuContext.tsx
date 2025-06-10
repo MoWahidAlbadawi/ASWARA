@@ -10,13 +10,13 @@ interface Props {
 }
 
 export const MenuContext = createContext<Menu>({
-    showMenu : false,
+    showMenu : true,
     toggleMenu : () => {},
 })
 
 export const MenuContextProvider = ({children} : Props) => {
 
-    const [showMenu , setShowMenu] = useState<boolean>(false);
+    const [showMenu , setShowMenu] = useState<boolean>(true);
 
     function toggleMenu () : void {
         setShowMenu(prev => !prev);
