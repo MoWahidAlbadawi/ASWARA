@@ -6,7 +6,7 @@ import { MenuContext } from "@/context/MenuContext";
 import { getCurrentUser } from "@/hooks/users/useUser";
 const NavBar = () => {
     const ctxMenu = useContext(MenuContext);
-    const {data : currentUser , isLoading , error} = getCurrentUser();
+    const {data : currentUser} = getCurrentUser();
     useEffect(() => {
         console.log(currentUser);
 },[currentUser])
