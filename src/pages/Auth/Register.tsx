@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 //auth image
 import Jewelry_Image from '@/assets/Jewelry_Auth.png';
 // logo
-import logo from '@/assets/LOGO_without_bg.png'
+import logo from '@/assets/Logo.png'
 // use from to handle form with react-hook-form
   import { useForm } from 'react-hook-form';
   // components from mui
@@ -55,18 +55,16 @@ import { useRegister } from '@/hooks/useAuth';
     };
     return (
       <Container className='min-h-screen grid items-center'>
-        <div className='grid grid-cols-1 lg:grid-cols-2 place-items-center gap-12'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 place-items-center'>
           {/* Form section */}  
-          <div className='bg-gradient-to-b from-white to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md  !-mt-10 sm:!-mt-0 !py-8 !px-6 sm:!px-12'>
+          <div className='bg-gradient-to-b from-white to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md !py-4 !px-6 sm:!px-12'>
             <div className='flex justify-center items-center'>
-              <img src={logo} width={200} />
+              <img src={logo} width={150} />
             </div>
+            <h3 className='font-bold text-primary-main'>Create Your Account</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Typography component="h3" variant='h6' color="primary" fontWeight='bold' className='!mt-4'>
-              Create Your Account
-              </Typography>
                 <TextField
-                  className='!my-3'
+                  className='!my-2'
                   fullWidth
                   label="Name"
                   placeholder='Enter your name'
@@ -75,7 +73,7 @@ import { useRegister } from '@/hooks/useAuth';
                   helperText={errors.name?.message}
                 />
                 <TextField
-                  className='!mb-3'
+                  className='!mb-2'
                   fullWidth
                   label="Email"
                   type="email"
@@ -89,7 +87,7 @@ import { useRegister } from '@/hooks/useAuth';
                   helperText={errors.email?.message}
                 />
                 <TextField
-                  className='!mb-3'
+                  className='!mb-2'
                   fullWidth
                   label="Password"
                   type={showPassword ? 'text' : 'password'}
@@ -112,7 +110,7 @@ import { useRegister } from '@/hooks/useAuth';
                   }}
                 />
                 <TextField
-                className='!mb-3'
+                className='!mb-2'
                   fullWidth
                   label="Confirm Password"
                   type={showConfirmPassword ? 'text' : 'password'}

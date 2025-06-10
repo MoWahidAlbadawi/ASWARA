@@ -19,7 +19,7 @@ export const useLogin = () => {
     }, {
         onSuccess : (data : any ) => {
             console.log('login successfully!',data);
-            cookies.set('jewelry-store',data.data.token);
+            cookies.set('aswara',data.data.token);
             const navigateTo = data.data.user.userType === 'admin' ? '/jewelryDashboard' : '/';
             navigate(navigateTo);
         },
@@ -38,7 +38,7 @@ export const useRegister = () => {
     } ),{
          onSuccess : (data : any ) => {
             console.log('register successfully!',data);
-            cookies.set('jewelry-store',data.data.token);
+            cookies.set('aswara',data.data.token);
             navigate('/');
         },
         onError : (err : any) => {

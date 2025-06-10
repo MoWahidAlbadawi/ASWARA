@@ -1,5 +1,5 @@
 // logo
-import logo from '@/assets/LOGO_without_bg.png'
+import logo from '@/assets/Logo.png'
 // css file
 import classes from './loading.module.css'
 const Loading = () => {

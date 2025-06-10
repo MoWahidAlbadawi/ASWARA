@@ -5,7 +5,7 @@ import { useEffect } from "react";
 const RequireBack = () => {
     const cookies = Cookie();
     const navigate = useNavigate();
-    const token = cookies.get('jewelry-store');
+    const token = cookies.get('aswara');
 
     // 1. token exist , still when you are
     useEffect(() => {

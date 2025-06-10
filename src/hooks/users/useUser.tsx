@@ -1,9 +1,10 @@
-import { myAxios } from "@/services/axios"
+import api from "@/services/axios"
 import type { ApiResponseGetCurrentUser } from "@/services/types/users";
 import { useQuery } from "react-query"
+import { CURRENT_USER } from "@/services/endpoints";
 
 export const getCurrentUser = () => {
     return useQuery('current-user',() => {
-        return myAxios.get<ApiResponseGetCurrentUser>('/user/current').then(res => res.data.data);  
+        return api.get<ApiResponseGetCurrentUser>(`/${CURRENT_USER}`).then(res => res.data.data);  
     })
 }

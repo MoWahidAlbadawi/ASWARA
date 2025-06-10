@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Jewelry_Image from '@/assets/Jewelry_Auth.png';
 // logo
-import logo from '@/assets/LOGO_without_bg.png'
+import logo from '@/assets/Logo.png'
 import { useForm } from 'react-hook-form';
 import {
   Button,
@@ -42,9 +42,9 @@ const Login = () => {
   return (
     <Container className='min-h-screen grid items-center'>
       <div
-      className='grid grid-cols-1 lg:grid-cols-2 gap-12 place-items-center'>
+      className='grid grid-cols-1 lg:grid-cols-2 place-items-center'>
         {/* Form section */}
-        <div  className='max-w-lg lg:max-w-md lg:max-w-lg !-mt-10 sm:!-mt-0 !p-8 rounded-lg bg-gradient-to-b from-white to-primary-light shadow-lg'>
+        <div  className='max-w-lg lg:max-w-md lg:max-w-lg !p-8 rounded-lg bg-gradient-to-b from-white to-primary-light shadow-lg'>
           {/* Welcome message */}
           <div className='flex flex-col justify-center items-center'>
             <img src={logo} alt="Welcome" width={200}/>

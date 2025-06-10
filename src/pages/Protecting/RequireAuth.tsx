@@ -10,26 +10,27 @@ interface Props {
 
 const RequireAuth = ({ roles }: Props) => {
     const cookies = Cookie();
-    const token = cookies.get('jewelry-store');
+    const token = cookies.get('aswara');
 
     // 1. No token go to login
     if (!token) {
         return <Navigate to="/login" replace />;
     }
 
-    // 2. Fetch user
-    const { data: currentUser, isLoading, error } = getCurrentUser();
+    // // 2. Fetch user
+    const { data : currentUser, isLoading, error } = getCurrentUser();
+
 
     if (isLoading) {
         return <Loading />;
     }
 
-    // 3. Handle errors 
+    // // 3. Handle errors 
     if (error) {
-        return <Navigate to="/login" replace />; 
+        return <Navigate to="/login" replace/>; 
     }
 
-    // 4. Check permissions
+    // // 4. Check permissions
     if (!roles.includes(currentUser?.userType)) {
         return <Err403 />; // User exists but lacks role
     }
