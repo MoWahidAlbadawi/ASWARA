@@ -3,7 +3,8 @@ import { Outlet } from "react-router-dom";
 import Cookie from 'cookie-universal'
 import Loading from "../Loading/Loading";
 import { Navigate } from "react-router-dom";
-import Err403 from "../Errors/Err404";
+import Err403 from "../Errors/Err403";
+import Err404 from "../Errors/Err404";
 interface Props {
     roles : (string | undefined)[]
 }
@@ -28,6 +29,10 @@ const RequireAuth = ({ roles }: Props) => {
     // // 3. Handle errors 
     if (error) {
         return <Navigate to="/login" replace/>; 
+    }
+
+    if(currentUser?.userType == 'user') {
+        return <Err404 />
     }
 
     // // 4. Check permissions

@@ -11,43 +11,43 @@ interface Link {
 export const Links: Link[] = [
     {
         title: 'Users',
-        path: '/jewelryDashboard/users',
+        path: '/aswaraDashboard/users',
         roles: ['admin'],
         icon: <FaUsers />,
     },
     {
         title: 'Add User',
-        path: '/jewelryDashboard/user/add',
+        path: '/aswaraDashboard/user/add',
         roles: ['admin'],
         icon: <FaPlus />
     },
     {
         title: 'Categories',
-        path: '/jewelryDashboard/categories',
+        path: '/aswaraDashboard/categories',
         roles: ['admin', 'product_manger'],
         icon: <TbCategoryFilled />
     },
     {
         title: 'Add category',
-        path: '/jewelryDashboard/category/add',
+        path: '/aswaraDashboard/category/add',
         roles: ['admin', 'product_manger'],
         icon: <FaPlus />
     },
     {
         title: 'Products',
-        path: '/jewelryDashboard/products',
+        path: '/aswaraDashboard/products',
         roles: ['admin', 'product_manger'],
         icon: <FaProductHunt />
     },
     {
         title: 'Add product',
-        path: '/jewelryDashboard/product/add',
+        path: '/aswaraDashboard/product/add',
         roles: ['admin', 'product_manger'],
         icon: <FaPlus />
     },
     {
         title: 'Notifications',
-        path: '/jewelryDashboard/notifications',
+        path: '/aswaraDashboard/notifications',
         roles: ['admin', 'product_manger'],
         icon: <FaBell />
     }

@@ -1,6 +1,6 @@
 import { Typography , Box, Button } from "@mui/material";
 import { Link } from "react-router-dom";
-const Err403 = () => {
+const Err404 = () => {
     return <Box textAlign={'center'} mt={5}>
         <Typography color="primary" fontWeight={'bold'} fontSize={75}>404</Typography>
         <Typography color="primary.dark" fontWeight={'bold'} fontSize={30} mt={-2}>Oops! You seem to be lost</Typography>
@@ -10,4 +10,4 @@ const Err403 = () => {
         </Button>
     </Box>
 }
-export default Err403;
+export default Err404;

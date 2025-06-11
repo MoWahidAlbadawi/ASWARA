@@ -10,20 +10,19 @@ import Home  from './pages/Website/Home';
 // Dashboard pages
 import LayoutDashboard from './pages/Dashboard/LayoutDashboard';
 import Err404 from './pages/Errors/Err404'
-// protecting pages
-import RequireAuth from './pages/Protecting/RequireAuth';
-import RequireBack from './pages/Protecting/RequireBack';
 import Users from './pages/Dashboard/Users/Users';
 import AddUser from './pages/Dashboard/Users/AddUser';
 import EditUser from './pages/Dashboard/Users/EditUser';
 import Products from './pages/Dashboard/Products/Products';
-import AddProduct from './pages/Dashboard/Products/AddProduct';
+import AddProduct from './pages/Dashboard/Products/AddProduct';   
 import EditProduct from './pages/Dashboard/Products/EditProduct';
 import Categories from './pages/Dashboard/Categories/Categories';
 import AddCategory from './pages/Dashboard/Categories/AddCategory';
 import EditCategory from './pages/Dashboard/Categories/EditCategory';
 import Notifications from './pages/Dashboard/Notifications';
-// create project router
+// protecting pages
+import RequireAuth from './pages/Protecting/RequireAuth';
+import RequireBack from './pages/Protecting/RequireBack';// create project router
 const router = createBrowserRouter([
   // Auth routes
   {element : <RequireBack /> , children : [
@@ -32,28 +31,30 @@ const router = createBrowserRouter([
   ]},
   // Website routes
   {path : '/' , element : <Home />},
-  // Dashboard route
-  {element : <RequireAuth  roles={['admin','product_manger']} /> , children : [
-  {path : '/jewelryDashboard' , element : <LayoutDashboard /> , children : [
-      // users pages
-    {path : '/jewelryDashboard/users' , element : <Users />},
-    {path : '/jewelryDashboard/user/add' , element : <AddUser />},
-    {path : '/jewelryDashboard/users/:id' , element : <EditUser />},
-    // products pages
-    {path : '/jewelryDashboard/products' , element : <Products />},
-    {path : '/jewelryDashboard/product/add' , element : <AddProduct />},
-    {path : '/jewelryDashboard/products/:id' , element : <EditProduct />},
+  // Dashboard route (admin & product_manger)
+  {element : <RequireAuth roles={['admin','product_manger']} /> , children : [
+  {path : '/aswaraDashboard' , element : <LayoutDashboard /> , children : [
+    // users pages (just for admin)
+    {element : <RequireAuth roles={['admin']} /> , children : [
+    {path : '/aswaraDashboard/users' , element : <Users /> },
+    {path : '/aswaraDashboard/user/add' , element : <AddUser /> },
+    {path : '/aswaraDashboard/users/:id' , element : <EditUser /> },
+    ]},
     // categories pages
-    {path : '/jewelryDashboard/categories' , element : <Categories />},
-    {path : '/jewelryDashboard/category/add' , element : <AddCategory />},
-    {path : '/jewelryDashboard/categories/:id' , element : <EditCategory />},
-    // notification
-    {path : '/jewelryDashboard/notifications' , element : <Notifications />}
+    {path : '/aswaraDashboard/categories' , element : <Categories />   },
+    {path : '/aswaraDashboard/category/add' , element : <AddCategory /> },
+    {path : '/aswaraDashboard/categories/:id' , element : <EditCategory /> },
+    // products pages
+    {path : '/aswaraDashboard/products' , element : <Products /> },
+    {path : '/aswaraDashboard/product/add' , element : <AddProduct /> },
+    {path : '/aswaraDashboard/products/:id' , element : <EditProduct /> },
+    // notifications page
+    {path : '/aswaraDashboard/notifications' , element : <Notifications />}
   ]},
 ]},
-// unexist page
+  // unexist page
   {path : '*' , element : <Err404 />}
-])
+]);
 
 const App = () => {
   const client = new QueryClient();
