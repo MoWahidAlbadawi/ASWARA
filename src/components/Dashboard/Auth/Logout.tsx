@@ -1,18 +1,20 @@
 import api from "@/services/axios";
 import { LOGOUT } from "@/services/endpoints";
-import { Button } from "@mui/material";
+import { Button, Typography , Icon} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookie from 'cookie-universal'
+import { AiOutlineLogout } from "react-icons/ai";
 const Logout = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     const cookies = Cookie();
     async function logout () {
         await api.post(`${LOGOUT}`);
         cookies.remove('aswara');
         navigate('/');
     }
-    return <Button variant="contained" onClick={logout}>
-        <p className="text-white capitalize">Logout</p>
+    return <Button onClick={logout} color="error" sx={{textTransform : 'capitalize' , display : 'flex' , gap : '5px'}}>
+        <Icon><AiOutlineLogout /></Icon>
+        <Typography>Logout</Typography>
     </Button>
 }
 export default Logout;

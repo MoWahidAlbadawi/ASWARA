@@ -1,10 +1,10 @@
 import axios from 'axios'
 import Cookie from 'cookie-universal'
-
+import { BASE_URL } from './endpoints';
 const cookies = Cookie(); 
 
 const api = axios.create({
-    baseURL : 'https://jewelrystore-production.up.railway.app/api',
+    baseURL : `${BASE_URL}/api`,
 
 });
 

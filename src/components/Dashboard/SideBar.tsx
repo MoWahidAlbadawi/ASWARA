@@ -4,7 +4,7 @@ import { MenuContext } from "@/context/MenuContext";
 import { useContext } from "react";
 import { Links } from './Links';
 import { NavLink } from 'react-router-dom';
-import { getCurrentUser } from '@/hooks/users/useUser';
+import { getCurrentUser } from '@/hooks/users/useUsers';
 
 const Sidebar = () => {
   const ctxMenu = useContext(MenuContext);
@@ -39,7 +39,7 @@ const Sidebar = () => {
       {/* Navigation with staggered transitions */}
       <ul className='flex flex-col gap-5 !mt-10'>
         {Links.map((link, index) => (
-          currentUser?.userType && link.roles.includes(currentUser.userType) && (
+          currentUser?.userType && link.roles.includes(currentUser.userType) && ( 
             <li key={index}>
               <NavLink 
                 to={link.path}

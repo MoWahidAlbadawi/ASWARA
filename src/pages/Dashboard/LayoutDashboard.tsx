@@ -22,11 +22,12 @@ const LayoutDashboard = () => {
                 <NavBar />
             </Box>
             {/* dynamic page */}
-            <Box className='w-[95%] !mx-auto sm:w-full'> 
+            <Box className='w-[95%] !mx-auto !mb-12'> 
                 <Outlet />
             </Box>
         </Box>
         </Box>
     )
 }
+
 export default LayoutDashboard;

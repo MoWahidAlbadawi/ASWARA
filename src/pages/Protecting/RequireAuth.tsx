@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/hooks/users/useUser";
+import { getCurrentUser } from "@/hooks/users/useUsers";
 import { Outlet } from "react-router-dom";
 import Cookie from 'cookie-universal'
 import Loading from "../Loading/Loading";

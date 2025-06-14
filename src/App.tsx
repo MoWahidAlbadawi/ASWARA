@@ -11,7 +11,7 @@ import Home  from './pages/Website/Home';
 import LayoutDashboard from './pages/Dashboard/LayoutDashboard';
 import Err404 from './pages/Errors/Err404'
 import Users from './pages/Dashboard/Users/Users';
-import AddUser from './pages/Dashboard/Users/AddUser';
+import AddUser from './pages/Dashboard/Users/AddUser'
 import EditUser from './pages/Dashboard/Users/EditUser';
 import Products from './pages/Dashboard/Products/Products';
 import AddProduct from './pages/Dashboard/Products/AddProduct';   

@@ -1,10 +1,12 @@
 import { SlMenu } from "react-icons/sl";
-import { IconButton , Menu , MenuItem , Button , Divider, Stack, Typography} from "@mui/material";
+import { IconButton , Menu , MenuItem , Button , Divider, Stack, Typography , Icon , Box} from "@mui/material";
 // context to mange menu 
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "@/context/MenuContext";
-import { getCurrentUser } from "@/hooks/users/useUser";
+import { getCurrentUser } from "@/hooks/users/useUsers";
 import { FaBell } from "react-icons/fa";
+import { CiUser } from "react-icons/ci";
+import { MdNavigateNext } from "react-icons/md";
 import { Link } from "react-router-dom";
 // logout component
 import Logout from "./Auth/Logout";
@@ -63,11 +65,31 @@ useEffect(()=> {
                         }}
                     >
                         <MenuItem onClick={handleClose}>
+                        <Box className='flex gap-2'>
+                            <Icon color="primary"><CiUser /></Icon>
+                            <Typography className="!me-3">{currentUser?.name}</Typography>
+                            <Icon color='primary'><MdNavigateNext/></Icon>
+                            </Box>
+                        </MenuItem>
+                        <Divider />
+                        <MenuItem onClick={handleClose}>
                         <Stack gap={2}>
-                            <Typography>Name : {currentUser?.name}</Typography>
-                            <Typography>Email : {currentUser?.email}</Typography>
-                            <Typography>phone Number : {currentUser?.phone}</Typography>
-                            <Typography>Created at : {currentUser?.created_at.slice(0,10)}</Typography>
+                            <Typography className="flex gap-4"> 
+                                <Typography fontWeight={'bold'}>Name</Typography>
+                                <Typography>{currentUser?.name}</Typography>
+                            </Typography>
+                            <Typography className="flex gap-4"> 
+                                <Typography fontWeight={'bold'}>Email</Typography>
+                                <Typography>{currentUser?.email}</Typography>
+                            </Typography>
+                            <Typography className="flex gap-4"> 
+                                <Typography fontWeight={'bold'}>Phone</Typography>
+                                <Typography>{currentUser?.phone}</Typography>
+                            </Typography>
+                            <Typography className="flex gap-4"> 
+                                <Typography fontWeight={'bold'}>Created at</Typography>
+                                <Typography>{currentUser?.created_at.slice(0,10)}</Typography>
+                            </Typography>
                         </Stack>
                         </MenuItem>
                         <Divider />

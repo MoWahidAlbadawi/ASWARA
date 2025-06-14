@@ -57,7 +57,7 @@ const Login = () => {
             <TextField
               margin="normal"
               fullWidth
-              label="Email"
+            label="Email"
               type="email"
               placeholder="Enter your email"
               {...register('email', {
