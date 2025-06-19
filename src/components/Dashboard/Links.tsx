@@ -1,5 +1,7 @@
 import { FaUsers, FaPlus, FaProductHunt, FaBell } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
+import { MdCategory } from "react-icons/md";
+import { TiUserAdd } from "react-icons/ti";
 
 interface Link {
     title: string;
@@ -19,7 +21,7 @@ export const Links: Link[] = [
         title: 'Add User',
         path: '/aswaraDashboard/user/add',
         roles: ['admin'],
-        icon: <FaPlus />
+        icon: <TiUserAdd />
     },
     {
         title: 'Categories',
@@ -31,7 +33,7 @@ export const Links: Link[] = [
         title: 'Add category',
         path: '/aswaraDashboard/category/add',
         roles: ['admin', 'product_manger'],
-        icon: <FaPlus />
+        icon: <MdCategory />
     },
     {
         title: 'Products',

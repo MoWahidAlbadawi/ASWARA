@@ -1,4 +1,5 @@
-import { Box, Typography , Button } from "@mui/material";
+import { Box, Typography , Button , Icon} from "@mui/material";
+import { FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // actions icons
 import { getAllUsers } from "@/hooks/users/useUsers";
@@ -17,7 +18,8 @@ const Users = () => {
     return <Box>
         {/* header  */}
         <Box className='flex justify-between  !mb-6'>
-            <Typography color='secondary' variant="h5">Users</Typography>
+            <Typography color='secondary' variant="h5">
+                <Icon className="!pt-1"><FaUsers /></Icon> Users </Typography>
             <Button variant='contained' className='!text-white !capitalize'>
                 <Link to='/aswaraDashboard/user/add'>Add User</Link>
             </Button>

@@ -86,10 +86,6 @@ useEffect(()=> {
                                 <Typography fontWeight={'bold'}>Phone</Typography>
                                 <Typography>{currentUser?.phone}</Typography>
                             </Typography>
-                            <Typography className="flex gap-4"> 
-                                <Typography fontWeight={'bold'}>Created at</Typography>
-                                <Typography>{currentUser?.created_at.slice(0,10)}</Typography>
-                            </Typography>
                         </Stack>
                         </MenuItem>
                         <Divider />

@@ -1,4 +1,4 @@
-import { TextField , Button , CircularProgress } from "@mui/material";
+import { TextField , Button , CircularProgress , Typography , Icon} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import type { AddCategoryInterface } from "@/services/types/categories";
@@ -7,6 +7,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Inbox from '@/assets/inbox-icon.png'
 import toast, { Toaster } from 'react-hot-toast';
 import { TbPhotoEdit } from "react-icons/tb";
+import { MdCategory } from "react-icons/md";
 const AddCategory = () => {
     const navigate = useNavigate();
     // react hook form
@@ -100,7 +101,12 @@ const AddCategory = () => {
     setCategoryImagePreview(null);
 }
 
-    return <div>
+    return <div>        
+            {/* header  */}
+             <Typography color='secondary' variant="h5" mb={3}>
+                 <Icon className="!pt-1"><MdCategory /></Icon> Add Category
+                 </Typography>
+            {/* form */}
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}
             <div className="grid grid-cols-1 gap-6">
@@ -158,7 +164,7 @@ const AddCategory = () => {
         {/* actions */}
             <div className="flex gap-3 !my-8">
                 <Button type="submit" variant="contained" className="!text-white !capitalize">
-                    {isLoading ? <CircularProgress color="secondary" size={24} /> : 'Save'}
+                    {isLoading ? <CircularProgress color="secondary" size={24} /> : 'Add'}
                 </Button>
                 <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
                 onClick={cancelAddCategory}>Cancel</Button>
