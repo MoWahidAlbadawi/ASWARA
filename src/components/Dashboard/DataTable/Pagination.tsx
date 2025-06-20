@@ -6,18 +6,18 @@ import classes from './pagination.module.css'
 interface Props {
     itemsPerPage : number,
     total : number | undefined,
-    handlePage : (page : number) => void,
+    onHandlePage : (page : number) => void,
 }
 
 // Add react paginate library for a flexible interface and easy user experience
 
-export default function PaginatedItems({ itemsPerPage , total  , handlePage  } : Props) {
+export default function PaginatedItems({ itemsPerPage , total  , onHandlePage  } : Props) {
 
   const pageCount = total ? Math.ceil(total / itemsPerPage) : 0;
 
   // Invoke when user click to request another page
   const handlePageClick = (e: { selected: number }) => {
-    handlePage(e.selected+1);
+    onHandlePage(e.selected+1);
   };
 
   return (

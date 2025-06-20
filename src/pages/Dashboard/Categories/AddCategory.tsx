@@ -1,13 +1,19 @@
-import { TextField , Button , CircularProgress , Typography , Icon} from "@mui/material";
+import { TextField , Button , CircularProgress , Typography , Icon, InputAdornment} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+// category
 import type { AddCategoryInterface } from "@/services/types/categories";
 import { AddNewCategory } from "@/hooks/categories/useCategories";
 import React, { useEffect, useRef, useState } from "react";
+// uploader photo
 import Inbox from '@/assets/inbox-icon.png'
+// toast
 import toast, { Toaster } from 'react-hot-toast';
+// icons
 import { TbPhotoEdit } from "react-icons/tb";
 import { MdCategory } from "react-icons/md";
+import { BsPercent } from "react-icons/bs";
+
 const AddCategory = () => {
     const navigate = useNavigate();
     // react hook form
@@ -15,6 +21,7 @@ const AddCategory = () => {
         defaultValues : {
             name : '',
             description : '',
+            smithing : 15,
             categoryFile : null,
         }
     });
@@ -88,6 +95,7 @@ const AddCategory = () => {
         const formData = new FormData();
         formData.append('Name', data.name);
         formData.append('Description', data.description);
+        formData.append('smithing', String(data.smithing));
         if (data.categoryFile) {
             formData.append('CategoryFile', data.categoryFile);
     }
@@ -134,6 +142,30 @@ const AddCategory = () => {
             })}
             error={!!errors.description}
             helperText={errors.description?.message}
+            />
+        </div>
+        {/* smithing */}
+        <div className="flex flex-col gap-2">
+            <label className="text-secondary-main">Smithing Value</label>
+            <TextField
+            placeholder="Enter smithing value"
+            variant="outlined"
+            type="number"
+            {...register('smithing',{
+                required : 'smithing value is reqiured',
+                validate : (value) => {
+                    return value > 0 || 'smithing must be at least 1'
+                }
+            })}
+            error={!!errors.smithing}
+            helperText={errors.smithing?.message}
+            InputProps={{
+                startAdornment : (
+                    <InputAdornment position="start">
+                        <Icon className="text-gray-700"><BsPercent /></Icon>
+                    </InputAdornment>
+                )
+            }}
             />
         </div>
             {/* category file */}

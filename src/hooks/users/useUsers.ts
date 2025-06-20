@@ -1,17 +1,17 @@
 import { useQuery , useMutation} from "react-query";
 import type { ApiResponseGetUsers , ApiResponseGetCurrentUser, AddUserInterface} from "@/services/types/users";
 import api from "@/services/axios"
-import { USERS , CURRENT_USER , ADD_USER} from  "@/services/endpoints"
+import { USERS , CURRENT_USER , ADD_USER, DELETE_USER} from  "@/services/endpoints"
 
 // get all users
-export const getAllUsers = () => {
+export const GetAllUsers = () => {
     return useQuery('users',() => {
         return api.get<ApiResponseGetUsers>(`/${USERS}`).then(res => res.data.data);  
     })
 }
 
 // get current user 
-export const getCurrentUser = () => {
+export const GetCurrentUser = () => {
     return useQuery('current-user',() => {
         return api.get<ApiResponseGetCurrentUser>(`/${CURRENT_USER}`).then(res => res.data.data);  
     })
@@ -33,3 +33,10 @@ export const AddNewUser = () => {
 
 
 // modify user
+
+// delete user
+export const DeleteUser = () => {
+    return useMutation('delete-user',(id : number) => {
+        return api.post(`/${DELETE_USER}/${id}`);
+    });
+}

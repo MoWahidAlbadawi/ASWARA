@@ -4,11 +4,11 @@ import { MenuContext } from "@/context/MenuContext";
 import { useContext } from "react";
 import { Links } from './Links';
 import { NavLink } from 'react-router-dom';
-import { getCurrentUser } from '@/hooks/users/useUsers';
+import { GetCurrentUser } from '@/hooks/users/useUsers';
 
 const Sidebar = () => {
   const ctxMenu = useContext(MenuContext);
-  const { data: currentUser } = getCurrentUser();
+  const { data: currentUser } = GetCurrentUser();
 
   return (
     <div className='!p-4 transition-all duration-300 ease-in-out'>

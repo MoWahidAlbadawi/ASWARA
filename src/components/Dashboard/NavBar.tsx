@@ -3,7 +3,7 @@ import { IconButton , Menu , MenuItem , Button , Divider, Stack, Typography , Ic
 // context to mange menu 
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "@/context/MenuContext";
-import { getCurrentUser } from "@/hooks/users/useUsers";
+import { GetCurrentUser } from "@/hooks/users/useUsers";
 import { FaBell } from "react-icons/fa";
 import { CiUser } from "react-icons/ci";
 import { MdNavigateNext } from "react-icons/md";
@@ -14,7 +14,7 @@ const NavBar = () => {
     // menu context for control with sidebar
     const ctxMenu = useContext(MenuContext);
     // current user
-    const {data : currentUser} = getCurrentUser();
+    const {data : currentUser} = GetCurrentUser();
     // menu functions and states for show current user info
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

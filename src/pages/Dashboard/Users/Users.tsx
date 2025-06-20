@@ -2,11 +2,12 @@ import { Box, Typography , Button , Icon} from "@mui/material";
 import { FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 // actions icons
-import { getAllUsers } from "@/hooks/users/useUsers";
+import { GetAllUsers , DeleteUser } from "@/hooks/users/useUsers";
 import DataTable from "@/components/Dashboard/DataTable/DataTable";
 
 const Users = () => {
-    const {data , isLoading , isError } = getAllUsers();
+    const {data , isLoading , isError , refetch} = GetAllUsers();
+    const { mutate } = DeleteUser();
 
     const headers : {title : string , key : string}[] = [
         {title : 'Name' , key : 'name'},
@@ -14,6 +15,11 @@ const Users = () => {
         {title : 'Phone' , key : 'phone'},
         {title : 'User Role' , key : 'userType'}
     ];
+    // delete user function
+    async function handleDeleteUser (id : number) {
+    await mutate(id);   
+    refetch();
+    }
 
     return <Box>
         {/* header  */}
@@ -31,6 +37,7 @@ const Users = () => {
             data={data}
             isLoading={isLoading}
             isError={isError}
+            onDeleteItem={handleDeleteUser}
             />
       </Box>
 }

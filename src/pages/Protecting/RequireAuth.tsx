@@ -1,4 +1,4 @@
-import { getCurrentUser } from "@/hooks/users/useUsers";
+import { GetCurrentUser } from "@/hooks/users/useUsers";
 import { Outlet } from "react-router-dom";
 import Cookie from 'cookie-universal'
 import Loading from "../Loading/Loading";
@@ -19,7 +19,7 @@ const RequireAuth = ({ roles }: Props) => {
     }
 
     // // 2. Fetch user
-    const { data : currentUser, isLoading, error } = getCurrentUser();
+    const { data : currentUser, isLoading, error } = GetCurrentUser();
 
 
     if (isLoading) {

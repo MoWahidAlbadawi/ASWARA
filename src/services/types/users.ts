@@ -9,7 +9,7 @@ export interface CurrentUser {
     userType : string,
 }
 export interface GetUser { 
-    UserID : number,
+    id : number,
     name : string,
     email : string,
     phone : string,

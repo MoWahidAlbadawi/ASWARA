@@ -1,13 +1,14 @@
-import { useMutation} from "react-query";
+import { useMutation , useQuery} from "react-query";
 import api from "@/services/axios"
-import { ADD_CATEGORY } from  "@/services/endpoints"
+import { ADD_CATEGORY, CATEGORIES, DELETE_CATEGORY } from  "@/services/endpoints"
+import type { ApiResponseGetCategories } from "@/services/types/categories";
 
 // get all categories
-// export const getAllCategories = () => {
-//     return useQuery('users',() => {
-//         return api.get<ApiResponseGetUsers>(`/${USERS}`).then(res => res.data.data);  
-//     })
-// }
+export const getAllCategories = () => {
+    return useQuery('categories',() => {
+        return api.get<ApiResponseGetCategories>(`/${CATEGORIES}`).then(res => res.data.data);  
+    })
+}
 
 // add category 
 export const AddNewCategory = () => {
@@ -25,3 +26,10 @@ export const AddNewCategory = () => {
 
 
 // modify category
+
+// delete category
+export const DeleteCategory = () => {
+    return useMutation('delete-category',(id : number) => {
+        return api.post(`/${DELETE_CATEGORY}/${id}`);
+    })
+} 
