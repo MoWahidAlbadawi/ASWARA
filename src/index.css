@@ -14,3 +14,19 @@ body {
   --color-primary-dark : #A88629;
   --color-secondary-main : #4B2E00;
 }
+
+.english {
+  direction: ltr;
+  font-family: 'Inter', sans-serif;
+}
+
+.arabic {
+  direction: rtl;
+  font-family: 'Cairo', sans-serif;
+}
+
+/* gradient primay button */
+.gradient-primary-btn {
+  background: linear-gradient(to right, #A88629, #D4AF37 );
+  color: white;
+}

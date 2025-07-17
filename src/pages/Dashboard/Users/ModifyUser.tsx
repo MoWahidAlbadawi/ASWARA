@@ -1,33 +1,41 @@
-import { TextField , Button , CircularProgress , Select , MenuItem , Typography , Icon} from "@mui/material";
+import { TextField , Button , CircularProgress , LinearProgress , Select , MenuItem , Typography , Icon} from "@mui/material";
 import { useForm ,Controller} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import type { AddUserInterface } from "@/services/types/users";
-import { AddNewUser } from "@/hooks/users/useUsers";
+import type { ModifyUserInterface } from "@/services/types/users";
+import {  GetUserById, ModifyUser } from "@/hooks/users/useUsers";
 import { useEffect } from "react";
 import toast , { Toaster } from "react-hot-toast";
-import { TiUserAdd } from "react-icons/ti";
+import { FaUserEdit } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import Err404 from "@/pages/Errors/Err404";
 
 const AddUser = () => {
+    const { userId } = useParams();
     const navigate = useNavigate();
     // react hook form
-    const { register , reset , handleSubmit , formState , control} = useForm<AddUserInterface>({
-        defaultValues : {
-            name : '',
-            email : '',
-            password : '',
-            phone : '',
-            userType : 'user',
-        }
-    });
+    const { register , reset , handleSubmit , formState , control} = useForm<ModifyUserInterface>();
     const { errors } = formState;
     // react query
-    const { mutate : addNewUser , isLoading , error , isSuccess } = AddNewUser();
+    const { data : userInfo , isLoading : isLoadingGet , error : errorGet } = GetUserById(userId ?? "");
+    const { mutate : modify , isLoading : isLoadingSet , error : errorSet , isSuccess : isSuccessSet  } = ModifyUser();
+
+    useEffect(() => {
+        if(userInfo) {
+            reset({
+              name : userInfo.name,
+              email : userInfo.email,
+              userType : userInfo.userType,
+              phone : userInfo.phone,
+            });
+            console.log(userInfo);
+        }
+    },[userInfo])
 
     // handle finishing the request
     useEffect(() => {
             const controller = new AbortController();
-            if(isSuccess) {
-             toast.success('the user added successfully',{
+            if(isSuccessSet) {
+             toast.success('the user edited successfully',{
                 style : {
                 background : '#2e7d32',
                 color : 'white'
@@ -39,8 +47,8 @@ const AddUser = () => {
                 navigate('/aswaraDashboard/users');
                 },2000);
             }
-            if(error) {
-                toast.error('error happens while adding user',{
+            if(errorSet) {
+                toast.error('error happens while editing user',{
                 style : {   
                 background : '#d32f2f',
                 color : 'white'
@@ -51,11 +59,12 @@ const AddUser = () => {
             return () => {
                 controller.abort();
             }
-    },[isSuccess,error])
+    },[isSuccessSet,errorSet])
 
     // add
-    function onSubmit (data : AddUserInterface) {
-        addNewUser(data);
+    function onSubmit (data : ModifyUserInterface) {
+        modify(data);
+        reset();
     }
     // cancel
     function cancelAddUser () {
@@ -63,13 +72,20 @@ const AddUser = () => {
         reset();
     }
 
+        // user id not found
+        if(errorGet) {
+            return <Err404 />
+        }
+
     return <div>
                 {/* header  */}
              <Typography color='secondary' variant="h6" mb={3}>
-                 <Icon className="!pt-1"><TiUserAdd /></Icon> Users {'>'} Add User 
+                 <Icon className="!pt-1"><FaUserEdit /></Icon> Users {'>'} Modify User
                  </Typography>
             {/* form */}
-        <form onSubmit={handleSubmit(onSubmit)}>
+            {isLoadingGet ? 
+            <LinearProgress color="primary" /> : 
+         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* user name */}
@@ -95,26 +111,10 @@ const AddUser = () => {
                 required : 'user email is required',
                 validate : (value : string) => {
                     return value.includes('@') || 'please enter a valid user email'
-                }
+                }   
             })}
             error={!!errors.email}
             helperText={errors.email?.message}
-            />
-        </div>
-        {/* user password */}
-        <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Password</label>
-            <TextField 
-            placeholder="Enter user password"
-            variant="outlined"
-            {...register('password',{
-                required : 'password user is required',
-                validate : (value : string) => {
-                    return value.length >= 8 || 'password must be 8 charcters or more' 
-                }
-            })}
-            error={!!errors.password}
-            helperText={errors.password?.message}
             />
         </div>
         {/* user phone */}
@@ -144,11 +144,11 @@ const AddUser = () => {
                 render={({ field }) => (
                     <Select
                         {...field}
+                        value={field.value ?? ""}
                         variant="outlined"
                         displayEmpty
                         error={!!errors.userType}
                     >
-                        <MenuItem value="" disabled>Select role</MenuItem>
                         <MenuItem value="user">User</MenuItem>
                         <MenuItem value="product_manager">Product Manager</MenuItem>
                         <MenuItem value="admin">Admin</MenuItem>
@@ -160,13 +160,13 @@ const AddUser = () => {
         {/* actions */}
             <div className="flex gap-3 !my-8">
                 <Button type="submit" variant="contained" className="!text-white !capitalize">
-                    {isLoading ? <CircularProgress color="secondary" size={24} /> : 'Add'}
+                    {isLoadingSet ? <CircularProgress color="secondary" size={24} /> : 'Save'}
                 </Button>
                 <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
                 onClick={cancelAddUser}>Cancel</Button>
                 <Toaster />
             </div>
-        </form>
+        </form>}
     </div>
 }
 export default AddUser;

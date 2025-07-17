@@ -118,7 +118,9 @@ const AddCategory = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}
             <div className="grid grid-cols-1 gap-6">
-        {/* category name */}
+        {/* category name & simithing*/}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* category name */} 
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">Category Name</label>
             <TextField 
@@ -131,20 +133,7 @@ const AddCategory = () => {
             helperText={errors.name?.message}
             />
         </div>
-        {/* category description */}
-        <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category Description</label>
-            <TextField
-            placeholder="Enter category description"
-            variant="outlined"
-            {...register('description',{
-                required : 'category description is reqiured'
-            })}
-            error={!!errors.description}
-            helperText={errors.description?.message}
-            />
-        </div>
-        {/* smithing */}
+                {/* smithing */}
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">Smithing Value</label>
             <TextField
@@ -168,6 +157,20 @@ const AddCategory = () => {
             }}
             />
         </div>
+        </div>
+        {/* category description */}
+        <div className="flex flex-col gap-2">
+            <label className="text-secondary-main">Category Description</label>
+            <TextField
+            placeholder="Enter category description"
+            variant="outlined"
+            {...register('description',{
+                required : 'category description is reqiured'
+            })}
+            error={!!errors.description}
+            helperText={errors.description?.message}
+            />
+        </div>
             {/* category file */}
           <div className="flex flex-col gap-2">
             <label className="text-secondary-main">Category Image</label>
@@ -178,14 +181,14 @@ const AddCategory = () => {
             onChange={hanldeCategoryFileChange}
             />
             {/* uploader */}
-            <div className="flex justify-center items-center !mt-3 !py-8 border-2 border-primary-main border-dashed rounded-xl">
+            <div className="md:w-1/2 flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
                 {categoryImagePreview ? <div className="relative"> <img src={categoryImagePreview} width={200} /> 
                 <div className="absolute top-0 left-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity transition-300 ease-in-out bg-black flex flex-col gap-4 justify-center items-center text-white">
                     <button className="cursor-pointer text-xl" onClick={deleteCategoryImage}>X</button>
                     <button className="cursor-pointer text-3xl" onClick={clickFileInput}><TbPhotoEdit /></button>
                 </div>
                 </div> :
-                 <img src={Inbox} width={120} className="cursor-pointer" onClick={clickFileInput}/>}
+                 <img src={Inbox} width={100} className="cursor-pointer" onClick={clickFileInput}/>}
             </div>
             {errors.categoryFile && (
                 <span className="text-red-500 text-[13px] !ms-3 !-mt-2">{errors.categoryFile.message}</span>

@@ -1,5 +1,11 @@
 import type { ApiResponseGet } from "./response"
 
+export class filtersUserDto {
+    searchTerm : string = '';
+    pageSize : number = 8;
+    pageIndex : number = 1;
+}
+
 export interface CurrentUser {
     userID : number,
     created_at : string,
@@ -8,7 +14,7 @@ export interface CurrentUser {
     phone : string,
     userType : string,
 }
-export interface GetUser { 
+export interface User { 
     id : number,
     name : string,
     email : string,
@@ -24,5 +30,14 @@ export interface AddUserInterface {
     userType : string,
 }
 
+export interface ModifyUserInterface {
+    name : string,
+    email : string,
+    phone : string,
+    userType : string,
+}
+
+
+export type ApiResponseGetUserById = ApiResponseGet<User>
 export type ApiResponseGetCurrentUser = ApiResponseGet<CurrentUser>
-export type ApiResponseGetUsers = ApiResponseGet<GetUser[]>
+export type ApiResponseGetUsers = ApiResponseGet<User[]>

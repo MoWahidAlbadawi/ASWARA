@@ -16,7 +16,7 @@ export const AddNewCategory = () => {
     return api.post(`/${ADD_CATEGORY}`,data);
     } ),{
          onSuccess : (data : any ) => {
-            console.log('category added successfully!',data);
+            console.log('category added successfully!',data);   
         },
         onError : (err : any) => {
             console.log(err,'error on Add new category');

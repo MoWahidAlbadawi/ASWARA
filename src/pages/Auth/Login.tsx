@@ -57,7 +57,7 @@ const Login = () => {
             <TextField
               margin="normal"
               fullWidth
-            label="Email"
+              label="Email"
               type="email"
               placeholder="Enter your email"
               {...register('email', {
@@ -66,6 +66,7 @@ const Login = () => {
               })}
               error={!!errors.email}
               helperText={errors.email?.message}
+              autoComplete='new-email'
             />
             <TextField
               margin="normal"
@@ -88,6 +89,7 @@ const Login = () => {
                   </InputAdornment>
                 )
               }}
+              autoComplete='new-password'
             />
             <Button
               type="submit"

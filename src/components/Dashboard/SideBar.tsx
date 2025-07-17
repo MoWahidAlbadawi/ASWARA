@@ -1,17 +1,22 @@
 import logo from '@/assets/Logo.png';
-import { Button, Icon, Collapse } from "@mui/material";
+import { Button, Icon, Collapse, Divider } from "@mui/material";
 import { MenuContext } from "@/context/MenuContext";
 import { useContext } from "react";
 import { Links } from './Links';
 import { NavLink } from 'react-router-dom';
 import { GetCurrentUser } from '@/hooks/users/useUsers';
+import Logout from './Auth/Logout';
 
 const Sidebar = () => {
   const ctxMenu = useContext(MenuContext);
   const { data: currentUser } = GetCurrentUser();
+  const sideClassName = `${ctxMenu.showMenu ? 'w-[200px]' : 'w-[70px]'} 
+  h-full flex flex-col !p-4 transition-all duration-300 ease-in-out`;
 
   return (
-    <div className='!p-4 transition-all duration-300 ease-in-out'>
+    <div className={sideClassName}>
+      {/* top section */}
+      <div>
       <div className='!mb-6 flex md:hidden justify-end'>
         <Button 
           onClick={() => ctxMenu.toggleMenu()} 
@@ -37,20 +42,20 @@ const Sidebar = () => {
         </div>}
 
       {/* Navigation with staggered transitions */}
-      <ul className='flex flex-col gap-5 !mt-10'>
+      <ul className='flex flex-col gap-4 !mt-10'>
         {Links.map((link, index) => (
-          currentUser?.userType && link.roles.includes(currentUser.userType) && ( 
+          // currentUser?.userType && link.roles.includes(currentUser.userType) && ( 
             <li key={index}>
               <NavLink 
                 to={link.path}
-                className={({isActive}) => `
-                  flex gap-1 !px-3 !py-1 rounded
-                  transition-all duration-300 ease-in-out
-                  ${isActive 
-                    ? 'bg-primary-main text-white' 
-                    : 'text-gray-500 hover:bg-gray-100 hover:text-gray-700'}
-                  ${ctxMenu.showMenu ? 'w-full' : 'w-10 justify-center'}
-                `}
+                  className={({isActive}) => {
+                    return `flex gap-1 !px-3 !py-2 rounded
+                      transition-all duration-300 ease-in-out
+                      ${isActive
+                        ? 'gradient-primary-btn' 
+                        : 'text-gray-500 hover:text-secondary-main hover:bg-primary-light   '} 
+                      ${ctxMenu.showMenu ? 'w-full' : 'w-10 justify-center'}`;
+                  }}
                 style={{
                   transitionDelay: `${ctxMenu.showMenu ? index * 50 : 0}ms`
                 }}
@@ -70,9 +75,18 @@ const Sidebar = () => {
                 </Collapse>
               </NavLink>
             </li>
-          )
+          // )
         ))}
       </ul>
+      </div>
+
+      {/* bottom section */}
+      {ctxMenu.showMenu && 
+      <div className='!mt-auto !mb-2'>
+        <Divider className='!mb-2' />
+        <Logout />
+      </div>}
+
     </div>
   );
 };

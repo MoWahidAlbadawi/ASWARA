@@ -1,7 +1,7 @@
 import { useQuery , useMutation} from "react-query";
-import type { ApiResponseGetUsers , ApiResponseGetCurrentUser, AddUserInterface} from "@/services/types/users";
+import type { ApiResponseGetUsers , ApiResponseGetCurrentUser, AddUserInterface, ApiResponseGetUserById, ModifyUserInterface} from "@/services/types/users";
 import api from "@/services/axios"
-import { USERS , CURRENT_USER , ADD_USER, DELETE_USER} from  "@/services/endpoints"
+import { USERS , USER ,  CURRENT_USER , ADD_USER, DELETE_USER, MODIFY_USER} from  "@/services/endpoints"
 
 // get all users
 export const GetAllUsers = () => {
@@ -20,19 +20,23 @@ export const GetCurrentUser = () => {
 // add user 
 export const AddNewUser = () => {
     return useMutation(((data : AddUserInterface) => {
-    return api.post(`/${ADD_USER}`,data).then(res => res.data);
-    } ),{
-         onSuccess : (data : any ) => {
-            console.log('user added successfully!',data);
-        },
-        onError : (err : any) => {
-            console.log(err,'error on Add new user');
-        } 
+    return api.post(`/${ADD_USER}`,data);
+    }));
+}
+
+// get user by id 
+export const GetUserById = (id : (number | string)) => {
+    return useQuery('user-by-id',() => {
+        return api<ApiResponseGetUserById>(`/${USER}/${id}`).then(res => res.data.data);
+    })
+}
+// modify user
+export const ModifyUser = () => {
+    return useMutation('modify-user',(data : ModifyUserInterface) => {
+        return api.put(`/${MODIFY_USER}`,data);
     });
 }
 
-
-// modify user
 
 // delete user
 export const DeleteUser = () => {

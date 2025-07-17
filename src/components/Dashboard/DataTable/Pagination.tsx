@@ -24,20 +24,21 @@ export default function PaginatedItems({ itemsPerPage , total  , onHandlePage  }
     <>
       <ReactPaginate
         breakLabel="..."
-        nextLabel= " >>"
+        nextLabel= "next"
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         pageCount={pageCount}
-        previousLabel="<< "
+        previousLabel="prev"
         renderOnZeroPageCount={null}
         containerClassName={classes['container']}
         pageLinkClassName={classes['page-link']}
         activeLinkClassName={classes['active-link']}
         breakClassName={classes['break']}
         breakLinkClassName={classes['break-link']}
-        previousLinkClassName={classes['previous-link']}
-        nextLinkClassName={classes['next-link']}
+        previousLinkClassName={classes['actions']}
+        nextLinkClassName={classes['actions']}
+        disabledLinkClassName={classes['disabled-actions']}
       />  
     </>
   );

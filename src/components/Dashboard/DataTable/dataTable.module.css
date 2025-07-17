@@ -4,25 +4,18 @@
     border-collapse: collapse;
     text-align: center;
     color: #4B2E00;
-      border: 1px solid #ddd;
 }   
 .dashboard-table-tr-head {
-    background-color: #D4AF37;
-    color: white;
-}
-.dashboard-table-tr-full {
-    background-color: #fff8da;
+    background-color: #F1E5AC;
 }
 .dashboard-table-tr:nth-child(even) {
-    background-color: #fff8da;
+    background-color: #fffcec;
 }
 .dashboard-table-th {
     padding : 15px;
-    border: 1px solid #ddd;
 }
 .dashboard-table-td {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 15px;
 }
 @media (max-width : 767px) {
     .dashboard-table-th {
