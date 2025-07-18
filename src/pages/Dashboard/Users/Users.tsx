@@ -8,6 +8,7 @@ import {
   Icon,
   Select,
   MenuItem,
+  Grid
 } from "@mui/material"
 // icons
 import { FaUsers } from "react-icons/fa";
@@ -20,148 +21,12 @@ import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
 // paginate (react paginate)
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
 // toast
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 // filter data
 import { filtersUserDto } from "@/services/types/users";
 
-const data = [
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'},
-  {name : 'wahid' , email : 'wahod@test.com' , phone : '093064054' , userType : 'admin'}
-]
-
 const Users = () => {
-  const { isLoading, isError, refetch } = GetAllUsers();
+  const { data , isLoading, isError, refetch } = GetAllUsers();
   const { mutate, isSuccess: isSuccessDelete , error: errorDelete } = DeleteUser();
 
   const headers: { title: string; key: string }[] = [
@@ -200,41 +65,28 @@ const Users = () => {
             .includes(filters.searchTerm.toLocaleLowerCase().trim())
         )
       : [];
-  }, [filters]);
+  }, [filters,data]);
 
   // paginated data
-  let startIndex = 0 , endIndex = 8;
+  let startIndex = 0 , endIndex = Math.min(startIndex + filters.pageSize,filteredData.length);
 
   const paginatedData = useMemo(() => {
-    filters.pageIndex = 1;
     startIndex = (filters.pageIndex - 1) * filters.pageSize;
     endIndex = Math.min(
-      filters.pageIndex * filters.pageSize,
+      startIndex + filters.pageSize,
       filteredData.length
     );
     return filteredData.slice(startIndex, endIndex);
-  }, [filters]);
+  }, [filters,filteredData]);
 
   // handle delete feedback
   useEffect(() => {
     if (isSuccessDelete) {
-      toast.success("The user was deleted successfully", {
-        style: {
-          background: "#2e7d32",
-          color: "white",
-        },
-        duration: 2000,
-      });
+      toast.success("The user was deleted successfully");
       refetch();
     }
     if (errorDelete) {
-      toast.error("Error occurred while deleting user", {
-        style: {
-          background: "#d32f2f",
-          color: "white",
-        },
-        duration: 2000,
-      });
+      toast.error("Error occurred while deleting user");
     }
   }, [isSuccessDelete, errorDelete]);
 
@@ -242,6 +94,7 @@ const Users = () => {
   function handleDeleteUser(id: number) {
     mutate(id);
   }
+
 
   return (
     <Box>
@@ -259,11 +112,12 @@ const Users = () => {
       </Box>
 
       {/* Filters */}
-      <Box className="!mb-3 flex flex-col md:flex-row justify-between items-center">
+      <Grid spacing={2} container className="!mb-3">
         {/* Page size select */}
-        <Box>
+        <Grid size={{xs : 12 , sm : 5 , md : 3}}>
+          <label className="text-sm text-secondary-main">Items Per Page</label>
           <Select
-            className="min-w-1/8 max-h-[45px]"
+            className="w-full max-h-[45px]"
             value={filters.pageSize}
             onChange={handleFiltersChange}
             name="pageSize"
@@ -272,10 +126,11 @@ const Users = () => {
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={25}>25</MenuItem>
           </Select>
-        </Box>
-
+        </Grid>
+        <Grid size={{xs : 0 , sm : 2 , md : 6}} className="hidden md:block"></Grid>
         {/* Search input */}
-        <Box position={"relative"} width={"fit-content"}>
+        <Grid size={{xs : 12 , sm : 5 , md : 3}}>
+        <Box position={"relative"} className="!mt-6">
           <input
             className={classes["input-search"]}
             placeholder="Search"
@@ -283,11 +138,12 @@ const Users = () => {
             onChange={handleFiltersChange}
             name="searchTerm"
           />
-          <Icon className={classes["input-search-icon"]}>
+           <Icon className="absolute end-2 text-primary-main top-[50%] transform -translate-y-[50%]">
             <IoIosSearch />
           </Icon>
         </Box>
-      </Box>
+      </Grid>
+      </Grid>
 
       {/* Data Table */}
       <DataTable
@@ -313,9 +169,6 @@ const Users = () => {
           />
         </Box>
       )}
-
-      {/* Toast */}
-      <Toaster />
     </Box>
   );
 };

@@ -89,8 +89,8 @@ useEffect(()=> {
                         </Stack>
                         </MenuItem>
                         <Divider />
-                        <MenuItem onClick={handleClose}>
-                                <Logout />
+                        <MenuItem>
+                                <Logout onCloseDialog={handleClose}/>
                         </MenuItem>
                     </Menu>
                     </div>

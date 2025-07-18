@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { ModifyUserInterface } from "@/services/types/users";
 import {  GetUserById, ModifyUser } from "@/hooks/users/useUsers";
 import { useEffect } from "react";
-import toast , { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { FaUserEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Err404 from "@/pages/Errors/Err404";
@@ -35,26 +35,14 @@ const AddUser = () => {
     useEffect(() => {
             const controller = new AbortController();
             if(isSuccessSet) {
-             toast.success('the user edited successfully',{
-                style : {
-                background : '#2e7d32',
-                color : 'white'
-                    },
-                    duration : 2000,
-                })
+             toast.success('the user edited successfully');
                 reset();
                 setTimeout(() => {
                 navigate('/aswaraDashboard/users');
                 },2000);
             }
             if(errorSet) {
-                toast.error('error happens while editing user',{
-                style : {   
-                background : '#d32f2f',
-                color : 'white'
-                    },
-                    duration : 2000,
-                })
+                toast.error('error happens while editing user');
             }
             return () => {
                 controller.abort();
@@ -164,7 +152,6 @@ const AddUser = () => {
                 </Button>
                 <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
                 onClick={cancelAddUser}>Cancel</Button>
-                <Toaster />
             </div>
         </form>}
     </div>

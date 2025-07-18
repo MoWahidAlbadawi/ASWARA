@@ -24,6 +24,8 @@ import Notifications from './pages/Dashboard/Notifications';
 import RequireAuth from './pages/Protecting/RequireAuth';
 import RequireBack from './pages/Protecting/RequireBack';// create project router
 import HomeDashboard from './pages/Dashboard/HomeDashboard';
+// global toast
+import { Toaster } from 'react-hot-toast';
 const router = createBrowserRouter([
   // Auth routes
   {element : <RequireBack /> , children : [
@@ -33,16 +35,16 @@ const router = createBrowserRouter([
   // Website routes
   {path : '/' , element : <Home />},
   // Dashboard route (admin & product_manger)
-  // {element : <RequireAuth roles={['admin','product_manger']} /> , children : [
+  {element : <RequireAuth roles={['admin','product_manger']} /> , children : [
   {path : '/aswaraDashboard' , element : <LayoutDashboard /> , children : [
     {path : '' , element : <HomeDashboard />},
     {path : '/aswaraDashboard/home' , element : <HomeDashboard />},
     // users pages (just for admin)
-    // {element : <RequireAuth roles={['admin']} /> , children : [
+    {element : <RequireAuth roles={['admin']} /> , children : [
     {path : '/aswaraDashboard/users' , element : <Users /> },
     {path : '/aswaraDashboard/user/add' , element : <AddUser /> },
     {path : '/aswaraDashboard/users/:userId' , element : <ModifyUser /> },
-    // ]},
+    ]},
     // categories pages
     {path : '/aswaraDashboard/categories' , element : <Categories />   },
     {path : '/aswaraDashboard/category/add' , element : <AddCategory /> },
@@ -53,7 +55,7 @@ const router = createBrowserRouter([
     {path : '/aswaraDashboard/products/:productId' , element : <ModifyProduct /> },
     // notifications page
     {path : '/aswaraDashboard/notifications' , element : <Notifications />}
-  // ]},
+  ]},
 ]},
   // unexist page
   {path : '*' , element : <Err404 />}
@@ -63,6 +65,35 @@ const App = () => {
   const client = new QueryClient();
   return (
     <>
+  {/* toast */}
+    <Toaster
+      position="bottom-right"
+      toastOptions={{
+        style: {
+          background: '#1e293b',
+          color: '#fff',
+          fontSize: '15px',
+          fontWeight: 500,
+          borderRadius: '8px',
+          padding: '12px 16px',
+          minHeight: '52px',
+        },
+        success: {
+          style: {
+            background: '#16a34a', 
+            color: '#fff',
+          },
+         icon: '✅',
+        },
+        error: {
+          style: {
+            background: '#dc2626',
+            color: '#fff',
+          },
+          icon: '❌',
+        },
+      }}
+    />
     <QueryClientProvider client={client}>
     <RouterProvider router={router}>
     </RouterProvider>

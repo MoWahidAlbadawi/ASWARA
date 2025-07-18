@@ -3,122 +3,25 @@ import { DeleteCategory, getAllCategories } from "@/hooks/categories/useCategori
 // table (Manual) 
 import DataTable from "@/components/Dashboard/DataTable/DataTable";
 import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
-import { Box, Typography , Button , Icon , Select , MenuItem} from "@mui/material";
+import { Box, Typography , Button , Icon , Grid , Select , MenuItem} from "@mui/material";
 // icons
 import { IoIosSearch } from "react-icons/io";
 import { TbCategoryFilled } from "react-icons/tb";
 import { Link } from "react-router-dom";
-import toast ,{ Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { filtersCategoryDto } from "@/services/types/categories";
 // pagination (react paginate)
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
-const data = [
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''},
-    {name : 'أساور' , description : 'very very very nice' , smithing : 15 , categoryFile : ''}
-]
+
 const Categories = () => {
     
-    const { isLoading , isError , refetch} = getAllCategories();
+    const { data , isLoading , isError , refetch} = getAllCategories();
     const { mutate , isSuccess : isSuccessDelete , error : errorDelete} = DeleteCategory();
 
     const headers = [
         { title: 'Category Name' , key : 'name'},
         { title: 'Category Description' , key : 'description'},
         { title: 'Smithing Value' , key : 'smithing'},
-        { title: 'Category Image' , key : 'categoryFile'},
     ]
 
       // filters state
@@ -140,61 +43,50 @@ const Categories = () => {
       }
     
       // filtered data
-      const filteredData = useMemo(() => {
-        filters.pageIndex = 1;
-          const matchedSearch = data?.filter((item) => {
-              return item.name.toLocaleLowerCase().trim()
-                .includes(filters.searchTerm.toLocaleLowerCase().trim());
-          });
-          const matchedSmithing = data?.filter((item) => {
-             return item.smithing === filters.smithingValue;
-          });
-            return (matchedSearch && matchedSmithing) || [];
-      }, [filters]);
-    
-      // paginated data
-      let startIndex = 0 , endIndex = 8;
+        const filteredData = useMemo(() => {
+          return data?.filter((item) => {
+            const matchesSearch = item.name
+              .toLocaleLowerCase()
+              .trim()
+              .includes(filters.searchTerm.toLocaleLowerCase().trim());
 
-      const paginatedData = useMemo(() => {
-        filters.pageIndex = 1;
-        startIndex = (filters.pageIndex - 1) * filters.pageSize;
-        endIndex = Math.min(
-          filters.pageIndex * filters.pageSize,
-          filteredData.length
-        );
-        return filteredData.slice(startIndex, endIndex);
-      }, [filters]);
+            const matchesSmithing = (filters.smithingValue && filters.smithingValue !==0) ? 
+            filters.smithingValue === item.smithing : true;
+
+            return matchesSearch && matchesSmithing;
+          }) || [];
+        }, [filters, data]);
+    
+  // paginated data
+  let startIndex = 0 , endIndex = Math.min(startIndex + filters.pageSize,filteredData.length);
+
+  const paginatedData = useMemo(() => {
+    startIndex = (filters.pageIndex - 1) * filters.pageSize;
+    endIndex = Math.min(
+      startIndex + filters.pageSize,
+      filteredData.length
+    );
+    return filteredData.slice(startIndex, endIndex);
+  }, [filters,filteredData]);
     
 
      // handle delete feedback
             useEffect(() => {
                     if(isSuccessDelete) {
-                     toast.success('the category deleted successfully',{
-                        style : {
-                        background : '#2e7d32',
-                        color : 'white'
-                            },
-                            duration : 2000,
-                        });
+                     toast.success('the category deleted successfully');
                         // get all categories after deleting
                         refetch();
                     }
                     if(errorDelete) {
-                        toast.error('error happens while deleting category',{
-                        style : {   
-                        background : '#d32f2f',
-                        color : 'white'
-                            },
-                            duration : 2000,
-                        })
+                        toast.error('error happens while deleting category');
                     }
             },[isSuccessDelete,errorDelete])
-        
-
+    
     // delete category fucntion
     function handleDeleteCategory (id : number) {
     mutate(id);
     }
+
     return <Box>
         {/* header  */}
         <Box className='flex justify-between  !mb-6'>
@@ -206,15 +98,17 @@ const Categories = () => {
         </Box>
         
       {/* Filters */}
-      <Box className="!mb-3 flex flex-col md:flex-row justify-between items-center">
-        <Box className="flex gap-2">
+      <Grid container spacing={2} className="!mb-3">
+        <Grid size={{xs : 12 , sm : 6 , md : 3}}>
+          <label className="text-sm text-secondary-main">Smithing</label>
          {/* Page size select */}
           <Select
-            className="min-w-1/8 max-h-[45px]"
+            className="w-full max-h-[45px]"
             value={filters.smithingValue}
             onChange={handleFiltersChange}
             name="smithingValue"
           >
+            <MenuItem value={0}>Select Smithing</MenuItem>
             <MenuItem value={5}>5 %</MenuItem>
             <MenuItem value={6}>6 %</MenuItem>
             <MenuItem value={7}>7 %</MenuItem>
@@ -226,10 +120,18 @@ const Categories = () => {
             <MenuItem value={13}>13 %</MenuItem>
             <MenuItem value={14}>14 %</MenuItem>
             <MenuItem value={15}>15 %</MenuItem>
+            <MenuItem value={16}>16 %</MenuItem>
+            <MenuItem value={17}>17 %</MenuItem>
+            <MenuItem value={18}>18 %</MenuItem>
+            <MenuItem value={19}>19 %</MenuItem>
+            <MenuItem value={20}>20 %</MenuItem>
           </Select>
+          </Grid>
          {/* Page size select */}
+         <Grid size={{xs : 12 , sm : 6 , md : 3}}>
+          <label className="text-sm text-secondary-main">Items Per Page</label>
           <Select
-            className="min-w-1/8 max-h-[45px]"
+            className="w-full max-h-[45px]"
             value={filters.pageSize}
             onChange={handleFiltersChange}
             name="pageSize"
@@ -238,22 +140,24 @@ const Categories = () => {
             <MenuItem value={10}>10</MenuItem>
             <MenuItem value={25}>25</MenuItem>
           </Select>
-        </Box>
-
+        </Grid> 
+        <Grid size={{xs : 0 , md : 3}} className='hidden md:block'></Grid>
         {/* Search input */}
-        <Box position={"relative"} width={"fit-content"}>
+        <Grid size={{xs : 12 , sm : 6 , md : 3}} className="md:!mt-6">
+        <Box position={"relative"}>
           <input
-            className={classes["input-search"]}
+            className={`${classes["input-search"]} pe-12`}
             placeholder="Search"
             value={filters.searchTerm}
             onChange={handleFiltersChange}
             name="searchTerm"
           />
-          <Icon className={classes["input-search-icon"]}>
+          <Icon className="absolute end-2 text-primary-main top-[50%] transform -translate-y-[50%]">
             <IoIosSearch />
           </Icon>
         </Box>
-      </Box>
+        </Grid>
+      </Grid>
         {/* data  table */}
             <DataTable 
             table='categories'
@@ -278,8 +182,6 @@ const Categories = () => {
                       />
                     </Box>
                   )}
-        {/* toast */}
-        <Toaster />
       </Box>
 }
 export default Categories;

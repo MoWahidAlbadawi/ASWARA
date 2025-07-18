@@ -10,13 +10,10 @@ import {
   Slide,
   Dialog,
   DialogActions,
-  DialogContent,
-  DialogTitle,
-  DialogContentText
 } from "@mui/material";
 // action icons
 import { FaRegEdit } from "react-icons/fa";
-import { IoMdWarning } from "react-icons/io";
+import { IoWarningOutline } from "react-icons/io5";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 // css
 import classes from "./dataTable.module.css";
@@ -180,34 +177,25 @@ const DataTable = ({
           keepMounted
           onClose={handleClose}
           aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle
-            sx={{
-              textAlign: "center",
-              fontWeight: "bold",
-              color: "error.main",
+            PaperProps={{
+              sx: {
+                py : 1,
+                px : 2,
+                borderRadius: 3,
+                 width : '80%',
+              },
             }}
-          >
-            <Icon sx={{ fontSize: "5rem" }}>
-              <IoMdWarning />
+        >
+          <Box className="text-center text-gray-700">
+            <Icon sx={{ fontSize: "8rem" }} color="error">
+              <IoWarningOutline />
             </Icon>
             <Typography>
               Are you sure you want to delete this item?
             </Typography>
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText
-              sx={{
-                fontSize: "16px",
-                color: "text.secondary",
-                mt: 2,
-                textAlign: "center",
-              }}
-            >
               This action is permanent and cannot be undone. You will lose
               access to this item forever.
-            </DialogContentText>
-          </DialogContent>
+              </Box>
           <DialogActions>
             <Button
               onClick={handleClose}

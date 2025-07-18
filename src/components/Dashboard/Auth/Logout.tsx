@@ -1,20 +1,108 @@
-import api from "@/services/axios";
-import { LOGOUT } from "@/services/endpoints";
-import { Button, Typography , Icon} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookie from 'cookie-universal'
 import { AiOutlineLogout } from "react-icons/ai";
-const Logout = () => {
+import React , { useState } from "react"
+import api from "@/services/axios";
+import { LOGOUT } from "@/services/endpoints";
+import { IoWarningOutline } from "react-icons/io5";
+import {
+  Box,
+  Icon,
+  Typography,
+  Button,
+  Slide,
+  Dialog,
+  DialogActions,
+} from "@mui/material"
+// for transition dialog
+import type { TransitionProps } from "@mui/material/transitions";
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+interface Props {
+  onCloseDialog? : () => void,
+}
+const Logout = ({ onCloseDialog } : Props) => {
+    const [open, setOpen] = useState<boolean>(false);
+
     const navigate = useNavigate(); 
     const cookies = Cookie();
     async function logout () {
         await api.post(`${LOGOUT}`);
         cookies.remove('aswara');
+        setOpen(false);
+    if(onCloseDialog) {
+      onCloseDialog();
+      }
         navigate('/');
     }
-    return <Button onClick={logout} color="error" sx={{textTransform : 'capitalize' , display : 'flex' , gap : '5px'}}>
+
+    function openDialog () {
+      setOpen(true);
+    }
+    function closeDialog () {
+      setOpen(false);
+      if(onCloseDialog) {
+      onCloseDialog();
+      }
+    }
+    return <Box>
+    <Button onClick={openDialog} color="error" sx={{textTransform : 'capitalize' , display : 'flex' , gap : '5px'}}>
         <Icon><AiOutlineLogout /></Icon>
         <Typography>Logout</Typography>
     </Button>
+      {/* delete confirmation dialog */}
+      <Box>
+        <Dialog
+          open={open}
+          slots={{
+            transition: Transition,
+          }}
+          keepMounted
+          onClose={closeDialog}
+          aria-describedby="alert-dialog-slide-description"
+         PaperProps={{
+              sx: {
+                py : 1,
+                px : 2,
+                borderRadius: 3,
+                 width : '80%',
+              },
+            }}
+        >
+          <Box className="text-center text-gray-700">
+            <Icon sx={{ fontSize: "8rem" }} color="error">
+              <IoWarningOutline />
+            </Icon>
+            <Typography>
+              Are you sure you want to leave ASWARA ?
+            </Typography>
+            </Box>
+          <DialogActions>
+            <Button
+              onClick={closeDialog}
+              sx={{ textTransform: "capitalize" }}
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={logout}
+              color="error"
+              sx={{ textTransform: "capitalize" }}
+              variant="contained"
+            >
+              logout
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
+      </Box>
 }
 export default Logout;

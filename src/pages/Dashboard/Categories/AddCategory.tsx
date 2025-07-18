@@ -8,7 +8,7 @@ import React, { useEffect, useRef, useState } from "react";
 // uploader photo
 import Inbox from '@/assets/inbox-icon.png'
 // toast
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 // icons
 import { TbPhotoEdit } from "react-icons/tb";
 import { MdCategory } from "react-icons/md";
@@ -53,26 +53,14 @@ const AddCategory = () => {
     useEffect(() => {
             const controller = new AbortController();
             if(isSuccess) {
-             toast.success('the category added successfully',{
-                style : {
-                background : '#2e7d32',
-                color : 'white'
-                    },
-                    duration : 2000,
-                })
+             toast.success('the category added successfully');
                 reset();
                 setTimeout(() => {
                 navigate('/aswaraDashboard/categories');
                 },2000);
             }
             if(error) {
-                toast.error('error happens while adding category',{
-                style : {   
-                background : '#d32f2f',
-                color : 'white'
-                    },
-                    duration : 2000,
-                })
+                toast.error('error happens while adding category');
             }
             return () => {
                 controller.abort();
@@ -83,13 +71,7 @@ const AddCategory = () => {
     // add
     function onSubmit (data : AddCategoryInterface) {
         if(!data.categoryFile) {
-            toast.error('category file image is required',{
-                style : {
-                    background : '#d32f2f',
-                    color : 'white'
-                }
-            }
-            );
+            toast.error('category file image is required');
             return;
         }
         const formData = new FormData();
@@ -178,12 +160,13 @@ const AddCategory = () => {
             className="hidden"
             ref={fileInput}
             type="file"
+            accept="image/*"
             onChange={hanldeCategoryFileChange}
             />
             {/* uploader */}
             <div className="md:w-1/2 flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
                 {categoryImagePreview ? <div className="relative"> <img src={categoryImagePreview} width={200} /> 
-                <div className="absolute top-0 left-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity transition-300 ease-in-out bg-black flex flex-col gap-4 justify-center items-center text-white">
+                <div className="absolute inset-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity transition-300 ease-in-out bg-black flex flex-col gap-4 justify-center items-center text-white">
                     <button className="cursor-pointer text-xl" onClick={deleteCategoryImage}>X</button>
                     <button className="cursor-pointer text-3xl" onClick={clickFileInput}><TbPhotoEdit /></button>
                 </div>
@@ -193,7 +176,6 @@ const AddCategory = () => {
             {errors.categoryFile && (
                 <span className="text-red-500 text-[13px] !ms-3 !-mt-2">{errors.categoryFile.message}</span>
             )}
-            <Toaster />
             </div>
         </div>
         {/* actions */}
@@ -203,7 +185,6 @@ const AddCategory = () => {
                 </Button>
                 <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
                 onClick={cancelAddCategory}>Cancel</Button>
-                <Toaster />
             </div>
         </form>
     </div>

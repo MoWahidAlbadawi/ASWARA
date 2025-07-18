@@ -17,7 +17,7 @@ const Sidebar = () => {
     <div className={sideClassName}>
       {/* top section */}
       <div>
-      <div className='!mb-6 flex md:hidden justify-end'>
+      <div className='!mb-6 flex lg:hidden justify-end'>
         <Button 
           onClick={() => ctxMenu.toggleMenu()} 
           variant="contained"
@@ -44,7 +44,7 @@ const Sidebar = () => {
       {/* Navigation with staggered transitions */}
       <ul className='flex flex-col gap-4 !mt-10'>
         {Links.map((link, index) => (
-          // currentUser?.userType && link.roles.includes(currentUser.userType) && ( 
+          currentUser?.userType && link.roles.includes(currentUser.userType) && ( 
             <li key={index}>
               <NavLink 
                 to={link.path}
@@ -75,7 +75,7 @@ const Sidebar = () => {
                 </Collapse>
               </NavLink>
             </li>
-          // )
+          )
         ))}
       </ul>
       </div>

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import type { AddUserInterface } from "@/services/types/users";
 import { AddNewUser } from "@/hooks/users/useUsers";
 import { useEffect } from "react";
-import toast , { Toaster } from "react-hot-toast";
+import toast  from "react-hot-toast";
 import { TiUserAdd } from "react-icons/ti";
 
 const AddUser = () => {
@@ -27,26 +27,14 @@ const AddUser = () => {
     useEffect(() => {
             const controller = new AbortController();
             if(isSuccess) {
-             toast.success('the user added successfully',{
-                style : {
-                background : '#2e7d32',
-                color : 'white'
-                    },
-                    duration : 2000,
-                })
+             toast.success('the user added successfully');
                 reset();
                 setTimeout(() => {
                 navigate('/aswaraDashboard/users');
                 },2000);
             }
             if(error) {
-                toast.error('error happens while adding user',{
-                style : {   
-                background : '#d32f2f',
-                color : 'white'
-                    },
-                    duration : 2000,
-                })
+                toast.error('error happens while adding user');
             }
             return () => {
                 controller.abort();
@@ -164,7 +152,6 @@ const AddUser = () => {
                 </Button>
                 <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
                 onClick={cancelAddUser}>Cancel</Button>
-                <Toaster />
             </div>
         </form>
     </div>

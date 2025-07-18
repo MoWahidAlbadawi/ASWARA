@@ -3,7 +3,7 @@ export class filtersCategoryDto {
     searchTerm : string = '';
     pageSize : number = 8;
     pageIndex : number = 1;
-    smithingValue : number = 15;
+    smithingValue : number = 0;
 }
 
 export interface Category {
