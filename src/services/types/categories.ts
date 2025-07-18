@@ -11,7 +11,7 @@ export interface Category {
     name : string,
     description : string,
     smithing : number | null,
-    categoryFile : string,
+    categoryFile : string | File,
 }
 
 export interface AddCategoryInterface {
@@ -21,4 +21,12 @@ export interface AddCategoryInterface {
     categoryFile : File | null,
 }
 
+export interface ModifyCategoryInterface {
+    name : string,
+    description : string,
+    smithing : number | null,
+    categoryFile : string | File | null,
+}
+
+export type ApiResponseGetCategoryById = ApiResponseGet<Category>
 export type ApiResponseGetCategories = ApiResponseGet<Category[]>

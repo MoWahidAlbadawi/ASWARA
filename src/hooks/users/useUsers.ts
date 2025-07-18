@@ -27,13 +27,13 @@ export const AddNewUser = () => {
 // get user by id 
 export const GetUserById = (id : (number | string)) => {
     return useQuery('user-by-id',() => {
-        return api<ApiResponseGetUserById>(`/${USER}/${id}`).then(res => res.data.data);
+        return api.get<ApiResponseGetUserById>(`/${USER}/${id}`).then(res => res.data.data);
     })
 }
 // modify user
-export const ModifyUser = () => {
+export const UpdateUser = (id : number | string) => {
     return useMutation('modify-user',(data : ModifyUserInterface) => {
-        return api.put(`/${MODIFY_USER}`,data);
+        return api.put(`/${MODIFY_USER}/${id}`,data);
     });
 }
 

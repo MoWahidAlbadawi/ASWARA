@@ -31,6 +31,7 @@ import { useRegister } from '@/hooks/useAuth';
     const [ showConfirmPassword , setShowConfirmPassword ] = useState(false);
     // hook form
     const { register , handleSubmit , reset , formState , watch} = useForm<RegisterData>({
+      mode : 'all',
       defaultValues : {
         name : '',
         email : '',

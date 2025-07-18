@@ -18,6 +18,7 @@ const AddCategory = () => {
     const navigate = useNavigate();
     // react hook form
     const { register , reset , handleSubmit , formState , setValue } = useForm<AddCategoryInterface>({
+        mode : 'all',
         defaultValues : {
             name : '',
             description : '',

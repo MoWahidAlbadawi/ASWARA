@@ -21,6 +21,7 @@ import { type LoginData } from '@/services/types/Auth';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { register, handleSubmit, reset, formState } = useForm<LoginData>({
+    mode : 'all',
     defaultValues: {
       email: '',
       password: ''

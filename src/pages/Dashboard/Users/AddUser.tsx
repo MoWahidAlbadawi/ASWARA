@@ -11,6 +11,7 @@ const AddUser = () => {
     const navigate = useNavigate();
     // react hook form
     const { register , reset , handleSubmit , formState , control} = useForm<AddUserInterface>({
+        mode : 'all',
         defaultValues : {
             name : '',
             email : '',

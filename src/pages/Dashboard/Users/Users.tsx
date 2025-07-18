@@ -24,9 +24,11 @@ import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
 import toast from "react-hot-toast";
 // filter data
 import { filtersUserDto } from "@/services/types/users";
+import { GetAllProducts } from "@/hooks/products/useProducts";
 
 const Users = () => {
   const { data , isLoading, isError, refetch } = GetAllUsers();
+  const { data : P } = GetAllProducts();
   const { mutate, isSuccess: isSuccessDelete , error: errorDelete } = DeleteUser();
 
   const headers: { title: string; key: string }[] = [

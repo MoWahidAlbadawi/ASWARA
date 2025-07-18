@@ -2,22 +2,33 @@ import { TextField , Button , CircularProgress , LinearProgress , Select , MenuI
 import { useForm ,Controller} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import type { ModifyUserInterface } from "@/services/types/users";
-import {  GetUserById, ModifyUser } from "@/hooks/users/useUsers";
+import {  GetUserById, UpdateUser } from "@/hooks/users/useUsers";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { FaUserEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Err404 from "@/pages/Errors/Err404";
 
-const AddUser = () => {
+const ModifyUser = () => {
     const { userId } = useParams();
     const navigate = useNavigate();
     // react hook form
-    const { register , reset , handleSubmit , formState , control} = useForm<ModifyUserInterface>();
+    const { register , reset , handleSubmit , formState , control} = useForm<ModifyUserInterface>({
+        mode : 'all'
+    });
     const { errors } = formState;
     // react query
-    const { data : userInfo , isLoading : isLoadingGet , error : errorGet } = GetUserById(userId ?? "");
-    const { mutate : modify , isLoading : isLoadingSet , error : errorSet , isSuccess : isSuccessSet  } = ModifyUser();
+    const { data : userInfo , isLoading : isLoadingGet , error : errorGet } = GetUserById(userId ?? '');
+    const { mutate : modify , isLoading : isLoadingSet , error : errorSet , isSuccess : isSuccessSet  } = UpdateUser(userId ?? '');
+
+
+    
+    // react hook form saving the previous values so it is show them until it get the new data
+    // i reset data each userId change
+    // so it is reset the form then get the data reset with new real values
+        useEffect(() => {
+        reset();
+        }, [userId]);
 
     useEffect(() => {
         if(userInfo) {
@@ -27,7 +38,6 @@ const AddUser = () => {
               userType : userInfo.userType,
               phone : userInfo.phone,
             });
-            console.log(userInfo);
         }
     },[userInfo])
 
@@ -156,4 +166,4 @@ const AddUser = () => {
         </form>}
     </div>
 }
-export default AddUser;
+export default ModifyUser;
