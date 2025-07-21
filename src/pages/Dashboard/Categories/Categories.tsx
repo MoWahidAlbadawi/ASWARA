@@ -90,8 +90,10 @@ const Categories = () => {
     return <Box>
         {/* header  */}
         <Box className='flex justify-between  !mb-6'>
-            <Typography color='secondary' variant="h5">
-                <Icon className="!pt-1"><TbCategoryFilled/></Icon> Categories </Typography>
+            <Typography color='secondary' variant="h5" className="flex justify-between items-center gap-1">
+                <Icon><TbCategoryFilled/></Icon> 
+                <span>Categories</span>
+                </Typography>
             <Button variant='contained' className='!text-white !capitalize'>
                 <Link to='/aswaraDashboard/category/add'>Add Category</Link>
             </Button>
@@ -147,7 +149,7 @@ const Categories = () => {
         <Box position={"relative"}>
           <input
             className={`${classes["input-search"]} pe-12`}
-            placeholder="Search"
+            placeholder="search by name"
             value={filters.searchTerm}
             onChange={handleFiltersChange}
             name="searchTerm"
@@ -167,6 +169,9 @@ const Categories = () => {
             isError={isError}
             startIndex={startIndex}
             onDeleteItem={handleDeleteCategory}
+            customColumns={{
+              smithing : (item : any) => <span>{item.smithing}%</span>,
+            }}
             />
             
                   {/* Pagination */}

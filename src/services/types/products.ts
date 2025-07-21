@@ -1,15 +1,16 @@
 import type { ApiResponseGet  } from "./response";
-// export class filtersCategoryDto {
-//     searchTerm : string = '';
-//     pageSize : number = 8;
-//     pageIndex : number = 1;
-//     smithingValue : number = 0;
-// }
+export class filtersProductDto {
+    searchTerm : string = '';
+    pageSize : number = 8;
+    pageIndex : number = 1;
+    categoryId : number = 0;
+}
 
 export interface Product {
     id : number,
     name : string,
-    description : string,
+    // back-end forget s 
+    decription : string,
     weight : number ,
     price : number , 
     quantity : number ,
@@ -19,7 +20,7 @@ export interface Product {
     smithing : number | null,
     categoryFile : string | File,
     isFeatured : boolean,
-    categoryId : number,
+    categoryid : number,
 }
 
 // export interface AddCategoryInterface {

@@ -15,7 +15,7 @@ import Inbox from '@/assets/inbox-icon.png'
 import toast from 'react-hot-toast';
 // icons
 import { TbPhotoEdit } from "react-icons/tb";
-import { MdCategory } from "react-icons/md";
+import { TbCategoryFilled } from "react-icons/tb";
 import { BsPercent } from "react-icons/bs";
 
 const ModifyCategory = () => {
@@ -121,9 +121,10 @@ const ModifyCategory = () => {
 
     return <div>        
             {/* header  */}
-             <Typography color='secondary' variant="h5" mb={3}>
-                 <Icon className="!pt-1"><MdCategory /></Icon> Modify Category
-                 </Typography>
+           <Typography color='secondary' variant="h5" className="!mb-5 flex justify-start items-center gap-1">
+                <Icon><TbCategoryFilled/></Icon> 
+                <span>Categories / Modify Category</span>
+                </Typography>
             {/* form */}
         {isLoadingGet ? 
          <LinearProgress color="primary" /> : 

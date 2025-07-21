@@ -17,8 +17,6 @@ import { IoWarningOutline } from "react-icons/io5";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 // css
 import classes from "./dataTable.module.css";
-// no data image
-import NoDataImage from "@/assets/no-data.jpg";
 // for transition dialog
 import type { TransitionProps } from "@mui/material/transitions";
 
@@ -39,6 +37,11 @@ interface Props {
   data: any;
   startIndex : number,
   onDeleteItem: (itemId: number) => void;
+  // custom content 
+    customColumns?: {
+    [key: string]: (item: any) => React.ReactNode;
+  };
+
 }
 
 const DataTable = ({
@@ -49,6 +52,7 @@ const DataTable = ({
   data,
   startIndex,
   onDeleteItem,
+  customColumns,
 }: Props) => {
   // dialog state
   const [open, setOpen] = useState<boolean>(false);
@@ -100,7 +104,7 @@ const DataTable = ({
             )}
 
             {/* error */}
-            {/* {isError && (
+            {isError && (
               <tr>
                 <td
                   className={classes["dashboard-table-td"]}
@@ -109,7 +113,7 @@ const DataTable = ({
                   Something went wrong, please try again!
                 </td>
               </tr>
-            )} */}
+            )}
 
             {/* no data */}
             {!isLoading && !isError && data.length === 0 && (
@@ -131,20 +135,11 @@ const DataTable = ({
                     {startIndex + index + 1}
                   </td>
                   {headers.map((head, i) => (
-                    <td key={i} className={classes["dashboard-table-td"]}>
-                      {head.key === "categoryFile" ? (
-                        <div className="flex justify-center">
-                          <img
-                            src={item[head.key] || NoDataImage}
-                            className="w-[100px] h-[100px] rounded-3xl"
-                          />
-                        </div>
-                      ) : head.key === "smithing" ? (
-                        `${item[head.key]} %`
-                      ) : (
-                        item[head.key]
-                      )}
-                    </td>
+                        <td key={i} className={classes["dashboard-table-td"]}>
+                        {customColumns && customColumns[head.key]
+                          ? customColumns[head.key](item)
+                          : item[head.key]}
+                      </td>
                   ))}
                   <td>
                     <Box className="flex justify-center">

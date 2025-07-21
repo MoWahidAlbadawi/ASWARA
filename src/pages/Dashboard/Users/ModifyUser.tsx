@@ -5,9 +5,9 @@ import type { ModifyUserInterface } from "@/services/types/users";
 import {  GetUserById, UpdateUser } from "@/hooks/users/useUsers";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import { FaUserEdit } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import Err404 from "@/pages/Errors/Err404";
+import { FaUsers } from "react-icons/fa6";
 
 const ModifyUser = () => {
     const { userId } = useParams();
@@ -77,9 +77,12 @@ const ModifyUser = () => {
 
     return <div>
                 {/* header  */}
-             <Typography color='secondary' variant="h6" mb={3}>
-                 <Icon className="!pt-1"><FaUserEdit /></Icon> Users {'>'} Modify User
-                 </Typography>
+        <Typography color="secondary" variant="h6" className="!mb-5 flex justify-start items-center gap-1">
+          <Icon>
+            <FaUsers />
+          </Icon>
+          Users / Modify Users
+        </Typography>
             {/* form */}
             {isLoadingGet ? 
             <LinearProgress color="primary" /> : 

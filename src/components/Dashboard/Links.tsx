@@ -1,6 +1,7 @@
-import { FaUsers, FaProductHunt, FaBell } from "react-icons/fa";
+import { FaUsers, FaBell } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 import { MdDashboard } from 'react-icons/md';
+import { LuTableProperties } from "react-icons/lu";
 interface Link {
     title: string;
     path: string;
@@ -31,7 +32,7 @@ export const Links: Link[] = [
         title: 'Products',
         path: '/aswaraDashboard/products',
         roles: ['admin', 'product_manger'],
-        icon: <FaProductHunt />
+        icon: <LuTableProperties />
     },
     {
         title: 'Notifications',

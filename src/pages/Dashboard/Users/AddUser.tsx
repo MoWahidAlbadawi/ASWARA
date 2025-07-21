@@ -5,7 +5,7 @@ import type { AddUserInterface } from "@/services/types/users";
 import { AddNewUser } from "@/hooks/users/useUsers";
 import { useEffect } from "react";
 import toast  from "react-hot-toast";
-import { TiUserAdd } from "react-icons/ti";
+import { FaUsers } from "react-icons/fa6";
 
 const AddUser = () => {
     const navigate = useNavigate();
@@ -54,9 +54,12 @@ const AddUser = () => {
 
     return <div>
                 {/* header  */}
-             <Typography color='secondary' variant="h6" mb={3}>
-                 <Icon className="!pt-1"><TiUserAdd /></Icon> Users {'>'} Add User 
-                 </Typography>
+        <Typography color="secondary" variant="h6" className="!mb-5 flex justify-start items-center gap-1">
+          <Icon>
+            <FaUsers />
+          </Icon>
+          Users / Add User
+        </Typography>
             {/* form */}
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}

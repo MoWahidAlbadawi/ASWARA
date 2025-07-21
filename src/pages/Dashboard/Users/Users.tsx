@@ -100,10 +100,10 @@ const Users = () => {
     <Box>
       {/* Header */}
       <Box className="flex justify-between !mb-6">
-        <Typography color="secondary" variant="h6">
-          <Icon className="!pt-1">
+        <Typography color="secondary" variant="h6" className="flex justify-center items-center gap-1">
+          <Icon>
             <FaUsers />
-          </Icon>{" "}
+          </Icon>
           Users
         </Typography>
         <Button variant="contained" className="!text-white !capitalize">
@@ -133,7 +133,7 @@ const Users = () => {
         <Box position={"relative"} className="!mt-6">
           <input
             className={classes["input-search"]}
-            placeholder="Search"
+            placeholder="search by name"
             value={filters.searchTerm}
             onChange={handleFiltersChange}
             name="searchTerm"
