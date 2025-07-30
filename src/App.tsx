@@ -26,6 +26,7 @@ import RequireBack from './pages/Protecting/RequireBack';// create project route
 import HomeDashboard from './pages/Dashboard/HomeDashboard';
 // global toast
 import { Toaster } from 'react-hot-toast';
+import Profile from './pages/Dashboard/Profile';
 const router = createBrowserRouter([
   // Auth routes
   {element : <RequireBack /> , children : [
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
   {path : '/aswaraDashboard' , element : <LayoutDashboard /> , children : [
     {path : '' , element : <HomeDashboard />},
     {path : '/aswaraDashboard/home' , element : <HomeDashboard />},
+    {path : '/aswaraDashboard/profile' , element : <Profile />},
     // users pages (just for admin)
     {element : <RequireAuth roles={['admin']} /> , children : [
     {path : '/aswaraDashboard/users' , element : <Users /> },

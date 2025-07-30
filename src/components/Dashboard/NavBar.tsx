@@ -1,5 +1,5 @@
 import { SlMenu } from "react-icons/sl";
-import { IconButton , Menu , MenuItem , Button , Divider, Stack, Typography , Icon , Box} from "@mui/material";
+import { IconButton , Menu , MenuItem , Button , Divider,Typography , Icon , Box} from "@mui/material";
 // context to mange menu 
 import { useContext, useEffect, useState } from "react";
 import { MenuContext } from "@/context/MenuContext";
@@ -24,9 +24,7 @@ const NavBar = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
-useEffect(()=> {
-    console.log(currentUser)
-},[currentUser])
+    
     return (
         <div className="flex justify-between !p-4 text-primary-main">
             <div className="flex">
@@ -65,30 +63,17 @@ useEffect(()=> {
                         }}
                     >
                         <MenuItem onClick={handleClose}>
+                     <Link to='/aswaraDashboard/profile'>
                         <Box className='flex gap-2'>
                             <Icon color="primary"><CiUser /></Icon>
-                            <Typography className="!me-3">{currentUser?.name}</Typography>
-                            <Icon color='primary'><MdNavigateNext/></Icon>
+                            <Typography className="!me-12">Profile</Typography>
+                            <Icon color="primary"><MdNavigateNext /></Icon>
                             </Box>
+                            </Link>
                         </MenuItem>
                         <Divider />
                         <MenuItem onClick={handleClose}>
-                        <Stack gap={2}>
-                            <Typography className="flex gap-4"> 
-                                <Typography fontWeight={'bold'}>Name</Typography>
-                                <Typography>{currentUser?.name}</Typography>
-                            </Typography>
-                            <Typography className="flex gap-4"> 
-                                <Typography fontWeight={'bold'}>Email</Typography>
-                                <Typography>{currentUser?.email}</Typography>
-                            </Typography>
-                            <Typography className="flex gap-4"> 
-                                <Typography fontWeight={'bold'}>Phone</Typography>
-                                <Typography>{currentUser?.phone}</Typography>
-                            </Typography>
-                        </Stack>
                         </MenuItem>
-                        <Divider />
                         <MenuItem>
                                 <Logout onCloseDialog={handleClose}/>
                         </MenuItem>
