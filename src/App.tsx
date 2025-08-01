@@ -38,11 +38,10 @@ const router = createBrowserRouter([
   // Dashboard route (admin & product_manger)
   {element : <RequireAuth roles={['admin','product_manger']} /> , children : [
   {path : '/aswaraDashboard' , element : <LayoutDashboard /> , children : [
-    {path : '' , element : <HomeDashboard />},
-    {path : '/aswaraDashboard/home' , element : <HomeDashboard />},
-    {path : '/aswaraDashboard/profile' , element : <Profile />},
     // users pages (just for admin)
     {element : <RequireAuth roles={['admin']} /> , children : [
+    {path : '' , element : <HomeDashboard />},
+    {path : '/aswaraDashboard/home' , element : <HomeDashboard />},
     {path : '/aswaraDashboard/users' , element : <Users /> },
     {path : '/aswaraDashboard/user/add' , element : <AddUser /> },
     {path : '/aswaraDashboard/users/:userId' , element : <ModifyUser /> },
@@ -56,7 +55,9 @@ const router = createBrowserRouter([
     {path : '/aswaraDashboard/product/add' , element : <AddProduct /> },
     {path : '/aswaraDashboard/products/:productId' , element : <ModifyProduct /> },
     // notifications page
-    {path : '/aswaraDashboard/notifications' , element : <Notifications />}
+    {path : '/aswaraDashboard/notifications' , element : <Notifications />},
+    // profile
+     {path : '/aswaraDashboard/profile' , element : <Profile />},
   ]},
 ]},
   // unexist page

@@ -14,7 +14,7 @@ export const Links: Link[] = [
     {
         title: 'Home',
         path: '/aswaraDashboard/home',
-        roles: ['admin','product_manger'],
+        roles: ['admin'],
         icon: <MdDashboard />,
     },
     {
