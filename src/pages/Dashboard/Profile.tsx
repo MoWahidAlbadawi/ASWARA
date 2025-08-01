@@ -5,15 +5,14 @@ import { useNavigate } from "react-router-dom";
 const Profile = () => {
   const { data: currentUser } = GetCurrentUser();
   const navigate = useNavigate();
+
   const handleEditProfile = () => {
     if(currentUser) {
-    navigate(`/aswaraDashboard/users/${currentUser.userID}`);
+    navigate(`/aswaraDashboard/users/${currentUser.id}`);
   }
-}
-
-
+  }
   return (
-    <Box
+    <Box   
       sx={{
         p: 3,
         maxWidth: 900,
@@ -61,10 +60,7 @@ const Profile = () => {
         </ListItem>
         <Divider />
         <ListItem>
-          <ListItemText
-            primary="Created At"
-            secondary={currentUser?.created_at ? dayjs(currentUser.created_at).format("DD MMM YYYY") : "—"}
-          />
+          <ListItemText primary="Created at" secondary={currentUser?.created_at || "—"} />
         </ListItem>
       </List>
 
@@ -74,7 +70,7 @@ const Profile = () => {
           variant="contained"
           color="primary"
           onClick={handleEditProfile}
-          sx={{ textTransform: "none", borderRadius: 2, px: 4, py: 1.2 }}
+          sx={{ textTransform: "none", color : 'white' , borderRadius: 2, px: 4, py: 1.2 }}
         >
           Edit Profile
         </Button>

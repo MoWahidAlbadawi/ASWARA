@@ -20,7 +20,7 @@ export const ADD_CATEGORY = 'addcategory'
 export const DELETE_CATEGORY = 'deletecategory'
 export const MODIFY_Category = 'updatecategory'
 
-// categories endpoints
+// products endpoints
 export const PRODUCT = 'product'
 export const PRODUCTS = 'products'
 export const ADD_PRODUCT = 'addproduct'

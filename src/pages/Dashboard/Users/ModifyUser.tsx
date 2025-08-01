@@ -81,7 +81,7 @@ const ModifyUser = () => {
           <Icon>
             <FaUsers />
           </Icon>
-          Users / Modify Users
+          Users / Modify User
         </Typography>
             {/* form */}
             {isLoadingGet ? 

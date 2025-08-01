@@ -1,4 +1,5 @@
 import logo from '@/assets/Logo.png';
+import { RiCloseLargeFill } from "react-icons/ri";
 import { Button, Icon, Collapse, Divider } from "@mui/material";
 import { MenuContext } from "@/context/MenuContext";
 import { useContext } from "react";
@@ -17,10 +18,10 @@ const Sidebar = () => {
     <div className={sideClassName}>
       {/* top section */}
       <div>
-      <div className='!mb-6 flex lg:hidden justify-end'>
+      <div className='flex lg:hidden justify-end'>
         <Button 
           onClick={() => ctxMenu.toggleMenu()} 
-          variant="contained"
+          variant='text'
           size="small"
           sx={{ 
             minWidth: '32px',
@@ -28,7 +29,9 @@ const Sidebar = () => {
             transition: 'all 0.3s ease',
           }}
         >
-          <span className="text-white">X</span>
+          <span className="text-primary text-2xl">
+            <Icon><RiCloseLargeFill /></Icon>
+          </span>
         </Button>
       </div>
       

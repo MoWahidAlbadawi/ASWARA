@@ -14,7 +14,7 @@ import {
 import { FaUsers } from "react-icons/fa";
 import { IoIosSearch } from "react-icons/io";
 // custom react query hooks
-import { GetAllUsers, DeleteUser } from "@/hooks/users/useUsers";
+import { GetAllUsers, DeleteUser, GetCurrentUser } from "@/hooks/users/useUsers";
 // table (Manual) 
 import DataTable from "@/components/Dashboard/DataTable/DataTable";
 import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
@@ -27,6 +27,7 @@ import { filtersUserDto } from "@/services/types/users";
 
 const Users = () => {
   const { data , isLoading, isError, refetch } = GetAllUsers();
+  const { data : currentUser} = GetCurrentUser();
   const { mutate, isSuccess: isSuccessDelete , error: errorDelete } = DeleteUser();
 
   const headers: { title: string; key: string }[] = [
@@ -54,17 +55,20 @@ const Users = () => {
     }));
   }
 
+  const usersWithoutCurrentUser = useMemo(() => {
+    return data ? 
+    data.filter((user) => user.id !== currentUser?.id)
+    : []
+  },[data,currentUser]);
+
   // filtered data
   const filteredData = useMemo(() => {
-    filters.pageIndex = 1;
-    return data
-      ? data.filter((item) =>
+    return usersWithoutCurrentUser.filter((item) =>
           item.name
             .toLocaleLowerCase()
             .trim()
             .includes(filters.searchTerm.toLocaleLowerCase().trim())
         )
-      : [];
   }, [filters,data]);
 
   // paginated data
@@ -94,6 +98,11 @@ const Users = () => {
   function handleDeleteUser(id: number) {
     mutate(id);
   }
+
+  useEffect(() => {
+    console.log(filters)
+  },[filters])
+
 
 
   return (

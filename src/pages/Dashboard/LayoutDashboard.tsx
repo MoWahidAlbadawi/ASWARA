@@ -18,6 +18,7 @@ const LayoutDashboard = () => {
             {/* navbar & page */}
             <Box className='flex flex-col gap-6 w-full min-h-screen'>
             {/* navbar */}
+            
             <Box className='h-[70px] shadow-md rounded w-full'>
                 <NavBar />
             </Box>
