@@ -1,7 +1,7 @@
 import { SlMenu } from "react-icons/sl";
 import { IconButton , Menu , MenuItem , Button , Divider,Typography , Icon , Box} from "@mui/material";
 // context to mange menu 
-import { useContext, useEffect, useState } from "react";
+import { useContext,useState } from "react";
 import { MenuContext } from "@/context/MenuContext";
 import { GetCurrentUser } from "@/hooks/users/useUsers";
 import { FaBell } from "react-icons/fa";
