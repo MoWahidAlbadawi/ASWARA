@@ -2,8 +2,11 @@ import { Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Cookie from 'cookie-universal'
 import toast from "react-hot-toast";
+import { GetCurrentUser } from "@/hooks/users/useUsers";
+import Logout from "@/components/Dashboard/Auth/Logout";
 
 const Home = () => {
+    const { data : currentUser} = GetCurrentUser();
     const cookies = Cookie();
     const token = cookies.get('aswara');
     const navigate = useNavigate();
@@ -24,7 +27,9 @@ const Home = () => {
             return;
         }
         else {
-            navigate('/aswaraDashboard/home');
+            const navigateTo = currentUser?.userType === 'admin' ? '/aswaraDashboard/home' : 
+            currentUser?.userType === 'product_manager'? '/aswaraDashboard/categories' : '/';
+            navigate(navigateTo);
         }
     }
 
@@ -41,6 +46,7 @@ const Home = () => {
         onClick={navigateToDashboard}>
             Go To Dashboard
         </Button>
+        <Logout />
         </div>
         </div>
 }

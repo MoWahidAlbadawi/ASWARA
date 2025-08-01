@@ -36,7 +36,7 @@ const router = createBrowserRouter([
   // Website routes
   {path : '/' , element : <Home />},
   // Dashboard route (admin & product_manger)
-  {element : <RequireAuth roles={['admin','product_manger']} /> , children : [
+  {element : <RequireAuth roles={['admin','product_manager']} /> , children : [
   {path : '/aswaraDashboard' , element : <LayoutDashboard /> , children : [
     // users pages (just for admin)
     {element : <RequireAuth roles={['admin']} /> , children : [

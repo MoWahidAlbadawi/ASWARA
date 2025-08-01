@@ -26,25 +26,25 @@ export const Links: Link[] = [
     {
         title: 'Categories',
         path: '/aswaraDashboard/categories',
-        roles: ['admin', 'product_manger'],
+        roles: ['admin', 'product_manager'],
         icon: <TbCategoryFilled />
     },
     {
         title: 'Products',
         path: '/aswaraDashboard/products',
-        roles: ['admin', 'product_manger'],
+        roles: ['admin', 'product_manager'],
         icon: <LuTableProperties />
     },
     {
         title: 'Notifications',
         path: '/aswaraDashboard/notifications',
-        roles: ['admin', 'product_manger'],
+        roles: ['admin', 'product_manager'],
         icon: <FaBell />
     },
     {
         title : 'Profile',
         path: '/aswaraDashboard/profile',
-        roles: ['admin', 'product_manger'],
+        roles: ['admin', 'product_manager'],
         icon: <CgProfile />
     }
 ];

@@ -20,7 +20,7 @@ export const useLogin = () => {
         onSuccess : (data : any ) => {
             console.log('login successfully!',data);
             cookies.set('aswara',data.data.token);
-            const navigateTo = data.data.user.userType == 'admin' ? '/aswaraDashboard/users' : data.data.user.userType == 'product_manger' ? '/aswaraDashboard/categories' : '/';
+            const navigateTo = data.data.user.userType == 'admin' ? '/aswaraDashboard/home' : data.data.user.userType == 'product_manager' ? '/aswaraDashboard/categories' : '/';
             navigate(navigateTo);
         },
         onError : (err : any) => {

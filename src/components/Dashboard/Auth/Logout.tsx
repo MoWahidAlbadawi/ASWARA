@@ -16,6 +16,7 @@ import {
 } from "@mui/material"
 // for transition dialog
 import type { TransitionProps } from "@mui/material/transitions";
+import toast from "react-hot-toast";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,7 +35,7 @@ const Logout = ({ onCloseDialog } : Props) => {
     const navigate = useNavigate(); 
     const cookies = Cookie();
     async function logout () {
-        await api.post(`${LOGOUT}`);
+        await api.post(`${LOGOUT}`).then(() => toast.success('logout successfully!'));
         cookies.remove('aswara');
         setOpen(false);
     if(onCloseDialog) {
