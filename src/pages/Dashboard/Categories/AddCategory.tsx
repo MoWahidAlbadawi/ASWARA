@@ -33,7 +33,8 @@ const AddCategory = () => {
     const fileInput = useRef<HTMLInputElement>(null);
     const [categoryImagePreview , setCategoryImagePreview] = useState<string | null>(null);
 
-    function clickFileInput () {
+    function clickFileInput (e : React.MouseEvent) {
+        e.preventDefault();
         if(fileInput.current) {
             fileInput.current.click();
         }   
@@ -45,7 +46,8 @@ const AddCategory = () => {
             setCategoryImagePreview(URL.createObjectURL(file));
         }
     }
-    function deleteCategoryImage () {
+    function deleteCategoryImage (e : React.MouseEvent) {
+        e.preventDefault();
         setValue('categoryFile',null);
         setCategoryImagePreview(null);
     }
@@ -101,7 +103,7 @@ const AddCategory = () => {
             {/* form */}
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-3">
         {/* category name & simithing*/}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* category name */} 
@@ -148,6 +150,9 @@ const AddCategory = () => {
             <TextField
             placeholder="Enter category description"
             variant="outlined"
+            multiline
+              rows={3}
+              fullWidth
             {...register('description',{
                 required : 'category description is reqiured'
             })}
@@ -166,11 +171,13 @@ const AddCategory = () => {
             onChange={hanldeCategoryFileChange}
             />
             {/* uploader */}
-            <div className="md:w-1/2 flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
+            <div className="flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
                 {categoryImagePreview ? <div className="relative"> <img src={categoryImagePreview} width={200} /> 
                 <div className="absolute inset-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity transition-300 ease-in-out bg-black flex flex-col gap-4 justify-center items-center text-white">
-                    <button className="cursor-pointer text-xl" onClick={deleteCategoryImage}>X</button>
-                    <button className="cursor-pointer text-3xl" onClick={clickFileInput}><TbPhotoEdit /></button>
+                    <button className="cursor-pointer text-xl"
+                     onClick={deleteCategoryImage}>X</button>
+                    <button className="cursor-pointer text-3xl" 
+                    onClick={clickFileInput}><TbPhotoEdit /></button>
                 </div>
                 </div> :
                  <img src={Inbox} width={100} className="cursor-pointer" onClick={clickFileInput}/>}

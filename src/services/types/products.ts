@@ -23,12 +23,16 @@ export interface Product {
     categoryid : number,
 }
 
-// export interface AddCategoryInterface {
-//     name : string,
-//     description : string,
-//     smithing : number,
-//     categoryFile : File | null,
-// }
+export interface AddProductInterface {
+    name : string,
+    description : string,
+    weight : number | string | null;
+    price : number | string | null;
+    productFile : File | string | null;
+    categoryID : number | string | null;
+    isFeatured : 0 | 1;
+    quantity : number | string | null;
+}
 
 export interface ModifyProductInterface {
     name : string,

@@ -3,7 +3,7 @@ import { TextField , Button , CircularProgress , Typography , Icon, InputAdornme
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-// category0
+// category
 import type { ModifyCategoryInterface } from "@/services/types/categories";
 import { GetCategoryById, UpdateCategory } from "@/hooks/categories/useCategories";
 import React, { useEffect, useRef, useState } from "react";
@@ -46,7 +46,8 @@ const ModifyCategory = () => {
             setCategoryImagePreview(URL.createObjectURL(file));
         }
     }
-    function deleteCategoryImage () {
+    function deleteCategoryImage (e : React.MouseEvent) {
+        e.preventDefault();
         setValue('categoryFile',null);
         setCategoryImagePreview(null);
     }
@@ -130,7 +131,7 @@ const ModifyCategory = () => {
          <LinearProgress color="primary" /> : 
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}
-            <div className="grid grid-cols-1 gap-6">
+            <div className="grid grid-cols-1 gap-3">
         {/* category name & simithing*/}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* category name */} 
@@ -197,7 +198,7 @@ const ModifyCategory = () => {
             onChange={hanldeCategoryFileChange}
             />
             {/* uploader */}
-            <div className="md:w-1/2 flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
+            <div className="flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
                 {categoryImagePreview ? <div className="relative"> <img src={categoryImagePreview} width={200} /> 
                 <div className="absolute inset-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity transition-300 ease-in-out bg-black flex flex-col gap-4 justify-center items-center text-white">
                     <button className="cursor-pointer text-xl" onClick={deleteCategoryImage}>X</button>

@@ -63,7 +63,7 @@ const AddUser = () => {
             {/* form */}
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* user name */}
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">User Name</label>
