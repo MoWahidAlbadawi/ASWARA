@@ -66,7 +66,7 @@ const AddUser = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* user name */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Name</label>
+            <label className="text-secondary-main">User Name<span className="text-red-600">*</span></label>
             <TextField 
             placeholder="Enter user name"
             variant="outlined"
@@ -79,7 +79,7 @@ const AddUser = () => {
         </div>
         {/* user email*/}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Email</label>
+            <label className="text-secondary-main">User Email<span className="text-red-600">*</span></label>
             <TextField 
             placeholder="Enter user email"
             variant="outlined"
@@ -95,7 +95,7 @@ const AddUser = () => {
         </div>
         {/* user password */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Password</label>
+            <label className="text-secondary-main">User Password<span className="text-red-600">*</span></label>
             <TextField 
             placeholder="Enter user password"
             variant="outlined"
@@ -111,7 +111,7 @@ const AddUser = () => {
         </div>
         {/* user phone */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Phone</label>
+            <label className="text-secondary-main">User Phone<span className="text-red-600">*</span></label>
             <TextField 
             placeholder="Enter user phone number"
             variant="outlined"
@@ -128,7 +128,7 @@ const AddUser = () => {
         </div>
         {/* user role */}
         <div className="flex flex-col gap-2">
-    <label className="text-secondary-main">User Role</label>
+    <label className="text-secondary-main">User Role<span className="text-red-600">*</span></label>
            <Controller
                 name="userType"
                 control={control}

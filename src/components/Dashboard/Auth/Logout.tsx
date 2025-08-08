@@ -13,6 +13,7 @@ import {
   Slide,
   Dialog,
   DialogActions,
+  CircularProgress
 } from "@mui/material"
 // for transition dialog
 import type { TransitionProps } from "@mui/material/transitions";
@@ -31,17 +32,25 @@ interface Props {
 }
 const Logout = ({ onCloseDialog } : Props) => {
     const [open, setOpen] = useState<boolean>(false);
+    const [isLoading , setIsLoading] = useState<boolean>(false);
 
     const navigate = useNavigate(); 
     const cookies = Cookie();
     async function logout () {
+      try {
+        setIsLoading(true);
         await api.post(`${LOGOUT}`).then(() => toast.success('logout successfully!'));
         cookies.remove('aswara');
         setOpen(false);
     if(onCloseDialog) {
       onCloseDialog();
       }
+    } catch (err) {
+      console.log('error on logout',err);
+    } finally {
+      setIsLoading(false);
         navigate('/');
+    }
     }
 
     function openDialog () {
@@ -99,7 +108,7 @@ const Logout = ({ onCloseDialog } : Props) => {
               sx={{ textTransform: "capitalize" }}
               variant="contained"
             >
-              logout
+              {isLoading ?  <CircularProgress  size={24} /> : 'logout'}
             </Button>
           </DialogActions>
         </Dialog>

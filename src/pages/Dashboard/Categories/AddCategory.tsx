@@ -108,7 +108,7 @@ const AddCategory = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* category name */} 
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category Name</label>
+            <label className="text-secondary-main">Category Name<span className="text-red-600">*</span></label>
             <TextField 
             placeholder="Enter category name"
             variant="outlined"
@@ -121,7 +121,7 @@ const AddCategory = () => {
         </div>
                 {/* smithing */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Smithing Value</label>
+            <label className="text-secondary-main">Smithing Value<span className="text-red-600">*</span></label>
             <TextField
             placeholder="Enter smithing value"
             variant="outlined"
@@ -146,7 +146,7 @@ const AddCategory = () => {
         </div>
         {/* category description */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category Description</label>
+            <label className="text-secondary-main">Category Description<span className="text-red-600">*</span></label>
             <TextField
             placeholder="Enter category description"
             variant="outlined"
@@ -162,7 +162,7 @@ const AddCategory = () => {
         </div>
             {/* category file */}
           <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category Image</label>
+            <label className="text-secondary-main">Category Image<span className="text-red-600">*</span></label>
             <input 
             className="hidden"
             ref={fileInput}

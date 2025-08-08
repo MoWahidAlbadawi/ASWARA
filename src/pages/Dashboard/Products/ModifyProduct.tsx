@@ -197,7 +197,7 @@ const ModifyProduct = () => {
         />
           </div>
           <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Product Name</label>
+            <label className="text-secondary-main">Product Name<span className="text-red-600">*</span></label>
             <TextField
               placeholder="Enter product name"
               variant="outlined"
@@ -212,7 +212,7 @@ const ModifyProduct = () => {
 
           {/* Description */}
           <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Description</label>
+            <label className="text-secondary-main">Description<span className="text-red-600">*</span></label>
             <TextField
               placeholder="Enter product description"
               variant="outlined"
@@ -230,7 +230,7 @@ const ModifyProduct = () => {
           {/* Price & Weight */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Price</label>
+              <label className="text-secondary-main">Price<span className="text-red-600">*</span></label>
               <TextField
                 type="number"
                 placeholder="Enter price"
@@ -246,7 +246,7 @@ const ModifyProduct = () => {
             </div>
 
             <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Weight (g)</label>
+              <label className="text-secondary-main">Weight (g)<span className="text-red-600">*</span></label>
               <TextField
                 type="number"
                 placeholder="Enter weight"  
@@ -264,7 +264,7 @@ const ModifyProduct = () => {
 
           {/* Quantity & IsFeatured */}
             <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Quantity</label>
+              <label className="text-secondary-main">Quantity<span className="text-red-600">*</span></label>
               <TextField
                 type="number"
                 placeholder="Enter quantity"
@@ -281,7 +281,7 @@ const ModifyProduct = () => {
 
           {/* Category Autocomplete  */}
           <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category</label>
+            <label className="text-secondary-main">Category<span className="text-red-600">*</span></label>
             <Controller
               name="categoryID"
               control={control}
@@ -311,7 +311,7 @@ const ModifyProduct = () => {
 
           {/* Product Image Uploader */}
                     <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Product Image</label>
+            <label className="text-secondary-main">Product Image<span className="text-red-600">*</span></label>
             <input 
             className="hidden"
             ref={fileInput}

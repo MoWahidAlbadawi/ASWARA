@@ -171,7 +171,7 @@ import { useRegister } from '@/hooks/useAuth';
           </div>
           {/* Image section */}
           <div className='hidden lg:block'>
-            <img src={Jewelry_Image} width={600}/>
+            <img src={Jewelry_Image} alt='Jewelry Auth' width={600}/>
           </div>
         </div>
         </Container>
