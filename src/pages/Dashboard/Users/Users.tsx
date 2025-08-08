@@ -34,7 +34,7 @@ const Users = () => {
     { title: "Name", key: "name" },
     { title: "Email", key: "email" },
     { title: "Phone", key: "phone" },
-    { title: "User Role", key: "userType" },
+    { title: "Role", key: "userType" },
   ];
 
   // filters state
@@ -49,10 +49,12 @@ const Users = () => {
 
   // handle filters input change
   function handleFiltersChange(e: any) {
-    setFilters((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setFilters((prev) => {
+      return ({...prev , 
+        [e.target.name] : e.target.value,
+        pageIndex : 1
+      })
+    });
   }
 
   const usersWithoutCurrentUser = useMemo(() => {
@@ -62,14 +64,16 @@ const Users = () => {
   },[data,currentUser]);
 
   // filtered data
-  const filteredData = useMemo(() => {
-    return usersWithoutCurrentUser.filter((item) =>
-          item.name
-            .toLocaleLowerCase()
-            .trim()
-            .includes(filters.searchTerm.toLocaleLowerCase().trim())
-        )
-  }, [filters,data]);
+const filteredData = useMemo(() => {
+  if (!filters.searchTerm) return usersWithoutCurrentUser;
+  return usersWithoutCurrentUser.filter((item) =>
+    item.name
+      .toLocaleLowerCase()
+      .trim()
+      .includes(filters.searchTerm.toLocaleLowerCase().trim())
+  );
+}, [filters.searchTerm, usersWithoutCurrentUser]);
+
 
   // paginated data
   let startIndex = 0 , endIndex = Math.min(startIndex + filters.pageSize,filteredData.length);
@@ -81,7 +85,7 @@ const Users = () => {
       filteredData.length
     );
     return filteredData.slice(startIndex, endIndex);
-  }, [filters,filteredData]);
+  }, [filters.pageIndex, filters.pageSize, filteredData]);
 
   // handle delete feedback
   useEffect(() => {

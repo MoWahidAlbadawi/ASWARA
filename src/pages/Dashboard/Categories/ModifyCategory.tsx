@@ -77,7 +77,6 @@ const ModifyCategory = () => {
             const controller = new AbortController();
             if(isSuccessSet) {
              toast.success('the category updated successfully');
-                reset();
                 setTimeout(() => {
                 navigate('/aswaraDashboard/categories');
                 },2000);    
@@ -106,7 +105,6 @@ const ModifyCategory = () => {
             formData.append('CategoryFile', data.categoryFile);
     }
         update(formData);
-        reset();
          }
 
     // cancel

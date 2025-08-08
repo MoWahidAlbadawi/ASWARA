@@ -5,28 +5,37 @@ import { QueryClient , QueryClientProvider } from 'react-query'
 // Auth pages
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+
 // Webiste Pages
 import Home  from './pages/Website/Home';
-// Dashboard pages
+
+// Dashboard Pages
 import LayoutDashboard from './pages/Dashboard/LayoutDashboard';
-import Err404 from './pages/Errors/Err404'
+import HomeDashboard from './pages/Dashboard/HomeDashboard';
+// Users Pages
 import Users from './pages/Dashboard/Users/Users';
 import AddUser from './pages/Dashboard/Users/AddUser'
 import ModifyUser from './pages/Dashboard/Users/ModifyUser';
-import Products from './pages/Dashboard/Products/Products';
-import AddProduct from './pages/Dashboard/Products/AddProduct';   
-import ModifyProduct from './pages/Dashboard/Products/ModifyProduct';
+// Categories Pages
 import Categories from './pages/Dashboard/Categories/Categories';
 import AddCategory from './pages/Dashboard/Categories/AddCategory';
 import ModifyCategory from './pages/Dashboard/Categories/ModifyCategory';
-import Notifications from './pages/Dashboard/Notifications';
+// Products Pages
+import Products from './pages/Dashboard/Products/Products';
+import AddProduct from './pages/Dashboard/Products/AddProduct';   
+import ModifyProduct from './pages/Dashboard/Products/ModifyProduct';
+// Errors Pages
+import Err404 from './pages/Errors/Err404'
 // protecting pages
 import RequireAuth from './pages/Protecting/RequireAuth';
-import RequireBack from './pages/Protecting/RequireBack';// create project router
-import HomeDashboard from './pages/Dashboard/HomeDashboard';
+import RequireBack from './pages/Protecting/RequireBack';
+// Notification Page
+import Notifications from './pages/Dashboard/Notifications';
+
 // global toast
 import { Toaster } from 'react-hot-toast';
 import Profile from './pages/Dashboard/Profile';
+
 const router = createBrowserRouter([
   // Auth routes
   {element : <RequireBack /> , children : [
@@ -64,8 +73,11 @@ const router = createBrowserRouter([
   {path : '*' , element : <Err404 />}
 ]);
 
+
 const App = () => {
+
   const client = new QueryClient();
+
   return (
     <>
   {/* toast */}

@@ -26,14 +26,14 @@ export const AddNewCategory = () => {
 
 // get by id category
 export const GetCategoryById = (id : number | string) => {
-    return useQuery('category-by-id',() => {
+    return useQuery(['category-by-id',id],() => {
         return api.get<ApiResponseGetCategoryById>(`/${CATEGORY}/${id}`).then(res => res.data.data);
     })
 }
 
 // modify category
 export const UpdateCategory = (id : number | string) => {
-    return useMutation('modify-category',(data : FormData) => {
+    return useMutation(['modify-category',id],(data : FormData) => {
         return api.post(`/${MODIFY_Category}/${id}`,data);
     });
 }

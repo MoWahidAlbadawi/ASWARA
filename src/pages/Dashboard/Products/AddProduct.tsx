@@ -162,7 +162,7 @@ const AddProduct = () => {
                 control={
                   <Switch
                     checked={field.value === 1} 
-                    onChange={(e) => field.onChange(e.target.checked ? 1 : 0)}
+                    onChange={(_,newValue) => field.onChange(newValue ? 1 : 0)}
                     color="primary"
                   />
                 }
@@ -287,7 +287,7 @@ const AddProduct = () => {
           </div>
 
           {/* Product Image Uploader */}
-                    <div className="flex flex-col gap-2">
+           <div className="flex flex-col gap-2">
             <label className="text-secondary-main">Product Image</label>
             <input 
             className="hidden"

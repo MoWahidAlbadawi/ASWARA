@@ -24,6 +24,8 @@ const Categories = () => {
         { title: 'Smithing Value' , key : 'smithing'},
     ]
 
+    const smithingOptions = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+
       // filters state
       const [filters, setFilters] = useState<filtersCategoryDto>(
         new filtersCategoryDto()
@@ -39,11 +41,13 @@ const Categories = () => {
         setFilters((prev) => ({
           ...prev,
           [e.target.name]: e.target.value,
+          pageIndex : 1
         }));
       }
     
       // filtered data
         const filteredData = useMemo(() => {
+          if(!filters.searchTerm && !filters.smithingValue) return data || [];
           return data?.filter((item) => {
             const matchesSearch = item.name
               .toLocaleLowerCase()
@@ -111,22 +115,15 @@ const Categories = () => {
             name="smithingValue"
           >
             <MenuItem value={0}>Select Smithing</MenuItem>
-            <MenuItem value={5}>5 %</MenuItem>
-            <MenuItem value={6}>6 %</MenuItem>
-            <MenuItem value={7}>7 %</MenuItem>
-            <MenuItem value={8}>8 %</MenuItem>
-            <MenuItem value={9}>9 %</MenuItem>
-            <MenuItem value={10}>10 %</MenuItem>
-            <MenuItem value={11}>11 %</MenuItem>
-            <MenuItem value={12}>12 %</MenuItem>
-            <MenuItem value={13}>13 %</MenuItem>
-            <MenuItem value={14}>14 %</MenuItem>
-            <MenuItem value={15}>15 %</MenuItem>
-            <MenuItem value={16}>16 %</MenuItem>
-            <MenuItem value={17}>17 %</MenuItem>
-            <MenuItem value={18}>18 %</MenuItem>
-            <MenuItem value={19}>19 %</MenuItem>
-            <MenuItem value={20}>20 %</MenuItem>
+            { smithingOptions.map((option) => {
+              return (
+                  <MenuItem key={option} 
+                   value={option}
+                  >
+                    {option}%
+                  </MenuItem>
+              )
+            }) }
           </Select>
           </Grid>
          {/* Page size select */}

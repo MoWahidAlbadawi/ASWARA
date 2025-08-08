@@ -26,17 +26,16 @@ export const AddNewUser = () => {
 
 // get user by id 
 export const GetUserById = (id : (number | string)) => {
-    return useQuery('user-by-id',() => {
+    return useQuery(['user-by-id',id],() => {
         return api.get<ApiResponseGetUserById>(`/${USER}/${id}`).then(res => res.data.data);
     })
 }
 // modify user
 export const UpdateUser = (id : number | string) => {
-    return useMutation('modify-user',(data : ModifyUserInterface) => {
+    return useMutation(['modify-user',id],(data : ModifyUserInterface) => {
         return api.put(`/${MODIFY_USER}/${id}`,data);
     });
 }
-
 
 // delete user
 export const DeleteUser = () => {

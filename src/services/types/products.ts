@@ -19,7 +19,7 @@ export interface Product {
     category_name : string ,
     smithing : number | null,
     categoryFile : string | File,
-    isFeatured : boolean,
+    isFeatured : 1 | 0,
     categoryid : number,
 }
 
@@ -34,20 +34,7 @@ export interface AddProductInterface {
     quantity : number | string | null;
 }
 
-export interface ModifyProductInterface {
-    name : string,
-    description : string,
-    weight : number ,
-    price : number , 
-    quantity : number ,
-    productFile : string | File,
-    // back-end named this property
-    category_name : string ,
-    smithing : number | null,
-    categoryFile : string | File,
-    isFeatured : boolean,
-    categoryId : number,
-}
+export type ModifyProductInterface = AddProductInterface;
 
 export type ApiResponseGetProductById = ApiResponseGet<Product>
 export type ApiResponseGetProducts = ApiResponseGet<Product[]>

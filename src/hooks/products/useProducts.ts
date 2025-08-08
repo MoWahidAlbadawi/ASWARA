@@ -19,14 +19,14 @@ export const AddNewProduct = () => {
 
 // get product by id 
 export const GetProductById = (id : (number | string)) => {
-    return useQuery('product-by-id',() => {
+    return useQuery(['product-by-id',id],() => {
         return api.get<ApiResponseGetProductById>(`/${PRODUCT}/${id}`).then(res => res.data.data);
     })
 }
 // modify product
 export const UpdateProduct = (id : number | string) => {
-    return useMutation('modify-product',(data : FormData) => {
-        return api.put(`/${MODIFY_PRODUCT}/${id}`,data);
+    return useMutation(['modify-product',id],(data : FormData) => {
+        return api.post(`/${MODIFY_PRODUCT}/${id}`,data);
     });
 }
 

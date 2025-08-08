@@ -47,11 +47,13 @@ const Products = () => {
         setFilters((prev) => ({
           ...prev,
           [e.target.name]: e.target.value,
+          pageIndex : 1
         }));
       }
     
       // filtered data
         const filteredData = useMemo(() => {
+          if(!filters.searchTerm && !filters.categoryId) return data || [];
           return data?.filter((item) => {
             const matchesSearch = item.name
               .toLocaleLowerCase()
