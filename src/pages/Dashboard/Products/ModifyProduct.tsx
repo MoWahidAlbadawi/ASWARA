@@ -86,15 +86,7 @@ const ModifyProduct = () => {
     e.preventDefault();
     setValue('productFile', null);
     setProductImagePreview(null);
-  };
-      // react hook form saving the previous values so it is show them until it get the new data
-      // i reset data each productId change
-      // so it is reset the form then get the data reset with new real values
-          useEffect(() => {
-          reset();
-          setProductImagePreview(null); 
-          }, [productId]);
-  
+  }
           useEffect(() => {
           if(productInfo) {
               reset({

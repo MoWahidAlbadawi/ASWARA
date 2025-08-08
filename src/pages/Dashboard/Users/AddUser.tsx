@@ -1,14 +1,18 @@
-import { TextField , Button , CircularProgress , Select , MenuItem , Typography , Icon} from "@mui/material";
+import { TextField , Button , CircularProgress , Select , MenuItem , Typography , Icon ,
+      InputAdornment, IconButton,
+} from "@mui/material";
 import { useForm ,Controller} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import type { AddUserInterface } from "@/services/types/users";
 import { AddNewUser } from "@/hooks/users/useUsers";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast  from "react-hot-toast";
 import { FaUsers } from "react-icons/fa6";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const AddUser = () => {
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
     // react hook form
     const { register , reset , handleSubmit , formState , control} = useForm<AddUserInterface>({
         mode : 'all',
@@ -68,6 +72,7 @@ const AddUser = () => {
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">User Name<span className="text-red-600">*</span></label>
             <TextField 
+            margin="normal"
             placeholder="Enter user name"
             variant="outlined"
             {...register('name',{
@@ -81,6 +86,7 @@ const AddUser = () => {
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">User Email<span className="text-red-600">*</span></label>
             <TextField 
+            margin="normal"
             placeholder="Enter user email"
             variant="outlined"
             {...register('email',{
@@ -96,17 +102,28 @@ const AddUser = () => {
         {/* user password */}
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">User Password<span className="text-red-600">*</span></label>
-            <TextField 
-            placeholder="Enter user password"
-            variant="outlined"
-            {...register('password',{
-                required : 'password user is required',
-                validate : (value : string) => {
-                    return value.length >= 8 || 'password must be 8 charcters or more' 
-                }
-            })}
-            error={!!errors.password}
-            helperText={errors.password?.message}
+            <TextField
+                className="!m-0"
+              margin="normal"
+              fullWidth
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Enter your password"
+              {...register('password', {
+                required: 'Password is required',
+                validate: (value: string) => value.length >= 8 || 'Password must be 8 characters or more'
+              })}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+              autoComplete='new-password'
             />
         </div>
         {/* user phone */}

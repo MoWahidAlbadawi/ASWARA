@@ -21,13 +21,6 @@ const ModifyUser = () => {
     const { data : userInfo , isLoading : isLoadingGet , error : errorGet} = GetUserById(userId ?? '');
     const { mutate : modify , isLoading : isLoadingSet , error : errorSet , isSuccess : isSuccessSet  } = UpdateUser(userId ?? '');
 
-    // react hook form saving the previous values so it is show them until it get the new data
-     // i reset data each userId change
-     // so it is reset the form then get the data reset with new real values
-         useEffect(() => {
-         reset(); 
-         }, [userId]);
-
     useEffect(() => {
         if(userInfo) {
             reset({
