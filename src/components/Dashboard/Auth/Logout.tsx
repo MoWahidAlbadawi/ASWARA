@@ -49,7 +49,7 @@ const Logout = ({ onCloseDialog } : Props) => {
       console.log('error on logout',err);
     } finally {
       setIsLoading(false);
-        navigate('/');
+        navigate('/login');
     }
     }
 

@@ -35,7 +35,7 @@ const AddUser = () => {
              toast.success('the user added successfully');
                 reset();
                 setTimeout(() => {
-                navigate('/aswaraDashboard/users');
+                navigate('/users');
                 },2000);
             }
             if(error) {
@@ -52,7 +52,7 @@ const AddUser = () => {
     }
     // cancel
     function cancelAddUser () {
-        navigate('/aswaraDashboard/users');
+        navigate('/users');
         reset();
     }
 

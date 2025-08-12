@@ -20,7 +20,7 @@ export const useLogin = () => {
         onSuccess : (data : any ) => {
             console.log('login successfully!',data);
             cookies.set('aswara',data.data.token);
-            const navigateTo = data.data.user.userType == 'admin' ? '/aswaraDashboard/home' : data.data.user.userType == 'product_manager' ? '/aswaraDashboard/categories' : '/';
+            const navigateTo = data.data.user.userType == 'admin' ? '/home' : data.data.user.userType == 'product_manager' ? '/categories' : '/';
             navigate(navigateTo);
         },
         onError : (err : any) => {
@@ -32,14 +32,12 @@ export const useLogin = () => {
 
 export const useRegister = () => {
     const navigate = useNavigate();
-    const cookies = Cookie();
     return useMutation(((data : RegisterData) => {
         return axios.post(`${BASE_URL}/api/${REGISTER}`,data).then(res => res.data);
     } ),{
          onSuccess : (data : any ) => {
             console.log('register successfully!',data);
-            cookies.set('aswara',data.data.token);
-            navigate('/');
+            navigate('/login');
         },
         onError : (err : any) => {
             console.log(err,'error on send register data');

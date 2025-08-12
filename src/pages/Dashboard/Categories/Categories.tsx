@@ -99,12 +99,12 @@ const Categories = () => {
                 <span>Categories</span>
                 </Typography>
             <Button variant='contained' className='!text-white !capitalize'>
-                <Link to='/aswaraDashboard/category/add'>Add Category</Link>
+                <Link to='/category/add'>Add Category</Link>
             </Button>
         </Box>
         
       {/* Filters */}
-      <Grid container spacing={2} className="!mb-3">
+      <Grid container spacing={1} className="!mb-3">
         <Grid size={{xs : 12 , sm : 6 , md : 3}}>
           <label className="text-sm text-secondary-main">Smithing</label>
          {/* Page size select */}
@@ -142,7 +142,7 @@ const Categories = () => {
         </Grid> 
         <Grid size={{xs : 0 , md : 3}} className='hidden md:block'></Grid>
         {/* Search input */}
-        <Grid size={{xs : 12 , sm : 6 , md : 3}} className="md:!mt-6">
+        <Grid size={{xs : 12 , sm : 6 , md : 3}} className="!mt-1 md:!mt-6">
         <Box position={"relative"}>
           <input
             className={`${classes["input-search"]} pe-12`}
@@ -169,11 +169,12 @@ const Categories = () => {
             customColumns={{
               smithing : (item : any) => <span>{item.smithing}%</span>,
             }}
+            showActions={true}
             />
             
                   {/* Pagination */}
                   {filteredData.length > 0 && (
-                    <Box className="!mt-3 flex justify-between items-center">
+                 <Box className="!mt-3 flex flex-col gap-3 md:gap-0 md:flex-row justify-center md:justify-between items-center">
                       <Typography className="text-gray-600">
                         Show {startIndex + 1} to {endIndex} from {filteredData.length}
                       </Typography>

@@ -110,7 +110,7 @@ const ModifyProduct = () => {
       toast.success('The product was added successfully');
       setProductImagePreview(null);
       setTimeout(() => {
-        navigate('/aswaraDashboard/products');
+        navigate('/products');
       }, 2000);
     }
     if (errorSet) {
@@ -144,7 +144,7 @@ const ModifyProduct = () => {
   };
 
   const cancelModifyProduct = () => {
-    navigate('/aswaraDashboard/products');
+    navigate('/products');
     reset();
     setProductImagePreview(null);
   };

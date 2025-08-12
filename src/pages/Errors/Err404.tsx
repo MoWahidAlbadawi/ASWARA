@@ -6,7 +6,7 @@ const Err404 = () => {
         <Typography color="primary.dark" fontWeight={'bold'} fontSize={30} mt={-2}>Oops! You seem to be lost</Typography>
         <Typography color="primary">The page you're looking for doesn't exist or has been moved.</Typography>
         <Button variant='contained' color="secondary" className="!mt-5">
-        <Link to='/'>Back To Home</Link>
+        <Link to='/home'>Back To Home</Link>
         </Button>
     </Box>
 }

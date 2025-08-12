@@ -5,10 +5,6 @@ import { QueryClient , QueryClientProvider } from 'react-query'
 // Auth pages
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
-
-// Webiste Pages
-import Home  from './pages/Website/Home';
-
 // Dashboard Pages
 import LayoutDashboard from './pages/Dashboard/LayoutDashboard';
 import HomeDashboard from './pages/Dashboard/HomeDashboard';
@@ -35,6 +31,8 @@ import Notifications from './pages/Dashboard/Notifications';
 // global toast
 import { Toaster } from 'react-hot-toast';
 import Profile from './pages/Dashboard/Profile';
+import Orders from './pages/Dashboard/Order/Order';
+import OrderDetails from './pages/Dashboard/Order/OrderDetails';
 
 const router = createBrowserRouter([
   // Auth routes
@@ -43,30 +41,32 @@ const router = createBrowserRouter([
   {path : '/register' , element : <Register/>}
   ]},
   // Website routes
-  {path : '/' , element : <Home />},
+  // {path : '/' , element : <Home />},
   // Dashboard route (admin & product_manger)
   {element : <RequireAuth roles={['admin','product_manager']} /> , children : [
-  {path : '/aswaraDashboard' , element : <LayoutDashboard /> , children : [
+  {path : '/' , element : <LayoutDashboard /> , children : [
     // users pages (just for admin)
     {element : <RequireAuth roles={['admin']} /> , children : [
     {path : '' , element : <HomeDashboard />},
-    {path : '/aswaraDashboard/home' , element : <HomeDashboard />},
-    {path : '/aswaraDashboard/users' , element : <Users /> },
-    {path : '/aswaraDashboard/user/add' , element : <AddUser /> },
-    {path : '/aswaraDashboard/users/:userId' , element : <ModifyUser /> },
+    {path : '/home' , element : <HomeDashboard />},
+    {path : '/users' , element : <Users /> },
+    {path : '/user/add' , element : <AddUser /> },
+    {path : '/users/:userId' , element : <ModifyUser /> },
+    {path : '/orders' , element : <Orders /> },
+    {path : '/orders/:orderId' , element : <OrderDetails /> },
     ]},
     // categories pages
-    {path : '/aswaraDashboard/categories' , element : <Categories />   },
-    {path : '/aswaraDashboard/category/add' , element : <AddCategory /> },
-    {path : '/aswaraDashboard/categories/:categoryId' , element : <ModifyCategory /> },
+    {path : '/categories' , element : <Categories />   },
+    {path : '/category/add' , element : <AddCategory /> },
+    {path : '/categories/:categoryId' , element : <ModifyCategory /> },
     // products pages
-    {path : '/aswaraDashboard/products' , element : <Products /> },
-    {path : '/aswaraDashboard/product/add' , element : <AddProduct /> },
-    {path : '/aswaraDashboard/products/:productId' , element : <ModifyProduct /> },
+    {path : '/products' , element : <Products /> },
+    {path : '/product/add' , element : <AddProduct /> },
+    {path : '/products/:productId' , element : <ModifyProduct /> },
     // notifications page
-    {path : '/aswaraDashboard/notifications' , element : <Notifications />},
+    {path : '/notifications' , element : <Notifications />},
     // profile
-     {path : '/aswaraDashboard/profile' , element : <Profile />},
+     {path : '/profile' , element : <Profile />},
   ]},
 ]},
   // unexist page

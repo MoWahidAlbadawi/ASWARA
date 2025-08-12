@@ -1,45 +1,48 @@
-import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useMemo, useState } from "react";
 // components from mui
 import {
   Box,
   Typography,
-  Button,
   Icon,
   Select,
   MenuItem,
-  Grid
+  Grid,
+  IconButton,
 } from "@mui/material"
 // icons
-import { FaUsers } from "react-icons/fa";
+import { IoMdGitPullRequest } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
+import { FaEye } from "react-icons/fa";
 // custom react query hooks
-import { GetAllUsers, DeleteUser, GetCurrentUser } from "@/hooks/users/useUsers";
+import { GetAllOrders } from "@/hooks/order/useOrder";
 // table (Manual) 
 import DataTable from "@/components/Dashboard/DataTable/DataTable";
 import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
 // paginate (react paginate)
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
-// toast
-import toast from "react-hot-toast";
 // filter data
-import { filtersUserDto } from "@/services/types/users";
+import { filtersOrderDto } from "@/services/types/orders";
+import { GetAllUsers } from "@/hooks/users/useUsers";
+import { useNavigate } from "react-router-dom";
 
-const Users = () => {
-  const { data , isLoading, isError, refetch } = GetAllUsers();
-  const { data : currentUser} = GetCurrentUser();
-  const { mutate, isSuccess: isSuccessDelete , error: errorDelete } = DeleteUser();
+const Orders = () => {
+  const { data , isLoading, isError } = GetAllOrders();
+  const { data : users } = GetAllUsers();
+
+  const navigate = useNavigate();
 
   const headers: { title: string; key: string }[] = [
-    { title: "Name", key: "name" },
-    { title: "Email", key: "email" },
-    { title: "Phone", key: "phone" },
-    { title: "Role", key: "userType" },
+    { title: "User", key: "userid" },
+    { title: "Order Date", key: "orderDate" },
+    { title: "Status", key: "status" },
+    { title: "Total Amount", key: "totalAmount" },
+    { title: "Shipping Address", key: "shippingAddress" },
+    { title: "Actions", key: "actions" },
   ];
 
   // filters state
-  const [filters, setFilters] = useState<filtersUserDto>(
-    new filtersUserDto()
+  const [filters, setFilters] = useState<filtersOrderDto>(
+    new filtersOrderDto()
   );
 
   // handle page change
@@ -57,22 +60,18 @@ const Users = () => {
     });
   }
 
-  const usersWithoutCurrentUser = useMemo(() => {
-    return data ? 
-    data.filter((user) => user.id !== currentUser?.id)
-    : []
-  },[data,currentUser]);
 
-  // filtered data
+//   filtered data
 const filteredData = useMemo(() => {
-  if (!filters.searchTerm) return usersWithoutCurrentUser;
-  return usersWithoutCurrentUser.filter((item) =>
-    item.name
+  if (!filters.searchTerm && !filters.status) return data || [];
+  return data?.filter((item) =>
+    getUserName(item.userid)
       .toLocaleLowerCase()
       .trim()
       .includes(filters.searchTerm.toLocaleLowerCase().trim())
-  );
-}, [filters.searchTerm, usersWithoutCurrentUser]);
+  ) || [];
+}, [filters.searchTerm , filters.status , data]);
+
 
 
   // paginated data
@@ -87,22 +86,15 @@ const filteredData = useMemo(() => {
     return filteredData.slice(startIndex, endIndex);
   }, [filters.pageIndex, filters.pageSize, filteredData]);
 
-  // handle delete feedback
-  useEffect(() => {
-    if (isSuccessDelete) {
-      toast.success("The user was deleted successfully");
-      refetch();
-    }
-    if (errorDelete) {
-      toast.error("Error occurred while deleting user");
-    }
-  }, [isSuccessDelete, errorDelete]);
 
-  // delete user
-  function handleDeleteUser(id: number) {
-    mutate(id);
+  function getUserName (userId : number | string) {
+    const user = users?.find(user => user.id === userId);
+    return user?.name  || '--';
   }
 
+  function navigateToOrderDetails (id : string | number) {
+    navigate(`/orders/${id}`);
+  }
 
   return (
     <Box>
@@ -110,19 +102,16 @@ const filteredData = useMemo(() => {
       <Box className="flex justify-between !mb-6">
         <Typography color="secondary" variant="h6" className="flex justify-center items-center gap-1">
           <Icon>
-            <FaUsers />
+            <IoMdGitPullRequest />
           </Icon>
-          Users
+          Orders
         </Typography>
-        <Button variant="contained" className="!text-white !capitalize">
-          <Link to="/user/add">Add User</Link>
-        </Button>
       </Box>
 
       {/* Filters */}
-      <Grid  container className="!mb-3">
+      <Grid spacing={2} container className="!mb-3">
         {/* Page size select */}
-        <Grid size={{xs : 12 , sm : 5 , md : 3}}>
+        <Grid size={{xs : 12 , sm : 6 , md : 3}}>
           <label className="text-sm text-secondary-main">Items Per Page</label>
           <Select
             className="w-full max-h-[45px]"
@@ -135,13 +124,16 @@ const filteredData = useMemo(() => {
             <MenuItem value={25}>25</MenuItem>
           </Select>
         </Grid>
-        <Grid size={{xs : 0 , sm : 2 , md : 6}} className="hidden md:block"></Grid>
+        <Grid size={{xs : 12 , sm : 6 , md : 3}} className="w-full max-h-[45px]">
+            {/* FILTER BY STAUS HERE  */}
+        </Grid>
+        <Grid size={{xs : 0  , md : 3}} className="hidden md:block"></Grid>
         {/* Search input */}
         <Grid size={{xs : 12 , sm : 5 , md : 3}}>
         <Box position={"relative"} className="!mt-6">
           <input
             className={classes["input-search"]}
-            placeholder="search by name"
+            placeholder="search by user"
             value={filters.searchTerm}
             onChange={handleFiltersChange}
             name="searchTerm"
@@ -161,8 +153,13 @@ const filteredData = useMemo(() => {
         isLoading={isLoading}
         isError={isError}
         startIndex={startIndex}
-        onDeleteItem={handleDeleteUser}
-        showActions={true}
+        customColumns={{
+             totalAmount : (item : any) => <span>{item.totalAmount} $</span>,
+             orderDate : (item : any) => <span>{item.orderDate.slice(0,10)}</span>,
+             userid : (item : any) => <span>{getUserName(item.userid)}</span>,
+             actions : (item : any) => <IconButton onClick={() => navigateToOrderDetails(item.id)}><FaEye/></IconButton>
+        }}
+        showActions={false}
       />
 
       {/* Pagination */}
@@ -182,4 +179,4 @@ const filteredData = useMemo(() => {
   );
 };
 
-export default Users;
+export default Orders;

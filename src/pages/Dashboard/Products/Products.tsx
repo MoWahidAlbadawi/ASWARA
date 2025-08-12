@@ -105,12 +105,12 @@ const Products = () => {
                 <span>Products</span> 
                 </Typography>
             <Button variant='contained' className='!text-white !capitalize'>
-                <Link to='/aswaraDashboard/product/add'>Add Product</Link>
+                <Link to='/product/add'>Add Product</Link>
             </Button>
         </Box>
         
       {/* Filters */}
-      <Grid container spacing={2} className="!mb-3">
+      <Grid container spacing={1} className="!mb-3">
         <Grid size={{xs : 12 , sm : 6 , md : 3}}>
           <label className="text-sm text-secondary-main">Category</label>
          {/* Page size select */}
@@ -142,7 +142,7 @@ const Products = () => {
         </Grid> 
         <Grid size={{xs : 0 , md : 3}} className='hidden md:block'></Grid>
         {/* Search input */}
-        <Grid size={{xs : 12 , sm : 6 , md : 3}} className="md:!mt-6">
+        <Grid size={{xs : 12 , sm : 6 , md : 3}} className="!mt-1 md:!mt-6">
         <Box position={"relative"}>
           <input
             className={`${classes["input-search"]} pe-12`}
@@ -168,16 +168,17 @@ const Products = () => {
             onDeleteItem={handleDeleteProduct}
             customColumns={{
                 weight : (item : any) => <span>{item.weight} g</span>,
-                price : (item : any) => <span>{item.price} s.p</span>,
+                price : (item : any) => <span>{item.price} $</span>,
                 isFeatured : (item : any) => <Icon>
                     {item.isFeatured == 1 ? <FaStar /> : <FaRegStar />}
                 </Icon>
             }}
+            showActions={true}
             />
             
                   {/* Pagination */}
-                  {filteredData.length > 0 && (
-                    <Box className="!mt-3 flex justify-between items-center">
+                    {filteredData.length > 0 && (
+                     <Box className="!mt-3 flex flex-col gap-3 md:gap-0 md:flex-row justify-center md:justify-between items-center">
                       <Typography className="text-gray-600">
                         Show {startIndex + 1} to {endIndex} from {filteredData.length}
                       </Typography>

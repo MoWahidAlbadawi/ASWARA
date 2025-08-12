@@ -101,7 +101,7 @@ const AddProduct = () => {
       reset();
       setproductImagePreview(null);
       setTimeout(() => {
-        navigate('/aswaraDashboard/products');
+        navigate('/products');
       }, 2000);
     }
     if (error) {
@@ -132,7 +132,7 @@ const AddProduct = () => {
   };
 
   const cancelAddProduct = () => {
-    navigate('/aswaraDashboard/products');
+    navigate('/products');
     reset();
     setproductImagePreview(null);
   };

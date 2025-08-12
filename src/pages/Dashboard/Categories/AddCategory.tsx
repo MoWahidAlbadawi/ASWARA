@@ -59,7 +59,7 @@ const AddCategory = () => {
              toast.success('the category added successfully');
                 reset();
                 setTimeout(() => {
-                navigate('/aswaraDashboard/categories');
+                navigate('/categories');
                 },2000);
             }
             if(error) {
@@ -89,7 +89,7 @@ const AddCategory = () => {
 
     // cancel
     function cancelAddCategory () {
-        navigate('/aswaraDashboard/categories');
+        navigate('/categories');
         reset();
     setCategoryImagePreview(null);
 }

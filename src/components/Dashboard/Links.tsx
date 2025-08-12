@@ -3,6 +3,7 @@ import { TbCategoryFilled } from "react-icons/tb";
 import { MdDashboard } from 'react-icons/md';
 import { LuTableProperties } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
+import { IoMdGitPullRequest } from "react-icons/io";
 interface Link {
     title: string;
     path: string;
@@ -13,37 +14,43 @@ interface Link {
 export const Links: Link[] = [
     {
         title: 'Home',
-        path: '/aswaraDashboard/home',
+        path: '/home',
         roles: ['admin'],
         icon: <MdDashboard />,
     },
     {
         title: 'Users',
-        path: '/aswaraDashboard/users',
+        path: '/users',
         roles: ['admin'],
         icon: <FaUsers />,
     },
     {
         title: 'Categories',
-        path: '/aswaraDashboard/categories',
+        path: '/categories',
         roles: ['admin', 'product_manager'],
         icon: <TbCategoryFilled />
     },
     {
         title: 'Products',
-        path: '/aswaraDashboard/products',
+        path: '/products',
         roles: ['admin', 'product_manager'],
         icon: <LuTableProperties />
     },
     {
+        title : 'Orders',
+        path: '/orders',
+        roles: ['admin'],
+        icon: <IoMdGitPullRequest />
+    },
+    {
         title: 'Notifications',
-        path: '/aswaraDashboard/notifications',
+        path: '/notifications',
         roles: ['admin', 'product_manager'],
         icon: <FaBell />
     },
     {
         title : 'Profile',
-        path: '/aswaraDashboard/profile',
+        path: '/profile',
         roles: ['admin', 'product_manager'],
         icon: <CgProfile />
     }

@@ -70,7 +70,7 @@ const ModifyCategory = () => {
             if(isSuccessSet) {
              toast.success('the category updated successfully');
                 setTimeout(() => {
-                navigate('/aswaraDashboard/categories');
+                navigate('/categories');
                 },2000);    
             }
             if(errorSet) {
@@ -101,7 +101,7 @@ const ModifyCategory = () => {
 
     // cancel
     function cancel () {
-        navigate('/aswaraDashboard/categories');
+        navigate('/categories');
         reset();
         setCategoryImagePreview(null);
 }

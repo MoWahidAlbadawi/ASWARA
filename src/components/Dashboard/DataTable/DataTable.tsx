@@ -36,12 +36,12 @@ interface Props {
   isError: boolean;
   data: any;
   startIndex : number,
-  onDeleteItem: (itemId: number) => void;
+  onDeleteItem?: (itemId: number) => void;
   // custom content 
     customColumns?: {
     [key: string]: (item: any) => React.ReactNode;
-  };
-
+  },
+  showActions : boolean,
 }
 
 const DataTable = ({
@@ -53,6 +53,7 @@ const DataTable = ({
   startIndex,
   onDeleteItem,
   customColumns,
+  showActions,
 }: Props) => {
   // dialog state
   const [open, setOpen] = useState<boolean>(false);
@@ -70,8 +71,10 @@ const DataTable = ({
 
   // delete handler
   function handleDeleteItem() {
+    if(onDeleteItem) {
     onDeleteItem(deleteElementId);
     handleClose();
+    }
   }
 
   return (
@@ -87,7 +90,7 @@ const DataTable = ({
                   {head.title}
                 </th>
               ))}
-              <th className={classes["dashboard-table-th"]}>Actions</th>
+              {showActions && <th className={classes["dashboard-table-th"]}>Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -128,7 +131,7 @@ const DataTable = ({
             )}
 
             {/* rows */}
-            {data &&
+            {!isLoading && !isError && data &&
               data.map((item: any, index: number) => (
                 <tr key={index} className={classes["dashboard-table-tr"]}>
                   <td className={classes["dashboard-table-td"]}>
@@ -141,10 +144,10 @@ const DataTable = ({
                           : item[head.key]}
                       </td>
                   ))}
-                  <td>
+                  {showActions && <td>
                     <Box className="flex justify-center">
                       <IconButton color="secondary">
-                        <Link to={`/aswaraDashboard/${table}/${item.id}`}>
+                        <Link to={`/${table}/${item.id}`}>
                           <FaRegEdit />
                         </Link>
                       </IconButton>
@@ -155,7 +158,7 @@ const DataTable = ({
                         <RiDeleteBin5Fill />
                       </IconButton>
                     </Box>
-                  </td>
+                  </td>}
                 </tr>
               ))}
           </tbody>

@@ -37,7 +37,7 @@ const NavBar = () => {
                 <div className="flex gap-2 text-xl !mt-1">
                     {/* bell */}
                 <IconButton color="primary">
-                   <Link to='/aswaraDashboard/notifications'><FaBell /></Link>
+                   <Link to='/notifications'><FaBell /></Link>
                 </IconButton>
             {/* bell and menu user */}
                 <div>
@@ -63,7 +63,7 @@ const NavBar = () => {
                         }}
                     >
                         <MenuItem onClick={handleClose}>
-                     <Link to='/aswaraDashboard/profile'>
+                     <Link to='/profile'>
                         <Box className='flex gap-2'>
                             <Icon color="primary"><CiUser /></Icon>
                             <Typography className="!me-12">Profile</Typography>
@@ -72,8 +72,6 @@ const NavBar = () => {
                             </Link>
                         </MenuItem>
                         <Divider />
-                        <MenuItem onClick={handleClose}>
-                        </MenuItem>
                         <MenuItem>
                                 <Logout onCloseDialog={handleClose}/>
                         </MenuItem>

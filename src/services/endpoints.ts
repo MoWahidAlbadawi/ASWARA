@@ -26,3 +26,7 @@ export const PRODUCTS = 'products'
 export const ADD_PRODUCT = 'addproduct'
 export const DELETE_PRODUCT = 'deleteproduct'
 export const MODIFY_PRODUCT = 'updateproduct'
+
+// orders endpoint
+export const ORDER = 'order'
+export const ORDERS = 'orders'

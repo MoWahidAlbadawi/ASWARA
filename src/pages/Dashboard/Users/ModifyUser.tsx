@@ -39,7 +39,7 @@ const ModifyUser = () => {
              toast.success('the user edited successfully');
                 reset();
                 setTimeout(() => {
-                navigate('/aswaraDashboard/users');
+                navigate('/users');
                 },2000);
             }
             if(errorSet) {
@@ -56,7 +56,7 @@ const ModifyUser = () => {
     }
     // cancel
     function cancelAddUser () {
-        navigate('/aswaraDashboard/users');
+        navigate('/users');
         reset();
     }
 
