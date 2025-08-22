@@ -1,4 +1,8 @@
-export const BASE_URL = 'https://jawalry.mustafafares.com';
+import { APP_CONFIG } from "../../config"
+
+// Local Config Endpoints
+export const BASE_URL = APP_CONFIG.API_URL
+export const COOKIE_NAME = APP_CONFIG.COOKIE_NAME
 
 // auth endpoints
 export const REGISTER = 'register';

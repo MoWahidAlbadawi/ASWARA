@@ -23,11 +23,12 @@ import Inbox from '@/assets/inbox-icon.png';
 import toast from 'react-hot-toast';
 // icons
 import { TbPhotoEdit } from "react-icons/tb";
-import { LuTableProperties } from "react-icons/lu";
-import { getAllCategories } from "@/hooks/categories/useCategories";
-import Err404 from "@/pages/Errors/Err404";
+import { Package } from "lucide-react";
 // import { BsPercent } from "react-icons/bs";
-
+// get all
+import { getAllCategories } from "@/hooks/categories/useCategories";
+// 404 not found page
+import Err404 from "@/pages/Errors/Err404";
 // // Interface for category option in autocomplete
 interface CategoryOption {
   id: number;
@@ -157,7 +158,7 @@ const ModifyProduct = () => {
     <div>        
             {/* header  */}
            <Typography color='secondary' variant="h5" className="!mb-5 flex justify-start items-center gap-1">
-                <Icon><LuTableProperties /></Icon> 
+                <Icon><Package /></Icon> 
                 <span>Products / Modify Product</span>
                 </Typography>
             {/* form */}

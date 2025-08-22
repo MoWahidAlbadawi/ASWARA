@@ -10,23 +10,18 @@ export interface Category {
     id : number,
     name : string,
     description : string,
-    smithing : number | null,
+    smithing : number | string,
     categoryFile : string | File,
 }
 
 export interface AddCategoryInterface {
     name : string,
     description : string,
-    smithing : number,
-    categoryFile : File | null,
-}
-
-export interface ModifyCategoryInterface {
-    name : string,
-    description : string,
-    smithing : number | null,
+    smithing : number | string,
     categoryFile : string | File | null,
 }
+
+export type ModifyCategoryInterface = AddCategoryInterface;
 
 export type ApiResponseGetCategoryById = ApiResponseGet<Category>
 export type ApiResponseGetCategories = ApiResponseGet<Category[]>

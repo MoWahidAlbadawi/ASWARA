@@ -7,7 +7,7 @@ import axios from 'axios'
 // cookies for storing user token 
 import Cookie from 'cookie-universal'
 // endpoints
-import { BASE_URL, LOGIN , REGISTER } from "@/services/endpoints";
+import { BASE_URL, LOGIN , REGISTER , COOKIE_NAME} from "@/services/endpoints";
 // interfaces
 import type { LoginData, RegisterData } from "@/services/types/Auth";
 
@@ -19,8 +19,8 @@ export const useLogin = () => {
     }, {
         onSuccess : (data : any ) => {
             console.log('login successfully!',data);
-            cookies.set('aswara',data.data.token);
-            const navigateTo = data.data.user.userType == 'admin' ? '/home' : data.data.user.userType == 'product_manager' ? '/categories' : '/';
+            cookies.set(COOKIE_NAME,data.data.token);
+            const navigateTo = data.data.user.userType == 'admin' ? '/home' : '/categories' ;
             navigate(navigateTo);
         },
         onError : (err : any) => {

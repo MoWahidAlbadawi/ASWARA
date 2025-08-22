@@ -5,20 +5,21 @@ import Loading from "../Loading/Loading";
 import { Navigate } from "react-router-dom";
 import Err403 from "../Errors/Err403";
 import Err404 from "../Errors/Err404";
+import { COOKIE_NAME } from "@/services/endpoints";
 interface Props {
     roles : (string | undefined)[]
 }
 
 const RequireAuth = ({ roles }: Props) => {
     const cookies = Cookie();
-    const token = cookies.get('aswara');
+    const token = cookies.get(COOKIE_NAME);
 
-    // 1. No token go to login
+    // No token go to login
     if (!token) {
         return <Navigate to="/login" replace />;
     }
 
-    // // 2. Fetch user
+    // Get user
     const { data : currentUser, isLoading, error } = GetCurrentUser();
 
 
@@ -26,7 +27,7 @@ const RequireAuth = ({ roles }: Props) => {
         return <Loading />;
     }
 
-    // // 3. Handle errors 
+    // Handle errors 
     if (error) {
         return <Navigate to="/login" replace/>; 
     }
@@ -35,12 +36,12 @@ const RequireAuth = ({ roles }: Props) => {
         return <Err404 />
     }
 
-    // // 4. Check permissions
+    // Check permissions
     if (!roles.includes(currentUser?.userType)) {
         return <Err403 />; // User exists but lacks role
     }
 
-    // 5. All good so render
+    // All good , go to destination
     return <Outlet />;
 };
 export default RequireAuth;

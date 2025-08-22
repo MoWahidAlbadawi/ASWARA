@@ -6,7 +6,7 @@ import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
 import { Box, Typography , Button , Icon , Grid , Select , MenuItem} from "@mui/material";
 // icons
 import { IoIosSearch } from "react-icons/io";
-import { LuTableProperties } from "react-icons/lu";
+import { Package } from "lucide-react"
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -101,7 +101,7 @@ const Products = () => {
         {/* header  */}
         <Box className='flex justify-between  !mb-6'>
             <Typography color='secondary' variant="h5" className="flex justify-center items-center gap-1">
-                <Icon><LuTableProperties /></Icon> 
+                <Icon><Package /></Icon> 
                 <span>Products</span> 
                 </Typography>
             <Button variant='contained' className='!text-white !capitalize'>

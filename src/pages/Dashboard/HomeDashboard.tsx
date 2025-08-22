@@ -1,7 +1,12 @@
-"use client"
-
+// data
+import { GetAllOrders } from "@/hooks/order/useOrder"
+import { GetAllProducts } from "@/hooks/products/useProducts"
+import { GetAllUsers } from "@/hooks/users/useUsers"
+// style components
 import { Card, CardContent, CardHeader, Button , Typography } from "@mui/material"
+// icons
 import {  Users, Package, ShoppingCart } from "lucide-react"
+// charts
 import {
   LineChart,
   Line,
@@ -14,34 +19,58 @@ import {
   Pie,
   Cell,
 } from "recharts"
+// react hooks
+import { useMemo } from "react"
+const HomePage = () => {
+  // get data
+  const { data : orders } = GetAllOrders();
+  const { data : users } = GetAllUsers();
+  const { data : products } = GetAllProducts();
+  // get what i want from this data
+  const usersCount = useMemo(() => {
+    const justUsers = users?.map((user) => user.userType === 'user') || [];
+    return justUsers?.length;
+  },[users])
 
-export default function GoldDashboard() {
+  const productsCount = useMemo(() => {
+    return products?.length || 0;
+  },[products])
+
+  const ordersCount = useMemo(() => {
+    return orders?.length || 0;
+  },
+  [orders]);
+
+  const pendingOrdersCount = useMemo(() => {
+    const pendingOrders = orders?.map((order) => order.status === 'pending') || [];
+    return pendingOrders?.length;
+  },[orders])
   // Mock data for statistics
   const stats = [
     {
       title: "إجمالي العملاء",
-      value: "1,247",
+      value: usersCount,
       change: "+8.2%",
       icon: Users,
       trend: "up",
     },
     {
       title: "المنتجات المتاحة",
-      value: "324",
+      value: productsCount,
       change: "-2.1%",
       icon: Package,
       trend: "down",
     },
     {
       title: "عدد الطلبات الكلي",
-      value: "50",
+      value: ordersCount,
       change: "+12%",
       icon: ShoppingCart,
       trend: "up",
     },
     {
       title: "الطلبات المعلقة",
-      value: "18",
+      value: pendingOrdersCount,
       change: "+5.3%",
       icon: ShoppingCart,
       trend: "up",
@@ -79,7 +108,7 @@ export default function GoldDashboard() {
                 key={index}
                 className="relative overflow-hidden border-0 shadow-lg hover:shadow-xl !transition-all ease-in-out duration-300 hover:-translate-y-1"
               >
-                <div className="absolute inset-0 bg-secondary-main"></div>
+                <div className="absolute inset-0 bg-[#9d6b1b]"></div>
                 <div className="absolute top-0 right-0 w-20 h-20 bg-yellow-400/10 rounded-full -translate-y-10 translate-x-10"></div>
                 <CardContent className="relative p-6 text-white">
                   <div className="flex items-center justify-between mb-4">
@@ -204,3 +233,4 @@ export default function GoldDashboard() {
     </div>
   )
 }
+export default HomePage;

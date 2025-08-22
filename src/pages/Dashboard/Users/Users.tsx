@@ -11,7 +11,7 @@ import {
   Grid
 } from "@mui/material"
 // icons
-import { FaUsers } from "react-icons/fa";
+import {  Users as UsersIcon } from "lucide-react"
 import { IoIosSearch } from "react-icons/io";
 // custom react query hooks
 import { GetAllUsers, DeleteUser, GetCurrentUser } from "@/hooks/users/useUsers";
@@ -110,7 +110,7 @@ const filteredData = useMemo(() => {
       <Box className="flex justify-between !mb-6">
         <Typography color="secondary" variant="h6" className="flex justify-center items-center gap-1">
           <Icon>
-            <FaUsers />
+            <UsersIcon />
           </Icon>
           Users
         </Typography>

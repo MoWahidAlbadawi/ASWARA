@@ -54,19 +54,12 @@ const AddCategory = () => {
 
     // handle finishing the request
     useEffect(() => {
-            const controller = new AbortController();
             if(isSuccess) {
              toast.success('the category added successfully');
                 reset();
-                setTimeout(() => {
-                navigate('/categories');
-                },2000);
             }
             if(error) {
                 toast.error('error happens while adding category');
-            }
-            return () => {
-                controller.abort();
             }
     },[isSuccess,error])
 
@@ -129,7 +122,7 @@ const AddCategory = () => {
             {...register('smithing',{
                 required : 'smithing value is reqiured',
                 validate : (value) => {
-                    return value > 0 || 'smithing must be at least 1'
+                    return Number(value) > 0 || 'smithing must be at least 1'
                 }
             })}
             error={!!errors.smithing}

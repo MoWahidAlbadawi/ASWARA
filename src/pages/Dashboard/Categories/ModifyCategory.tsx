@@ -148,7 +148,7 @@ const ModifyCategory = () => {
                 required : 'smithing value is reqiured',
                 validate : (value) => {
                     if(value) {
-                    return value > 0 || 'smithing must be at least 1'
+                    return Number(value) > 0 || 'smithing must be at least 1'
                 }
             }
             })}

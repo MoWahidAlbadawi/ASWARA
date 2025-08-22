@@ -7,7 +7,7 @@ import type { AddUserInterface } from "@/services/types/users";
 import { AddNewUser } from "@/hooks/users/useUsers";
 import { useEffect, useState } from "react";
 import toast  from "react-hot-toast";
-import { FaUsers } from "react-icons/fa6";
+import { Users } from 'lucide-react';
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const AddUser = () => {
@@ -30,19 +30,13 @@ const AddUser = () => {
 
     // handle finishing the request
     useEffect(() => {
-            const controller = new AbortController();
             if(isSuccess) {
              toast.success('the user added successfully');
                 reset();
-                setTimeout(() => {
                 navigate('/users');
-                },2000);
             }
             if(error) {
                 toast.error('error happens while adding user');
-            }
-            return () => {
-                controller.abort();
             }
     },[isSuccess,error])
 
@@ -60,7 +54,7 @@ const AddUser = () => {
                 {/* header  */}
         <Typography color="secondary" variant="h6" className="!mb-5 flex justify-start items-center gap-1">
           <Icon>
-            <FaUsers />
+            <Users />
           </Icon>
           Users / Add User
         </Typography>

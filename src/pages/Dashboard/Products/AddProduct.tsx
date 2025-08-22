@@ -22,7 +22,7 @@ import Inbox from '@/assets/inbox-icon.png';
 import toast from 'react-hot-toast';
 // icons
 import { TbPhotoEdit } from "react-icons/tb";
-import { LuTableProperties } from "react-icons/lu";
+import {  Package } from "lucide-react"
 import { getAllCategories } from "@/hooks/categories/useCategories";
 // import { BsPercent } from "react-icons/bs";
 
@@ -100,9 +100,7 @@ const AddProduct = () => {
       toast.success('The product was added successfully');
       reset();
       setproductImagePreview(null);
-      setTimeout(() => {
         navigate('/products');
-      }, 2000);
     }
     if (error) {
       toast.error('An error occurred while adding the product');
@@ -143,7 +141,7 @@ const AddProduct = () => {
       {/* Header */}
       <Typography color="secondary" variant="h5" className="!mb-5 flex justify-start items-center gap-1">
         <Icon>
-          <LuTableProperties />
+          <Package />
         </Icon>
         <span>Products / Add Product</span>
       </Typography>

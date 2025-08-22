@@ -1,9 +1,8 @@
-import { FaUsers, FaBell } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 import { MdDashboard } from 'react-icons/md';
-import { LuTableProperties } from "react-icons/lu";
 import { CgProfile } from "react-icons/cg";
-import { IoMdGitPullRequest } from "react-icons/io";
+import {  Users, Package, ShoppingCart } from "lucide-react"
 interface Link {
     title: string;
     path: string;
@@ -22,7 +21,7 @@ export const Links: Link[] = [
         title: 'Users',
         path: '/users',
         roles: ['admin'],
-        icon: <FaUsers />,
+        icon: <Users />,
     },
     {
         title: 'Categories',
@@ -34,13 +33,13 @@ export const Links: Link[] = [
         title: 'Products',
         path: '/products',
         roles: ['admin', 'product_manager'],
-        icon: <LuTableProperties />
+        icon: <Package />
     },
     {
         title : 'Orders',
         path: '/orders',
         roles: ['admin'],
-        icon: <IoMdGitPullRequest />
+        icon: <ShoppingCart />
     },
     {
         title: 'Notifications',

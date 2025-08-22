@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Cookie from 'cookie-universal'
+import { COOKIE_NAME } from "@/services/endpoints";
 import { AiOutlineLogout } from "react-icons/ai";
 import React , { useState } from "react"
 import api from "@/services/axios";
@@ -40,7 +41,7 @@ const Logout = ({ onCloseDialog } : Props) => {
       try {
         setIsLoading(true);
         await api.post(`${LOGOUT}`).then(() => toast.success('logout successfully!'));
-        cookies.remove('aswara');
+        cookies.remove(COOKIE_NAME);
         setOpen(false);
     if(onCloseDialog) {
       onCloseDialog();

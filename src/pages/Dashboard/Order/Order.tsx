@@ -10,7 +10,7 @@ import {
   IconButton,
 } from "@mui/material"
 // icons
-import { IoMdGitPullRequest } from "react-icons/io";
+import { ShoppingCart } from "lucide-react"
 import { IoIosSearch } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 // custom react query hooks
@@ -102,7 +102,7 @@ const filteredData = useMemo(() => {
       <Box className="flex justify-between !mb-6">
         <Typography color="secondary" variant="h6" className="flex justify-center items-center gap-1">
           <Icon>
-            <IoMdGitPullRequest />
+            <ShoppingCart />
           </Icon>
           Orders
         </Typography>

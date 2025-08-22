@@ -22,20 +22,18 @@ export interface User {
     userType : string,
 }
 
-export interface AddUserInterface {
+interface UserInterface {
     name : string,
     email : string,
-    password : string,
     phone : string,
     userType : string,
 }
 
-export interface ModifyUserInterface {
-    name : string,
-    email : string,
-    phone : string,
-    userType : string,
+export type  AddUserInterface = UserInterface & {
+    password : string,
 }
+
+export type ModifyUserInterface = UserInterface;
 
 
 export type ApiResponseGetUserById = ApiResponseGet<User>

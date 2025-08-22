@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import Err404 from "@/pages/Errors/Err404";
-import { FaUsers } from "react-icons/fa6";
+import { Users } from 'lucide-react';
 
 const ModifyUser = () => {
     const { userId } = useParams();
@@ -69,7 +69,7 @@ const ModifyUser = () => {
                 {/* header  */}
         <Typography color="secondary" variant="h6" className="!mb-5 flex justify-start items-center gap-1">
           <Icon>
-            <FaUsers />
+            <Users />
           </Icon>
           Users / Modify User
         </Typography>
