@@ -34,6 +34,10 @@ import Profile from './pages/Dashboard/Profile';
 import Orders from './pages/Dashboard/Order/Order';
 import OrderDetails from './pages/Dashboard/Order/OrderDetails';
 
+// Context
+import { MenuContextProvider } from './context/MenuContext.tsx'
+import { GoldPricesContextProvider } from './context/GoldPrices.tsx'
+
 const router = createBrowserRouter([
   // Auth routes
   {element : <RequireBack /> , children : [
@@ -110,8 +114,12 @@ const App = () => {
       }}
     />
     <QueryClientProvider client={client}>
+      <MenuContextProvider>
+        <GoldPricesContextProvider>
     <RouterProvider router={router}>
     </RouterProvider>
+    </GoldPricesContextProvider>
+    </MenuContextProvider>
     </QueryClientProvider>
     </>
   )

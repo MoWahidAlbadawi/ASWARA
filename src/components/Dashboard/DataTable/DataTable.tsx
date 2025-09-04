@@ -147,7 +147,7 @@ const DataTable = ({
                   {showActions && <td>
                     <Box className="flex justify-center">
                       <IconButton color="secondary">
-                        <Link to={`/${table}/${item.id}`}>
+                        <Link to={table == 'users' ? `/${table}/${item.id}?profileMode=false` : `/${table}/${item.id}`  }>
                           <FaRegEdit />
                         </Link>
                       </IconButton>

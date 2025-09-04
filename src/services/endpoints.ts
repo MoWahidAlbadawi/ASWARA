@@ -3,6 +3,7 @@ import { APP_CONFIG } from "../../config"
 // Local Config Endpoints
 export const BASE_URL = APP_CONFIG.API_URL
 export const COOKIE_NAME = APP_CONFIG.COOKIE_NAME
+export const METAL_PRICE_API = APP_CONFIG.METAL_PRICE_API
 
 // auth endpoints
 export const REGISTER = 'register';

@@ -21,6 +21,7 @@ export interface Product {
     categoryFile : string | File,
     isFeatured : 1 | 0,
     categoryid : number,
+    karat : 18 | 21 | 24;
 }
 
 export interface AddProductInterface {
@@ -32,6 +33,7 @@ export interface AddProductInterface {
     categoryID : number | string | null;
     isFeatured : 0 | 1;
     quantity : number | string | null;
+    karat : 18 | 21 | 24;
 }
 
 export type ModifyProductInterface = AddProductInterface;

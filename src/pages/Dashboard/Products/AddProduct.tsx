@@ -8,6 +8,10 @@ import {
   FormGroup,
   FormControlLabel,
   Autocomplete,
+  Select ,
+  FormControl,
+  MenuItem,
+  FormHelperText
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import type { AddProductInterface } from "@/services/types/products";
 import { AddNewProduct } from "@/hooks/products/useProducts";
 // import { useCategories } from "@/hooks/categories/useCategories"; // You need this
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 // assets
 import Inbox from '@/assets/inbox-icon.png';
 // toast
@@ -24,6 +28,7 @@ import toast from 'react-hot-toast';
 import { TbPhotoEdit } from "react-icons/tb";
 import {  Package } from "lucide-react"
 import { getAllCategories } from "@/hooks/categories/useCategories";
+import { GoldPricesContext } from "@/context/GoldPrices";
 // import { BsPercent } from "react-icons/bs";
 
 // // Interface for category option in autocomplete
@@ -34,7 +39,8 @@ interface CategoryOption {
 
 const AddProduct = () => {
   const navigate = useNavigate();
-
+  // gold prices from context
+  const { goldPrices } = useContext(GoldPricesContext);
   // Fetch categories for autocomplete
   const { data: categories = [] } = getAllCategories();
 
@@ -59,6 +65,7 @@ const AddProduct = () => {
       description: '',
       weight: null,
       price: null,
+      karat : 24,
       productFile: null,
       categoryID: null,
       isFeatured: 0,
@@ -119,8 +126,13 @@ const AddProduct = () => {
     formData.append('Description', data.description);
 
     if (data.weight) formData.append('Weight', String(data.weight));
-    if (data.price) formData.append('Price', String(data.price));
-    if (data.quantity) formData.append('quantity', String(data.quantity));
+    if (data.karat) formData.append('Karat', String(data.karat));
+
+    const itemKaratMatched = goldPrices.find((item) => item.karat == data.karat);
+    const price = itemKaratMatched?.price;
+     
+    if (price) formData.append('Price', String(price));
+    if (data.quantity) formData.append('Quantity', String(data.quantity));
     if (data.categoryID) formData.append('CategoryID', String(data.categoryID));
 
     formData.append('ProductFile', data.productFile);
@@ -202,23 +214,35 @@ const AddProduct = () => {
             />
           </div>
 
-          {/* Price & Weight */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {/* Karat & Weight */}
+         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* FIXED KARAT SELECT */}
             <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Price<span className="text-red-600">*</span></label>
-              <TextField
-                type="number"
-                placeholder="Enter price"
-                variant="outlined"
-                fullWidth
-                error={!!errors.price}
-                helperText={errors.price?.message}
-                {...register('price', {
-                  required: 'Price is required',
-                   validate: v => Number(v) > 0 || 'price must be greater than 0',
-                })}
+              <label className="text-secondary-main">Karat<span className="text-red-600">*</span></label>
+              <Controller
+                name="karat"
+                control={control}
+                rules={{ required: 'Karat is required' }}
+                render={({ field, fieldState }) => (
+                  <FormControl fullWidth error={!!fieldState.error}>
+                    <Select
+                      {...field}
+                      value={field.value || 24}
+                      displayEmpty
+                      variant="outlined"
+                    >
+                      <MenuItem value={18}>18K</MenuItem>
+                      <MenuItem value={21}>21K</MenuItem>
+                      <MenuItem value={24}>24K</MenuItem>
+                    </Select>
+                    {fieldState.error && (
+                      <FormHelperText>{fieldState.error.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                )}
               />
             </div>
+
 
             <div className="flex flex-col gap-2">
               <label className="text-secondary-main">Weight (g)<span className="text-red-600">*</span></label>

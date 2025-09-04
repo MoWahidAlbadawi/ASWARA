@@ -8,7 +8,7 @@ const Profile = () => {
 
   const handleEditProfile = () => {
     if(currentUser) {
-    navigate(`/users/${currentUser.id}`);
+    navigate(`/users/${currentUser.id}?profileMode=true`);
   }
   }
   return (

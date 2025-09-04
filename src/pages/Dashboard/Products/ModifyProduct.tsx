@@ -8,7 +8,11 @@ import {
   FormGroup,
   FormControlLabel,
   Autocomplete,
+  Select ,
+  FormControl,
+  MenuItem,
   LinearProgress,
+  FormHelperText
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -16,7 +20,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import type { ModifyProductInterface } from "@/services/types/products";
 import { GetProductById, UpdateProduct } from "@/hooks/products/useProducts";
 // import { useCategories } from "@/hooks/categories/useCategories"; // You need this
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 // assets
 import Inbox from '@/assets/inbox-icon.png';
 // toast
@@ -29,6 +33,7 @@ import { Package } from "lucide-react";
 import { getAllCategories } from "@/hooks/categories/useCategories";
 // 404 not found page
 import Err404 from "@/pages/Errors/Err404";
+import { GoldPricesContext } from "@/context/GoldPrices";
 // // Interface for category option in autocomplete
 interface CategoryOption {
   id: number;
@@ -36,6 +41,8 @@ interface CategoryOption {
 }
 
 const ModifyProduct = () => {
+  // gold price from context
+  const { goldPrices } = useContext(GoldPricesContext);
   const navigate = useNavigate();
   const { productId } = useParams();
 
@@ -131,7 +138,13 @@ const ModifyProduct = () => {
     formData.append('Description', data.description);
 
     if (data.weight) formData.append('Weight', String(data.weight));
-    if (data.price) formData.append('Price', String(data.price));
+    if (data.karat) formData.append('Karat', String(data.karat));
+
+    const itemKaratMatched = goldPrices.find((item) => item.karat == data.karat);
+    const price = itemKaratMatched?.price;
+     
+    if (price) formData.append('Price', String(price));
+     
     if (data.quantity) formData.append('quantity', String(data.quantity));
     if (data.categoryID) formData.append('CategoryID', String(data.categoryID));
 
@@ -222,21 +235,33 @@ const ModifyProduct = () => {
 
           {/* Price & Weight */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* FIXED KARAT SELECT */}
             <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Price<span className="text-red-600">*</span></label>
-              <TextField
-                type="number"
-                placeholder="Enter price"
-                variant="outlined"
-                fullWidth
-                error={!!errors.price}
-                helperText={errors.price?.message}
-                {...register('price', {
-                  required: 'Price is required',
-                   validate: v => Number(v) > 0 || 'price must be greater than 0',
-                })}
+              <label className="text-secondary-main">Karat<span className="text-red-600">*</span></label>
+              <Controller
+                name="karat"
+                control={control}
+                rules={{ required: 'Karat is required' }}
+                render={({ field, fieldState }) => (
+                  <FormControl fullWidth error={!!fieldState.error}>
+                    <Select
+                      {...field}
+                      value={field.value || 24}
+                      displayEmpty
+                      variant="outlined"
+                    >
+                      <MenuItem value={18}>18K</MenuItem>
+                      <MenuItem value={21}>21K</MenuItem>
+                      <MenuItem value={24}>24K</MenuItem>
+                    </Select>
+                    {fieldState.error && (
+                      <FormHelperText>{fieldState.error.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                )}
               />
             </div>
+
 
             <div className="flex flex-col gap-2">
               <label className="text-secondary-main">Weight (g)<span className="text-red-600">*</span></label>

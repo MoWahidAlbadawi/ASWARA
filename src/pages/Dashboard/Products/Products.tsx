@@ -27,6 +27,7 @@ const Products = () => {
         { title: 'Description' , key : 'decription'},
         { title: 'Weight' , key : 'weight'},
         { title: 'Price' , key : 'price'},
+        { title: 'Karat' , key : 'karat'},
         { title: 'Quantity' , key : 'quantity'},
         { title: 'Category' , key : 'category_name'},
         { title: 'Featured' , key : 'isFeatured'},
@@ -169,6 +170,7 @@ const Products = () => {
             customColumns={{
                 weight : (item : any) => <span>{item.weight} g</span>,
                 price : (item : any) => <span>{item.price} $</span>,
+                karat : (item : any) => <span>{item.karat || 24} K</span>,
                 isFeatured : (item : any) => <Icon>
                     {item.isFeatured == 1 ? <FaStar /> : <FaRegStar />}
                 </Icon>

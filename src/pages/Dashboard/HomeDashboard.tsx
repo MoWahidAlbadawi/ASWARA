@@ -3,9 +3,9 @@ import { GetAllOrders } from "@/hooks/order/useOrder"
 import { GetAllProducts } from "@/hooks/products/useProducts"
 import { GetAllUsers } from "@/hooks/users/useUsers"
 // style components
-import { Card, CardContent, CardHeader, Button , Typography } from "@mui/material"
+import { Card, CardContent, CardHeader , Typography } from "@mui/material"
 // icons
-import {  Users, Package, ShoppingCart } from "lucide-react"
+import {  Users, Package, ShoppingCart , DollarSign  } from "lucide-react"
 // charts
 import {
   LineChart,
@@ -20,12 +20,16 @@ import {
   Cell,
 } from "recharts"
 // react hooks
-import { useMemo } from "react"
+import { useContext, useEffect, useMemo } from "react"
+import { GoldPricesContext } from "@/context/GoldPrices"
 const HomePage = () => {
   // get data
   const { data : orders } = GetAllOrders();
   const { data : users } = GetAllUsers();
   const { data : products } = GetAllProducts();
+  // gold price from conext
+  const { goldPrices } = useContext(GoldPricesContext);
+  // Silver prices
   // get what i want from this data
   const usersCount = useMemo(() => {
     const justUsers = users?.map((user) => user.userType === 'user') || [];
@@ -40,6 +44,11 @@ const HomePage = () => {
     return orders?.length || 0;
   },
   [orders]);
+
+
+  useEffect(() => {
+    console.log(goldPrices,'dd')
+  })
 
   const pendingOrdersCount = useMemo(() => {
     const pendingOrders = orders?.map((order) => order.status === 'pending') || [];
@@ -95,10 +104,91 @@ const HomePage = () => {
     { name: "أقراط", value: 12, color: "#b8860b" },
     { name: "سلاسل", value: 8, color: "#8b7500" },
   ]
-
   return (
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-8 !my-5">
+        {/* Metal Prices */}
+        <div className="!mb-3">
+  {/* Modern Metal Prices Section */}
+            {/* Market status indicator */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                  <span className="text-sm font-medium text-gray-700">Market Status: Active</span>
+                </div>
+                <span className="text-xs text-gray-500">
+                  Last updated: {new Date().toLocaleTimeString('en-US' , {
+                    hour : '2-digit',
+                    minute : '2-digit',
+                    hour12 : true,
+                  })}
+                </span>
+            </div>
+
+          <div className="relative">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {goldPrices.map((item) => (
+                <div 
+                  key={item.karat}
+                  className="group relative bg-white/80 backdrop-blur-sm rounded-2xl !p-6 border border-amber-200/50 hover:border-amber-300/80 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                >
+                  {/* Gradient background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-400/5 via-yellow-400/5 to-orange-400/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  
+                  {/* Karat badge */}
+                  <div className="relative flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-xl flex items-center justify-center shadow-md">
+                        <DollarSign className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-gray-800 text-lg">{item.karat}K Gold</h4>
+                        <p className="text-amber-600 text-xs font-medium">Per Gram</p>
+                      </div>
+                    </div>
+                    
+                    {/* Quality indicator */}
+                    <div className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-full">
+                      <span className="text-xs font-semibold text-amber-700">
+                        {item.karat === 24 ? 'Pure' : item.karat === 21 ? 'High' : 'Standard'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Price display */}
+                  <div className="relative">
+                    <div className="flex items-baseline gap-1 mb-2">
+                      <span className="text-2xl font-bold text-gray-900">
+                        ${item.price.toFixed(2)}
+                      </span>
+                      <span className="text-sm text-gray-500 font-medium">USD</span>
+                    </div>
+                    
+                    {/* Purity percentage */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="flex-1 bg-gray-200 rounded-full h-2">
+                        <div 
+                          className="bg-gradient-to-r from-amber-400 to-yellow-500 h-2 rounded-full transition-all duration-500"
+                          style={{ width: `${(item.karat / 24) * 100}%` }}
+                        ></div>
+                      </div>
+                      <span className="text-xs text-gray-600 font-medium">
+                        {((item.karat / 24) * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                    
+                    {/* Additional info */}
+                    <div className="text-xs text-gray-500 flex items-center gap-1">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                      <span>Live pricing</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+      </div>
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => {
@@ -140,19 +230,6 @@ const HomePage = () => {
                 <Typography color="secondary" component="h2" variant="h6">
                   نظرة عامة على المبيعات
                 </Typography>
-              }
-              action={
-                <div className="flex gap-2">
-                  <Button variant="outlined" size="small">
-                    الشهر
-                  </Button>
-                  <Button variant="outlined" size="small" className="bg-transparent">
-                    الأسبوع
-                  </Button>
-                  <Button variant="outlined" size="small" className="bg-transparent">
-                    اليوم
-                  </Button>
-                </div>
               }
             />
             <CardContent>
