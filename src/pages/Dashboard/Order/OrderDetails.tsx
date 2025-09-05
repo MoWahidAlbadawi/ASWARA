@@ -6,7 +6,7 @@ import { Icon , Typography } from "@mui/material"
 
 import type { LocalProduct } from "@/services/types/products"
 import { GetAllUsers } from "@/hooks/users/useUsers"
-import { useContext, useMemo } from "react"
+import { useContext, useMemo, useEffect , useState } from "react"
 import { GoldPricesContext } from "@/context/GoldPrices"
 
 const OrderDetails = () => {   
@@ -14,13 +14,29 @@ const OrderDetails = () => {
     const {data : order} = GetOrderById(orderId || '');
     const { data : users } = GetAllUsers();
     const { goldPrices } = useContext(GoldPricesContext);
+    
+    const [orderInfo , setOrderInfo] = useState<{userid : number , orderDate : string , status : string}>({
+        userid : order?.userid || 0,
+        orderDate : order?.orderDate || '',
+        status : order?.status || ''
+    });
+
+    useEffect(() => {
+      if(order) {
+      setOrderInfo({
+        userid : order.userid,
+        orderDate : order.orderDate,
+        status : order.status,
+      })
+    }
+    },[order])
+
+      const { userid , orderDate , status} = orderInfo;
 
     function getProductPriceByKarat (karat : 18 | 21 | 24) {
         const itemKaratMatched = goldPrices.find((item) => item.karat == karat);
         return itemKaratMatched?.price || 0;
     }
-
-  const { userid , orderDate , status} = order!
 
   const localProducts: LocalProduct[] = [
     { name: "أسوارة موديل قفل", price: getProductPriceByKarat(21), weight : 12 , karat : 21 , quantity: 1 },
