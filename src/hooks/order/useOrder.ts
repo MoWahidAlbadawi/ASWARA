@@ -1,7 +1,7 @@
 import { useQuery } from "react-query";
-import type { ApiResponseGetOrders , ApiResponseGetOrderById } from '@/services/types/orders'
+import type { ApiResponseGetOrders , ApiResponseGetOrderById} from '@/services/types/orders'
 import api from "@/services/axios"
-import { ORDER , ORDERS } from  "@/services/endpoints"
+import { ORDERS , ORDER } from  "@/services/endpoints"
 
 // get all orders
 export const GetAllOrders = () => {

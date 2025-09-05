@@ -170,7 +170,7 @@ const Products = () => {
             customColumns={{
                 weight : (item : any) => <span>{item.weight} g</span>,
                 price : (item : any) => <span>{item.price} $</span>,
-                karat : (item : any) => <span>{item.karat || 24} K</span>,
+                karat : (item : any) => <span>{item.karat || 21} K</span>,
                 isFeatured : (item : any) => <Icon>
                     {item.isFeatured == 1 ? <FaStar /> : <FaRegStar />}
                 </Icon>

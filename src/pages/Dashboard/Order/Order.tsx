@@ -8,6 +8,7 @@ import {
   MenuItem,
   Grid,
   IconButton,
+  Chip,
 } from "@mui/material"
 // icons
 import { ShoppingCart } from "lucide-react"
@@ -21,11 +22,12 @@ import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
 // paginate (react paginate)
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
 // filter data
-import { filtersOrderDto } from "@/services/types/orders";
+import { filtersOrderDto , type Order} from "@/services/types/orders";
 import { GetAllUsers } from "@/hooks/users/useUsers";
 import { useNavigate } from "react-router-dom";
 
 const Orders = () => {
+
   const { data , isLoading, isError } = GetAllOrders();
   const { data : users } = GetAllUsers();
 
@@ -45,7 +47,7 @@ const Orders = () => {
     new filtersOrderDto()
   );
 
-  // handle page change
+  // handle page changes
   function hanldePageChanged(page: number) {
     setFilters((prev) => ({ ...prev, pageIndex: page }));
   }
@@ -95,6 +97,13 @@ const filteredData = useMemo(() => {
   function navigateToOrderDetails (id : string | number) {
     navigate(`/orders/${id}`);
   }
+
+// Change Order Status
+const orderStatus = [
+          { value: "pending", label: "Pending", color: "warning" },
+          { value: "completed", label: "Completed", color: "success" },
+          { value: "cancelled", label: "Cancelled", color: "error" },
+     ];
 
   return (
     <Box>
@@ -154,10 +163,26 @@ const filteredData = useMemo(() => {
         isError={isError}
         startIndex={startIndex}
         customColumns={{
-             totalAmount : (item : any) => <span>{item.totalAmount} $</span>,
-             orderDate : (item : any) => <span>{item.orderDate.slice(0,10)}</span>,
-             userid : (item : any) => <span>{getUserName(item.userid)}</span>,
-             actions : (item : any) => <IconButton onClick={() => navigateToOrderDetails(item.id)}><FaEye/></IconButton>
+             totalAmount : (item : Order) => <span>{item.totalAmount} $</span>,
+             orderDate : (item : Order) => <span>{item.orderDate.slice(0,10)}</span>,
+             userid : (item : Order) => <span>{getUserName(item.userid)}</span>,
+             status : (item : Order) => <Select
+                    className="w-full max-h-[40px]"
+                    value={item.status || ""}
+                    name="status"
+                >
+                  {orderStatus.map((item) => (
+                    <MenuItem key={item.value} value={item.value}>
+                      <Chip
+                        label={item.label}
+                        size="small"
+                        color={item.color as any}
+                        className="!rounded-[6px] !p-1 !text-[13px]"
+                      />
+                    </MenuItem>
+                  ))}
+                </Select>,
+          actions : (item : any) => <IconButton onClick={() => navigateToOrderDetails(item.id)}><FaEye/></IconButton>
         }}
         showActions={false}
       />

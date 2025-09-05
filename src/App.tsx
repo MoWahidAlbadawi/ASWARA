@@ -49,15 +49,13 @@ const router = createBrowserRouter([
   // Dashboard route (admin & product_manger)
   {element : <RequireAuth roles={['admin','product_manager']} /> , children : [
   {path : '/' , element : <LayoutDashboard /> , children : [
-    // users pages (just for admin)
+    // users pages (just for admin) Statistical & Users Mangement
     {element : <RequireAuth roles={['admin']} /> , children : [
     {path : '' , element : <HomeDashboard />},
     {path : '/home' , element : <HomeDashboard />},
     {path : '/users' , element : <Users /> },
     {path : '/user/add' , element : <AddUser /> },
     {path : '/users/:userId' , element : <ModifyUser /> },
-    {path : '/orders' , element : <Orders /> },
-    {path : '/orders/:orderId' , element : <OrderDetails /> },
     ]},
     // categories pages
     {path : '/categories' , element : <Categories />   },
@@ -67,6 +65,9 @@ const router = createBrowserRouter([
     {path : '/products' , element : <Products /> },
     {path : '/product/add' , element : <AddProduct /> },
     {path : '/products/:productId' , element : <ModifyProduct /> },
+    // orders pages
+    {path : '/orders' , element : <Orders /> },
+    {path : '/orders/:orderId' , element : <OrderDetails /> },
     // notifications page
     {path : '/notifications' , element : <Notifications />},
     // profile

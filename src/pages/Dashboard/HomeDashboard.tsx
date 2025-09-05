@@ -148,7 +148,7 @@ const HomePage = () => {
                     </div>
                     
                     {/* Quality indicator */}
-                    <div className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-full">
+                    <div className="!px-3 !py-1 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-full">
                       <span className="text-xs font-semibold text-amber-700">
                         {item.karat === 24 ? 'Pure' : item.karat === 21 ? 'High' : 'Standard'}
                       </span>

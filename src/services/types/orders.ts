@@ -8,7 +8,7 @@ export class filtersOrderDto {
 
 }
 
-export interface Order {
+export type Order = {
     id : number,
     userid : number,
     orderDate : string,
@@ -18,6 +18,12 @@ export interface Order {
     paymentMethod : string
 }
 
+export type OrderById =  {
+    userid : number,
+    orderDate : string,
+    status : string,
+    totalAmount : number,
+}
 
-export type ApiResponseGetOrderById = ApiResponseGet<Order>
+export type ApiResponseGetOrderById = ApiResponseGet<OrderById>
 export type ApiResponseGetOrders = ApiResponseGet<Order[]>

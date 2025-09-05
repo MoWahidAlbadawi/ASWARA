@@ -38,7 +38,7 @@ export const Links: Link[] = [
     {
         title : 'Orders',
         path: '/orders',
-        roles: ['admin'],
+        roles: ['admin','product_manager'],
         icon: <ShoppingCart />
     },
     {

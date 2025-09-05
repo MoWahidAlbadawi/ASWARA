@@ -36,6 +36,14 @@ export interface AddProductInterface {
     karat : 18 | 21 | 24;
 }
 
+export type LocalProduct = {
+    name : string,
+    price : number,
+    karat : 18 | 21 | 24,
+    weight : number,
+    quantity : number,  
+  }
+
 export type ModifyProductInterface = AddProductInterface;
 
 export type ApiResponseGetProductById = ApiResponseGet<Product>
