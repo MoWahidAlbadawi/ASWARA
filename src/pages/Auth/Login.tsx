@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import Jewelry_Image from '@/assets/Jewelry_Auth.png';
+import Jewelry_Image from '@/assets/Jewelry_Auth.webp';
 // logo
-import logo from '@/assets/Logo.png'
+import logo from '@/assets/Logo.webp'
 import { useForm } from 'react-hook-form';
 import {
   Button,

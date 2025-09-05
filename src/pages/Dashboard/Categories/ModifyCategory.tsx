@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from "react";
 // 404 page
 import Err404 from "@/pages/Errors/Err404";
 // uploader photo
-import Inbox from '@/assets/inbox-icon.png'
+import Inbox from '@/assets/inbox-icon.webp'
 // toast
 import toast from 'react-hot-toast';
 // icons

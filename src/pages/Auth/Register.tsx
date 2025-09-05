@@ -1,9 +1,9 @@
 // router
 import { Link } from 'react-router-dom';
 //auth image
-import Jewelry_Image from '@/assets/Jewelry_Auth.png';
+import Jewelry_Image from '@/assets/Jewelry_Auth.webp';
 // logo
-import logo from '@/assets/Logo.png'
+import logo from '@/assets/Logo.webp'
 // use from to handle form with react-hook-form
   import { useForm } from 'react-hook-form';
   // components from mui

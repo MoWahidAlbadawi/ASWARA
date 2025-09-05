@@ -1,4 +1,4 @@
-import logo from '@/assets/Logo.png';
+import logo from '@/assets/Logo.webp';
 import { RiCloseLargeFill } from "react-icons/ri";
 import { Button, Icon, Collapse, Divider } from "@mui/material";
 import { MenuContext } from "@/context/MenuContext";

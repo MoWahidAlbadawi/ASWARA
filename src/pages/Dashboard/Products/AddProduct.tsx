@@ -21,7 +21,7 @@ import { AddNewProduct } from "@/hooks/products/useProducts";
 // import { useCategories } from "@/hooks/categories/useCategories"; // You need this
 import React, { useContext, useEffect, useRef, useState } from "react";
 // assets
-import Inbox from '@/assets/inbox-icon.png';
+import Inbox from '@/assets/inbox-icon.webp';
 // toast
 import toast from 'react-hot-toast';
 // icons

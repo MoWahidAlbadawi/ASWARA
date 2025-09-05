@@ -1,5 +1,5 @@
 // logo
-import logo from '@/assets/Logo.png'
+import logo from '@/assets/Logo.webp'
 // css file
 import classes from './loading.module.css'
 const Loading = () => {

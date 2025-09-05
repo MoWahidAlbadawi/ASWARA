@@ -6,7 +6,7 @@ import type { AddCategoryInterface } from "@/services/types/categories";
 import { AddNewCategory } from "@/hooks/categories/useCategories";
 import React, { useEffect, useRef, useState } from "react";
 // uploader photo
-import Inbox from '@/assets/inbox-icon.png'
+import Inbox from '@/assets/inbox-icon.webp'
 // toast
 import toast from 'react-hot-toast';
 // icons
