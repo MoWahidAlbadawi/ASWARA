@@ -27,7 +27,6 @@ const Products = () => {
     const headers = [
         { title: t('products.table.name') , key : 'name'},
         { title: t('products.table.description') , key : 'decription'},
-        { title: t('products.table.weight') , key : 'weight'},
         { title: t('products.table.price') , key : 'price'},
         { title: t('products.table.karat') , key : 'karat'},
         { title: t('products.table.quantity') , key : 'quantity'},
@@ -170,9 +169,8 @@ const Products = () => {
             startIndex={startIndex}
             onDeleteItem={handleDeleteProduct}
             customColumns={{
-                weight : (item : any) => <span>{item.weight} g</span>,
-                price : (item : any) => <span>{item.price} $</span>,
-                karat : (item : any) => <span>{item.karat || 21} K</span>,
+                price : (item : any) => <span>{ item.price ? `${item.price}$` : '--' }</span>,
+                karat : (item : any) => <span dir="ltr">{item.karat || 21} K</span>,
                 isFeatured : (item : any) => <Icon>
                     {item.isFeatured == 1 ? <FaStar /> : <FaRegStar />}
                 </Icon>

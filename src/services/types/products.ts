@@ -11,7 +11,6 @@ export interface Product {
     name : string,
     // back-end forget s 
     decription : string,
-    weight : number ,
     price : number , 
     quantity : number ,
     productFile : string | File,
