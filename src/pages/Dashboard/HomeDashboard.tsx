@@ -54,7 +54,7 @@ const HomePage = () => {
   })
 
   const pendingOrdersCount = useMemo(() => {
-    const pendingOrders = orders?.map((order) => order.status === 'pending') || [];
+    const pendingOrders = orders?.map((order) => order.Status === 'pending') || [];
     return pendingOrders?.length;
   },[orders])
 
