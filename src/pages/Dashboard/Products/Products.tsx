@@ -15,22 +15,24 @@ import { filtersProductDto } from '@/services/types/products'
 // pagination (react paginate)
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
 import { getAllCategories } from "@/hooks/categories/useCategories";
+import { useTranslation } from "react-i18next";
 
 const Products = () => {
+    const { t } = useTranslation();
     
     const { data , isLoading , isError , refetch} = GetAllProducts();
     const { data : categories } = getAllCategories();
     const { mutate , isSuccess : isSuccessDelete , error : errorDelete} = DeleteProduct();
 
     const headers = [
-        { title: 'Name' , key : 'name'},
-        { title: 'Description' , key : 'decription'},
-        { title: 'Weight' , key : 'weight'},
-        { title: 'Price' , key : 'price'},
-        { title: 'Karat' , key : 'karat'},
-        { title: 'Quantity' , key : 'quantity'},
-        { title: 'Category' , key : 'category_name'},
-        { title: 'Featured' , key : 'isFeatured'},
+        { title: t('products.table.name') , key : 'name'},
+        { title: t('products.table.description') , key : 'decription'},
+        { title: t('products.table.weight') , key : 'weight'},
+        { title: t('products.table.price') , key : 'price'},
+        { title: t('products.table.karat') , key : 'karat'},
+        { title: t('products.table.quantity') , key : 'quantity'},
+        { title: t('products.table.category') , key : 'category_name'},
+        { title: t('products.table.featured') , key : 'isFeatured'},
     ]
 
       // filters state
@@ -84,16 +86,16 @@ const Products = () => {
      // handle delete feedback
             useEffect(() => {
                     if(isSuccessDelete) {
-                     toast.success('the product deleted successfully');
+                     toast.success(t('products.messages.deleteSuccess'));
                         // get all categories after deleting
                         refetch();
                     }
                     if(errorDelete) {
-                        toast.error('error happens while deleting product');
+                        toast.error(t('products.messages.deleteError'));
                     }
-            },[isSuccessDelete,errorDelete])
+            },[isSuccessDelete,errorDelete,t])
     
-    // delete category fucntion
+    // delete category function
     function handleDeleteProduct (id : number) {
     mutate(id);
     }
@@ -103,33 +105,33 @@ const Products = () => {
         <Box className='flex justify-between  !mb-6'>
             <Typography color='secondary' variant="h5" className="flex justify-center items-center gap-1">
                 <Icon><Package /></Icon> 
-                <span>Products</span> 
+                <span>{t('products.title')}</span> 
                 </Typography>
             <Button variant='contained' className='!text-white !capitalize'>
-                <Link to='/product/add'>Add Product</Link>
+                <Link to='/product/add'>{t('products.addProduct')}</Link>
             </Button>
         </Box>
         
       {/* Filters */}
       <Grid container spacing={1} className="!mb-3">
         <Grid size={{xs : 12 , sm : 6 , md : 3}}>
-          <label className="text-sm text-secondary-main">Category</label>
-         {/* Page size select */}
+          <label className="text-sm text-secondary-main">{t('products.filters.category')}</label>
+         {/* Category select */}
           <Select
             className="w-full max-h-[45px]"
             value={filters.categoryId}
             onChange={handleFiltersChange}
             name="categoryId"
           > 
-            <MenuItem value={0}>Select Category</MenuItem>
+            <MenuItem value={0}>{t('products.filters.selectCategory')}</MenuItem>
             {categories?.map((category) => {
-              return    <MenuItem value={category.id}>{category.name}</MenuItem>
+              return <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>
             })}
           </Select>
           </Grid>
          {/* Page size select */}
          <Grid size={{xs : 12 , sm : 6 , md : 3}}>
-          <label className="text-sm text-secondary-main">Items Per Page</label>
+          <label className="text-sm text-secondary-main">{t('common.itemsPerPage')}</label>
           <Select
             className="w-full max-h-[45px]"
             value={filters.pageSize}
@@ -147,7 +149,7 @@ const Products = () => {
         <Box position={"relative"}>
           <input
             className={`${classes["input-search"]} pe-12`}
-            placeholder="search by name"
+            placeholder={t('products.searchByName')}
             value={filters.searchTerm}
             onChange={handleFiltersChange}
             name="searchTerm"
@@ -182,7 +184,11 @@ const Products = () => {
                     {filteredData.length > 0 && (
                      <Box className="!mt-3 flex flex-col gap-3 md:gap-0 md:flex-row justify-center md:justify-between items-center">
                       <Typography className="text-gray-600">
-                        Show {startIndex + 1} to {endIndex} from {filteredData.length}
+                        {t('common.pagination.showing', {
+                          start: startIndex + 1,
+                          end: endIndex,
+                          total: filteredData.length
+                        })}
                       </Typography>
                       <PaginatedItems
                         itemsPerPage={filters.pageSize}

@@ -19,6 +19,7 @@ import {
 // for transition dialog
 import type { TransitionProps } from "@mui/material/transitions";
 import toast from "react-hot-toast";
+import { useTranslation } from "react-i18next";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -28,19 +29,23 @@ const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+
 interface Props {
   onCloseDialog? : () => void,
 }
+
 const Logout = ({ onCloseDialog } : Props) => {
+    const { t } = useTranslation();
     const [open, setOpen] = useState<boolean>(false);
     const [isLoading , setIsLoading] = useState<boolean>(false);
 
     const navigate = useNavigate(); 
     const cookies = Cookie();
+    
     async function logout () {
       try {
         setIsLoading(true);
-        await api.post(`${LOGOUT}`).then(() => toast.success('logout successfully!'));
+        await api.post(`${LOGOUT}`).then(() => toast.success(t('logout.successMessage')));
         cookies.remove(COOKIE_NAME);
         setOpen(false);
     if(onCloseDialog) {
@@ -48,6 +53,7 @@ const Logout = ({ onCloseDialog } : Props) => {
       }
     } catch (err) {
       console.log('error on logout',err);
+      toast.error(t('logout.errorMessage'));
     } finally {
       setIsLoading(false);
         navigate('/login');
@@ -66,7 +72,7 @@ const Logout = ({ onCloseDialog } : Props) => {
     return <Box>
     <Button onClick={openDialog} color="error" sx={{textTransform : 'capitalize' , display : 'flex' , gap : '5px'}}>
         <Icon><AiOutlineLogout /></Icon>
-        <Typography>Logout</Typography>
+        <Typography>{t('logout.title')}</Typography>
     </Button>
       {/* delete confirmation dialog */}
       <Box>
@@ -92,7 +98,7 @@ const Logout = ({ onCloseDialog } : Props) => {
               <IoWarningOutline />
             </Icon>
             <Typography>
-              Are you sure you want to leave ASWARA ?
+              {t('logout.confirmationMessage')}
             </Typography>
             </Box>
           <DialogActions>
@@ -101,7 +107,7 @@ const Logout = ({ onCloseDialog } : Props) => {
               sx={{ textTransform: "capitalize" }}
               variant="outlined"
             >
-              Cancel
+              {t('common.cancel')}
             </Button>
             <Button
               onClick={logout}
@@ -109,7 +115,7 @@ const Logout = ({ onCloseDialog } : Props) => {
               sx={{ textTransform: "capitalize" }}
               variant="contained"
             >
-              {isLoading ?  <CircularProgress  size={24} /> : 'logout'}
+              {isLoading ?  <CircularProgress  size={24} /> : t('logout.title')}
             </Button>
           </DialogActions>
         </Dialog>

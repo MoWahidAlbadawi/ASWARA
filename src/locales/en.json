@@ -1,0 +1,134 @@
+{
+  "navigation": {
+    "home": "Home",
+    "users": "Users",
+    "categories": "Categories",
+    "products": "Products",
+    "orders": "Orders",
+    "notifications": "Notifications",
+    "profile": "Profile"
+  },
+  "selectLanguage": "Select Language",
+  "logout": {
+    "title": "Logout",
+    "confirmationMessage": "Are you sure you want to leave ASWARA?",
+    "successMessage": "Logged out successfully!",
+    "errorMessage": "An error occurred while logging out"
+  },
+  "dashboard": {
+    "stats": {
+      "totalCustomers": "Total Customers",
+      "availableProducts": "Available Products",
+      "totalOrders": "Total Orders",
+      "pendingOrders": "Pending Orders"
+    },
+    "months": {
+      "january": "January",
+      "february": "February",
+      "march": "March",
+      "april": "April",
+      "may": "May",
+      "june": "June"
+    },
+    "categories": {
+      "rings": "Rings",
+      "bracelets": "Bracelets",
+      "sets": "Sets",
+      "earrings": "Earrings",
+      "chains": "Chains"
+    },
+    "goldQuality": {
+      "pure": "Pure",
+      "high": "High",
+      "standard": "Standard"
+    },
+    "charts": {
+      "salesOverview": "Sales Overview",
+      "productDistribution": "Product Distribution"
+    },
+    "marketStatus": "Market Status",
+    "marketActive": "Active",
+    "lastUpdated": "Last Updated",
+    "goldKarat": "{{karat}} Karat Gold",
+    "perGram": "Per Gram",
+    "livePricing": "Live Pricing"
+  },
+  "orders": {
+    "title": "Orders",
+    "searchByUser": "Search by User",
+    "table": {
+      "user": "User",
+      "orderDate": "Order Date",
+      "status": "Status",
+      "totalAmount": "Total Amount",
+      "shippingAddress": "Shipping Address",
+      "actions": "Actions"
+    },
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "orderDetails": {
+    "title": "Order Details",
+    "userName": "User Name",
+    "shippingAddress": "Shipping Address",
+    "status": "Status",
+    "totalAmount": "Total Amount",
+    "createdAt": "Created At",
+    "updatedAt": "Updated At",
+    "orderProducts": "Order Products",
+    "grandTotal": "Grand Total",
+    "table": {
+      "productName": "Product Name",
+      "price": "Price",
+      "karat": "Karat",
+      "quantity": "Quantity",
+      "total": "Total"
+    },
+    "products": {
+      "braceletLock": "Bracelet Lock Model",
+      "chainLetterM": "Chain Letter M",
+      "childrenEarrings": "Children’s Earrings",
+      "ankletFrank": "Frank Model Anklet",
+      "heavyChain": "Heavy Curb Chain"
+    }
+  },
+  "products": {
+    "title": "Products",
+    "addProduct": "Add Product",
+    "searchByName": "Search by Name",
+    "table": {
+      "name": "Name",
+      "description": "Description",
+      "weight": "Weight",
+      "price": "Price",
+      "karat": "Karat",
+      "quantity": "Quantity",
+      "category": "Category",
+      "featured": "Featured"
+    },
+    "filters": {
+      "category": "Category",
+      "selectCategory": "Select Category"
+    },
+    "messages": {
+      "deleteSuccess": "Product deleted successfully",
+      "deleteError": "An error occurred while deleting the product"
+    }
+  },
+  "common": {
+    "dashboard": "Dashboard",
+    "management": "Management",
+    "settings": "Settings",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "yes": "Yes",
+    "no": "No",
+    "itemsPerPage": "Items per page",
+    "pagination": {
+      "showing": "Showing {{start}} to {{end}} of {{total}}"
+    }
+  }
+}

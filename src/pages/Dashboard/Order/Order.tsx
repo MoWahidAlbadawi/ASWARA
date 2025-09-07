@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 // components from mui
 import {
   Box,
@@ -34,11 +34,12 @@ const Orders = () => {
   const navigate = useNavigate();
 
   const headers: { title: string; key: string }[] = [
-    { title: "User", key: "userid" },
-    { title: "Order Date", key: "orderDate" },
-    { title: "Status", key: "status" },
-    { title: "Total Amount", key: "totalAmount" },
-    { title: "Shipping Address", key: "shippingAddress" },
+    { title: "User", key: "UserID" },
+    { title: "Status", key: "Status" },
+    { title: "Total Amount", key: "TotalAmount" },
+    { title: "Shipping Address", key: "ShippingAddress" },
+    {title : "Created At" , key : 'created_at'},
+    {title : "Updated At" , key : 'updated_at'},
     { title: "Actions", key: "actions" },
   ];
 
@@ -67,14 +68,12 @@ const Orders = () => {
 const filteredData = useMemo(() => {
   if (!filters.searchTerm && !filters.status) return data || [];
   return data?.filter((item) =>
-    getUserName(item.userid)
+    getUserName(item.UserID)
       .toLocaleLowerCase()
       .trim()
       .includes(filters.searchTerm.toLocaleLowerCase().trim())
   ) || [];
 }, [filters.searchTerm , filters.status , data]);
-
-
 
   // paginated data
   let startIndex = 0 , endIndex = Math.min(startIndex + filters.pageSize,filteredData.length);
@@ -89,8 +88,8 @@ const filteredData = useMemo(() => {
   }, [filters.pageIndex, filters.pageSize, filteredData]);
 
 
-  function getUserName (userId : number | string) {
-    const user = users?.find(user => user.id === userId);
+  function getUserName (UserID : number | string) {
+    const user = users?.find(user => user.id === UserID);
     return user?.name  || '--';
   }
 
@@ -163,12 +162,13 @@ const orderStatus = [
         isError={isError}
         startIndex={startIndex}
         customColumns={{
-             totalAmount : (item : Order) => <span>{item.totalAmount} $</span>,
-             orderDate : (item : Order) => <span>{item.orderDate.slice(0,10)}</span>,
-             userid : (item : Order) => <span>{getUserName(item.userid)}</span>,
+             totalAmount : (item : Order) => <span>{item.TotalAmount} $</span>,
+             created_at : (item : Order) => <span>{item.created_at?.slice(0,10) || '--'}</span>,
+             updated_at : (item : Order) => <span>{item.updated_at?.slice(0,10) || '--'}</span>,
+             UserID : (item : Order) => <span>{getUserName(item.UserID)}</span>,
              status : (item : Order) => <Select
                     className="w-full max-h-[40px]"
-                    value={item.status || ""}
+                    value={item.Status || ""}
                     name="status"
                 >
                   {orderStatus.map((item) => (
@@ -182,7 +182,7 @@ const orderStatus = [
                     </MenuItem>
                   ))}
                 </Select>,
-          actions : (item : any) => <IconButton onClick={() => navigateToOrderDetails(item.id)}><FaEye/></IconButton>
+          actions : (item : any) => <IconButton onClick={() => navigateToOrderDetails(item.OrderID)}><FaEye/></IconButton>
         }}
         showActions={false}
       />

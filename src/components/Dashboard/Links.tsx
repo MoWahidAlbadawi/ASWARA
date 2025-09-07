@@ -2,55 +2,79 @@ import { FaBell } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 import { MdDashboard } from 'react-icons/md';
 import { CgProfile } from "react-icons/cg";
-import {  Users, Package, ShoppingCart } from "lucide-react"
+import { Users, Package, ShoppingCart } from "lucide-react";
+import { useTranslation } from "react-i18next";
+
 interface Link {
-    title: string;
+    titleKey: string; 
     path: string;
     roles: string[];
     icon: JSX.Element;
 }
 
-export const Links: Link[] = [
+// Static links configuration with translation keys
+const staticLinks: Link[] = [
     {
-        title: 'Home',
+        titleKey: 'navigation.home',
         path: '/home',
         roles: ['admin'],
         icon: <MdDashboard />,
     },
     {
-        title: 'Users',
+        titleKey: 'navigation.users',
         path: '/users',
         roles: ['admin'],
         icon: <Users />,
     },
     {
-        title: 'Categories',
+        titleKey: 'navigation.categories',
         path: '/categories',
         roles: ['admin', 'product_manager'],
         icon: <TbCategoryFilled />
     },
     {
-        title: 'Products',
+        titleKey: 'navigation.products',
         path: '/products',
         roles: ['admin', 'product_manager'],
         icon: <Package />
     },
     {
-        title : 'Orders',
+        titleKey: 'navigation.orders',
         path: '/orders',
-        roles: ['admin','product_manager'],
+        roles: ['admin', 'product_manager'],
         icon: <ShoppingCart />
     },
     {
-        title: 'Notifications',
+        titleKey: 'navigation.notifications',
         path: '/notifications',
         roles: ['admin', 'product_manager'],
         icon: <FaBell />
     },
     {
-        title : 'Profile',
+        titleKey: 'navigation.profile',
         path: '/profile',
         roles: ['admin', 'product_manager'],
         icon: <CgProfile />
     }
 ];
+
+// Hook to get translated links
+export const useTranslatedLinks = () => {
+    const { t } = useTranslation();
+    
+    return staticLinks.map(link => ({
+        ...link,
+        title: t(link.titleKey) 
+    }));
+};
+
+
+export const getTranslatedLinks = (t: (key: string) => string) => {
+    return staticLinks.map(link => ({
+        ...link,
+        title: t(link.titleKey)
+    }));
+};
+
+
+export { staticLinks };

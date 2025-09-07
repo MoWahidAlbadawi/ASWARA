@@ -1,0 +1,134 @@
+{
+  "navigation": {
+    "home": "الرئيسية",
+    "users": "المستخدمون",
+    "categories": "الفئات",
+    "products": "المنتجات",
+    "orders": "الطلبات",
+    "notifications": "الإشعارات",
+    "profile": "الملف الشخصي"
+  },
+  "selectLanguage": "اختر اللغة",
+  "logout": {
+    "title": "تسجيل الخروج",
+    "confirmationMessage": "هل أنت متأكد أنك تريد مغادرة ASWARA؟",
+    "successMessage": "تم تسجيل الخروج بنجاح!",
+    "errorMessage": "حدث خطأ أثناء تسجيل الخروج"
+  },
+  "dashboard": {
+    "stats": {
+      "totalCustomers": "إجمالي العملاء",
+      "availableProducts": "المنتجات المتاحة",
+      "totalOrders": "عدد الطلبات الكلي",
+      "pendingOrders": "الطلبات المعلقة"
+    },
+    "months": {
+      "january": "يناير",
+      "february": "فبراير",
+      "march": "مارس",
+      "april": "أبريل",
+      "may": "مايو",
+      "june": "يونيو"
+    },
+    "categories": {
+      "rings": "خواتم",
+      "bracelets": "أساور",
+      "sets": "أطقم",
+      "earrings": "أقراط",
+      "chains": "سلاسل"
+    },
+    "goldQuality": {
+      "pure": "خالص",
+      "high": "عالي",
+      "standard": "عادي"
+    },
+    "charts": {
+      "salesOverview": "نظرة عامة على المبيعات",
+      "productDistribution": "توزيع المنتجات"
+    },
+    "marketStatus": "حالة السوق",
+    "marketActive": "نشط",
+    "lastUpdated": "آخر تحديث",
+    "goldKarat": "ذهب {{karat}} قيراط",
+    "perGram": "للجرام",
+    "livePricing": "أسعار مباشرة"
+  },
+  "orders": {
+    "title": "الطلبات",
+    "searchByUser": "البحث بالمستخدم",
+    "table": {
+      "user": "المستخدم",
+      "orderDate": "تاريخ الطلب",
+      "status": "الحالة",
+      "totalAmount": "المبلغ الإجمالي",
+      "shippingAddress": "عنوان الشحن",
+      "actions": "الإجراءات"
+    },
+    "status": {
+      "pending": "معلق",
+      "completed": "مكتمل",
+      "cancelled": "ملغي"
+    }
+  },
+  "orderDetails": {
+    "title": "تفاصيل الطلب",
+    "userName": "اسم المستخدم",
+    "shippingAddress": "عنوان الشحن",
+    "status": "الحالة",
+    "totalAmount": "المبلغ الإجمالي",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التحديث",
+    "orderProducts": "منتجات الطلب",
+    "grandTotal": "المجموع الكلي",
+    "table": {
+      "productName": "اسم المنتج",
+      "price": "السعر",
+      "karat": "العيار",
+      "quantity": "الكمية",
+      "total": "المجموع"
+    },
+    "products": {
+      "braceletLock": "أسوارة موديل قفل",
+      "chainLetterM": "سلسال حرف M",
+      "childrenEarrings": "حلق أذن للأطفال",
+      "ankletFrank": "خلخال موديل فرانك",
+      "heavyChain": "سنارة زرد تقيلة"
+    }
+  },
+  "products": {
+    "title": "المنتجات",
+    "addProduct": "إضافة منتج",
+    "searchByName": "البحث بالاسم",
+    "table": {
+      "name": "الاسم",
+      "description": "الوصف",
+      "weight": "الوزن",
+      "price": "السعر",
+      "karat": "العيار",
+      "quantity": "الكمية",
+      "category": "الفئة",
+      "featured": "مميز"
+    },
+    "filters": {
+      "category": "الفئة",
+      "selectCategory": "اختر الفئة"
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف المنتج بنجاح",
+      "deleteError": "حدث خطأ أثناء حذف المنتج"
+    }
+  },
+  "common": {
+    "dashboard": "لوحة التحكم",
+    "management": "الإدارة",
+    "settings": "الإعدادات",
+    "cancel": "إلغاء",
+    "confirm": "تأكيد",
+    "yes": "نعم",
+    "no": "لا",
+    "itemsPerPage": "عدد العناصر في الصفحة",
+    "pagination": {
+      "showing": "عرض {{start}} إلى {{end}} من {{total}}"
+    }
+  }
+}

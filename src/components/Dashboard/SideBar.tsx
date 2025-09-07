@@ -3,12 +3,14 @@ import { RiCloseLargeFill } from "react-icons/ri";
 import { Button, Icon, Collapse, Divider } from "@mui/material";
 import { MenuContext } from "@/context/MenuContext";
 import { useContext } from "react";
-import { Links } from './Links';
+import { staticLinks } from './Links';
 import { NavLink } from 'react-router-dom';
 import { GetCurrentUser } from '@/hooks/users/useUsers';
 import Logout from './Auth/Logout';
+import { useTranslation } from 'react-i18next';
 
 const Sidebar = () => {
+  const { t } = useTranslation();
   const ctxMenu = useContext(MenuContext);
   const { data: currentUser } = GetCurrentUser();
   const sideClassName = `${ctxMenu.showMenu ? 'w-[200px]' : 'w-[70px]'} 
@@ -46,7 +48,7 @@ const Sidebar = () => {
 
       {/* Navigation with staggered transitions */}
       <ul className='flex flex-col gap-4 !mt-10'>
-        {Links.map((link, index) => (
+        {staticLinks.map((link, index) => (
           currentUser?.userType && link.roles.includes(currentUser.userType) && ( 
             <li key={index}>
               <NavLink 
@@ -73,7 +75,7 @@ const Sidebar = () => {
                   unmountOnExit
                 >
                   <span className="whitespace-nowrap">
-                    {link.title}
+                    {t(link.titleKey)}
                   </span>
                 </Collapse>
               </NavLink>

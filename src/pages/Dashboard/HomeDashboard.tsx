@@ -22,14 +22,18 @@ import {
 // react hooks
 import { useContext, useEffect, useMemo } from "react"
 import { GoldPricesContext } from "@/context/GoldPrices"
+import { useTranslation } from "react-i18next"
+
 const HomePage = () => {
+  const { t } = useTranslation();
+  
   // get data
   const { data : orders } = GetAllOrders();
   const { data : users } = GetAllUsers();
   const { data : products } = GetAllProducts();
-  // gold price from conext
+  // gold price from context
   const { goldPrices } = useContext(GoldPricesContext);
-  // Silver prices
+  
   // get what i want from this data
   const usersCount = useMemo(() => {
     const justUsers = users?.map((user) => user.userType === 'user') || [];
@@ -45,7 +49,6 @@ const HomePage = () => {
   },
   [orders]);
 
-
   useEffect(() => {
     console.log(goldPrices,'dd')
   })
@@ -54,31 +57,32 @@ const HomePage = () => {
     const pendingOrders = orders?.map((order) => order.status === 'pending') || [];
     return pendingOrders?.length;
   },[orders])
-  // Mock data for statistics
+
+  // Statistics data with translation keys
   const stats = [
     {
-      title: "إجمالي العملاء",
+      titleKey: "dashboard.stats.totalCustomers",
       value: usersCount,
       change: "+8.2%",
       icon: Users,
       trend: "up",
     },
     {
-      title: "المنتجات المتاحة",
+      titleKey: "dashboard.stats.availableProducts",
       value: productsCount,
       change: "-2.1%",
       icon: Package,
       trend: "down",
     },
     {
-      title: "عدد الطلبات الكلي",
+      titleKey: "dashboard.stats.totalOrders",
       value: ordersCount,
       change: "+12%",
       icon: ShoppingCart,
       trend: "up",
     },
     {
-      title: "الطلبات المعلقة",
+      titleKey: "dashboard.stats.pendingOrders",
       value: pendingOrdersCount,
       change: "+5.3%",
       icon: ShoppingCart,
@@ -86,44 +90,54 @@ const HomePage = () => {
     },
   ]
 
-  // Sales chart data
+  // Sales chart data with translated months
   const salesData = [
-    { month: "يناير", sales: 30000 },
-    { month: "فبراير", sales: 45000 },
-    { month: "مارس", sales: 38000 },
-    { month: "أبريل", sales: 52000 },
-    { month: "مايو", sales: 61000 },
-    { month: "يونيو", sales: 75000 },
+    { month: t('dashboard.months.january'), sales: 30000 },
+    { month: t('dashboard.months.february'), sales: 45000 },
+    { month: t('dashboard.months.march'), sales: 38000 },
+    { month: t('dashboard.months.april'), sales: 52000 },
+    { month: t('dashboard.months.may'), sales: 61000 },
+    { month: t('dashboard.months.june'), sales: 75000 },
   ]
 
-  // Category distribution data
+  // Category distribution data with translated names
   const categoryData = [
-    { name: "خواتم", value: 35, color: "#d4af37" },
-    { name: "أساور", value: 25, color: "#c4a000" },
-    { name: "أطقم", value: 20, color: "#ffd700" },
-    { name: "أقراط", value: 12, color: "#b8860b" },
-    { name: "سلاسل", value: 8, color: "#8b7500" },
+    { name: t('dashboard.categories.rings'), value: 35, color: "#d4af37" },
+    { name: t('dashboard.categories.bracelets'), value: 25, color: "#c4a000" },
+    { name: t('dashboard.categories.sets'), value: 20, color: "#ffd700" },
+    { name: t('dashboard.categories.earrings'), value: 12, color: "#b8860b" },
+    { name: t('dashboard.categories.chains'), value: 8, color: "#8b7500" },
   ]
+
+  // Quality labels for gold
+  const getQualityLabel = (karat: number) => {
+    if (karat === 24) return t('dashboard.goldQuality.pure');
+    if (karat === 21) return t('dashboard.goldQuality.high');
+    return t('dashboard.goldQuality.standard');
+  }
+
   return (
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto px-6 py-8 space-y-8 !my-5">
         {/* Metal Prices */}
         <div className="!mb-3">
-  {/* Modern Metal Prices Section */}
-            {/* Market status indicator */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-medium text-gray-700">Market Status: Active</span>
-                </div>
-                <span className="text-xs text-gray-500">
-                  Last updated: {new Date().toLocaleTimeString('en-US' , {
-                    hour : '2-digit',
-                    minute : '2-digit',
-                    hour12 : true,
-                  })}
-                </span>
+          {/* Modern Metal Prices Section */}
+          {/* Market status indicator */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium text-gray-700">
+                {t('dashboard.marketStatus')}: {t('dashboard.marketActive')}
+              </span>
             </div>
+            <span className="text-xs text-gray-500">
+              {t('dashboard.lastUpdated')}: {new Date().toLocaleTimeString('en-US' , {
+                hour : '2-digit',
+                minute : '2-digit',
+                hour12 : true,
+              })}
+            </span>
+          </div>
 
           <div className="relative">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -142,15 +156,19 @@ const HomePage = () => {
                         <DollarSign className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-800 text-lg">{item.karat}K Gold</h4>
-                        <p className="text-amber-600 text-xs font-medium">Per Gram</p>
+                        <h4 className="font-bold text-gray-800 text-lg">
+                          {t('dashboard.goldKarat', { karat: item.karat })}
+                        </h4>
+                        <p className="text-amber-600 text-xs font-medium">
+                          {t('dashboard.perGram')}
+                        </p>
                       </div>
                     </div>
                     
                     {/* Quality indicator */}
                     <div className="!px-3 !py-1 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-full">
                       <span className="text-xs font-semibold text-amber-700">
-                        {item.karat === 24 ? 'Pure' : item.karat === 21 ? 'High' : 'Standard'}
+                        {getQualityLabel(item.karat)}
                       </span>
                     </div>
                   </div>
@@ -180,15 +198,15 @@ const HomePage = () => {
                     {/* Additional info */}
                     <div className="text-xs text-gray-500 flex items-center gap-1">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                      <span>Live pricing</span>
+                      <span>{t('dashboard.livePricing')}</span>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
           </div>
+        </div>
 
-      </div>
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => {
@@ -212,7 +230,7 @@ const HomePage = () => {
                     </span>
                   </div>
                   <div>
-                    <p className="text-primary-light text-sm mb-1">{stat.title}</p>
+                    <p className="text-primary-light text-sm mb-1">{t(stat.titleKey)}</p>
                     <p className="text-2xl font-bold">{stat.value}</p>
                   </div>
                 </CardContent>
@@ -228,7 +246,7 @@ const HomePage = () => {
             <CardHeader className="pb-4" 
               title={
                 <Typography color="secondary" component="h2" variant="h6">
-                  نظرة عامة على المبيعات
+                  {t('dashboard.charts.salesOverview')}
                 </Typography>
               }
             />
@@ -267,7 +285,7 @@ const HomePage = () => {
               className="pb-4"
               title={
                 <Typography color="secondary" component="h2" variant="h6">
-                  توزيع المنتجات
+                  {t('dashboard.charts.productDistribution')}
                 </Typography>
               }
             />
