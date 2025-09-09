@@ -126,13 +126,13 @@ const AddProduct = () => {
     formData.append('Description', data.description);
 
     if (data.weight) formData.append('Weight', String(data.weight));
-    if (data.karat) formData.append('Karat', String(data.karat));
+    if (data.karat) formData.append('karat', String(data.karat));
 
     const itemKaratMatched = goldPrices.find((item) => item.karat == data.karat);
     const price = itemKaratMatched?.price;
      
     if (price) formData.append('Price', String(price));
-    if (data.quantity) formData.append('Quantity', String(data.quantity));
+    if (data.quantity) formData.append('quantity', String(data.quantity));
     if (data.categoryID) formData.append('CategoryID', String(data.categoryID));
 
     formData.append('ProductFile', data.productFile);
@@ -273,7 +273,7 @@ const AddProduct = () => {
                 helperText={errors.quantity?.message}
                 {...register('quantity', {
                     required : 'quantity is required',
-                  validate: v => Number(v) >= 0 || 'quantity must be positive',
+                  validate: v => Number(v) > 0 || 'quantity must be positive',
                 })}
               />
             </div>

@@ -1,5 +1,5 @@
-import { TextField , Button , CircularProgress , Typography , Icon, InputAdornment} from "@mui/material";
-import { useForm } from "react-hook-form";
+import { TextField , Button , CircularProgress , Typography , Icon, Select , MenuItem , FormControl,  FormHelperText} from "@mui/material";
+import { useForm , Controller} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 // category
 import type { AddCategoryInterface } from "@/services/types/categories";
@@ -12,12 +12,11 @@ import toast from 'react-hot-toast';
 // icons
 import { TbPhotoEdit } from "react-icons/tb";
 import { TbCategoryFilled } from "react-icons/tb";
-import { BsPercent } from "react-icons/bs";
 
 const AddCategory = () => {
     const navigate = useNavigate();
     // react hook form
-    const { register , reset , handleSubmit , formState , setValue } = useForm<AddCategoryInterface>({
+    const { register , reset , handleSubmit , formState , setValue , control} = useForm<AddCategoryInterface>({
         mode : 'all',
         defaultValues : {
             name : '',
@@ -57,12 +56,14 @@ const AddCategory = () => {
             if(isSuccess) {
              toast.success('the category added successfully');
                 reset();
+                navigate('/categories');
             }
             if(error) {
                 toast.error('error happens while adding category');
             }
     },[isSuccess,error])
 
+        const smithingOptions = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
     // add
     function onSubmit (data : AddCategoryInterface) {
@@ -115,26 +116,28 @@ const AddCategory = () => {
                 {/* smithing */}
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">Smithing Value<span className="text-red-600">*</span></label>
-            <TextField
-            placeholder="Enter smithing value"
-            variant="outlined"
-            type="number"
-            {...register('smithing',{
-                required : 'smithing value is reqiured',
-                validate : (value) => {
-                    return Number(value) > 0 || 'smithing must be at least 1'
-                }
-            })}
-            error={!!errors.smithing}
-            helperText={errors.smithing?.message}
-            InputProps={{
-                startAdornment : (
-                    <InputAdornment position="start">
-                        <Icon className="text-gray-700"><BsPercent /></Icon>
-                    </InputAdornment>
-                )
-            }}
-            />
+               <Controller
+                name="smithing"
+                control={control}
+                rules={{ required: 'smithing is required' }}
+                render={({ field, fieldState }) => (
+                  <FormControl fullWidth error={!!fieldState.error}>
+                    <Select
+                      {...field}
+                      value={field.value || 24}
+                      displayEmpty
+                      variant="outlined"
+                    >
+                        {smithingOptions.map((item : number) => <MenuItem key={item} value={item}>
+                        {item} %
+                        </MenuItem>)}
+                 </Select>
+                    {fieldState.error && (
+                      <FormHelperText>{fieldState.error.message}</FormHelperText>
+                    )}
+                  </FormControl>
+                )}
+              />
         </div>
         </div>
         {/* category description */}

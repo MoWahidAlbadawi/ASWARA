@@ -5,8 +5,8 @@
   margin : 0;
 }
 body {
-  font-family: sans-serif;
   min-width: 350px;
+  font-family: 'Cairo', sans-serif;
 }
 @theme {
   --color-primary-main : #D4AF37;
@@ -17,12 +17,10 @@ body {
 
 .english {
   direction: ltr;
-  font-family: 'Inter', sans-serif;
 }
 
 .arabic {
   direction: rtl;
-  font-family: 'Cairo', sans-serif;
 }
 
 /* gradient primay button */

@@ -1,7 +1,7 @@
-import { TextField , Button , CircularProgress , Typography , Icon, InputAdornment
+import { TextField , Button , CircularProgress , Typography , Icon, Select , MenuItem  , FormControl , FormHelperText
     , LinearProgress
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm , Controller } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 // category
 import type { ModifyCategoryInterface } from "@/services/types/categories";
@@ -16,13 +16,12 @@ import toast from 'react-hot-toast';
 // icons
 import { TbPhotoEdit } from "react-icons/tb";
 import { TbCategoryFilled } from "react-icons/tb";
-import { BsPercent } from "react-icons/bs";
 
 const ModifyCategory = () => {
     const { categoryId } = useParams();
     const navigate = useNavigate();
     // react hook form
-    const { register , reset , handleSubmit , formState , setValue } = useForm<ModifyCategoryInterface>({
+    const { register , reset , handleSubmit , formState , setValue , control } = useForm<ModifyCategoryInterface>({
         mode : 'all',
     });
     const { errors } = formState;
@@ -63,6 +62,8 @@ const ModifyCategory = () => {
             setCategoryImagePreview(categoryInfo.categoryFile.toString());
         }
     },[categoryInfo])
+
+    const smithingOptions = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
     // handle finishing the request
     useEffect(() => {
@@ -140,28 +141,28 @@ const ModifyCategory = () => {
                 {/* smithing */}
         <div className="flex flex-col gap-2">
             <label className="text-secondary-main">Smithing Value<span className="text-red-600">*</span></label>
-            <TextField
-            placeholder="Enter smithing value"
-            variant="outlined"
-            type="number"
-            {...register('smithing',{
-                required : 'smithing value is reqiured',
-                validate : (value) => {
-                    if(value) {
-                    return Number(value) > 0 || 'smithing must be at least 1'
-                }
-            }
-            })}
-            error={!!errors.smithing}
-            helperText={errors.smithing?.message}
-            InputProps={{
-                startAdornment : (
-                    <InputAdornment position="start">
-                        <Icon className="text-gray-700"><BsPercent /></Icon>
-                    </InputAdornment>
-                )
-            }}
-            />
+                     <Controller
+                            name="smithing"
+                            control={control}
+                            rules={{ required: 'smithing is required' }}
+                            render={({ field, fieldState }) => (
+                              <FormControl fullWidth error={!!fieldState.error}>
+                                <Select
+                                  {...field}
+                                  value={field.value || 24}
+                                  displayEmpty
+                                  variant="outlined"
+                                >
+                                    {smithingOptions.map((item : number) => <MenuItem key={item} value={item}>
+                                    {item} %
+                                    </MenuItem>)}
+                             </Select>
+                                {fieldState.error && (
+                                  <FormHelperText>{fieldState.error.message}</FormHelperText>
+                                )}
+                              </FormControl>
+                            )}
+                          />
         </div>
         </div>
         {/* category description */}

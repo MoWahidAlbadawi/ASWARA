@@ -137,7 +137,7 @@ const Categories = () => {
             isError={isError}
             startIndex={startIndex}
             customColumns={{
-                data : (item : Notification) => <span>{item.data.title}</span>,
+                data : (item : Notification) => <span>{item.data.title || '--'}</span>,
                 created_at : (item : Notification) => <span dir="rtl">
                     {`${item.created_at.split('T')[1].slice(0,5)} - ${item.created_at.split('T')[0]} `} 
                 </span>,
