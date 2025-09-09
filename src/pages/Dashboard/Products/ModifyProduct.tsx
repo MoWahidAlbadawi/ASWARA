@@ -100,7 +100,6 @@ const ModifyProduct = () => {
               reset({
                   name: productInfo.name,
                   description: productInfo.decription,
-                  weight: productInfo.weight,
                   price: productInfo.price,
                   productFile: productInfo.productFile,
                   categoryID: productInfo.categoryid,

@@ -59,7 +59,7 @@ const Users = () => {
 
   const usersWithoutCurrentUser = useMemo(() => {
     return data ? 
-    data.filter((user) => user.id !== currentUser?.id)
+    data.filter((user) => user.id !== currentUser?.UserID)
     : []
   },[data,currentUser]);
 

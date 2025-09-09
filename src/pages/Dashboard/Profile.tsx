@@ -1,6 +1,7 @@
 import { Typography, Box, Divider, Stack, List, ListItem, ListItemText, Button, Avatar } from "@mui/material";
 import { GetCurrentUser } from "@/hooks/users/useUsers";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Profile = () => {
   const { data: currentUser } = GetCurrentUser();
@@ -8,9 +9,14 @@ const Profile = () => {
 
   const handleEditProfile = () => {
     if(currentUser) {
-    navigate(`/users/${currentUser.id}?profileMode=true`);
+    navigate(`/users/${currentUser?.UserID}?profileMode=true`);
   }
   }
+
+  useEffect(() => {
+      console.log('current',currentUser)
+  })
+
   return (
     <Box   
       sx={{
@@ -60,7 +66,7 @@ const Profile = () => {
         </ListItem>
         <Divider />
         <ListItem>
-          <ListItemText primary="Created at" secondary={currentUser?.created_at || "—"} />
+          <ListItemText primary="Created at" secondary={currentUser?.created_at.split('T')[0] || "—"} />
         </ListItem>
       </List>
 

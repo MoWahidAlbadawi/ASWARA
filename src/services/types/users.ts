@@ -7,7 +7,7 @@ export class filtersUserDto {
 }
 
 export interface CurrentUser {
-    id : number | string,
+    UserID : number | string,
     created_at : string,
     name : string,
     email : string,
