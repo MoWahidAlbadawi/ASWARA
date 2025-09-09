@@ -35,3 +35,9 @@ export const MODIFY_PRODUCT = 'updateproduct'
 // orders endpoint
 export const ORDER = 'order'
 export const ORDERS = 'orders'
+
+// notifications endpoints
+export const NOTIFICATIONS = 'admin/notifications'
+export const UNREAD_NOTIFICATIONS = 'admin/notifications/unread'
+export const READ_NOTIFICATION = 'admin/notifications'
+export const READ_ALL_NOTIFICATIONS = 'admin/notifications/read-all'

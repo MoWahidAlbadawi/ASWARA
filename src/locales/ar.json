@@ -4,8 +4,8 @@
     "users": "المستخدمون",
     "categories": "الفئات",
     "products": "المنتجات",
-    "productsReview": "مراجعة المنتجات",
-    "orders": "الطلبات",
+    "reviewRequests": "طلبات الزبائن",
+    "orders": "الطلبيات",
     "notifications": "الإشعارات",
     "profile": "الملف الشخصي"
   },

@@ -1,7 +1,7 @@
 import { SlMenu } from "react-icons/sl";
-import { IconButton , Menu , MenuItem , Button , Divider, Typography , Icon , Box} from "@mui/material";
+import { IconButton , Menu , MenuItem , Button , Divider, Typography , Icon , Box, Chip} from "@mui/material";
 // context to mange menu 
-import { useContext,useState } from "react";
+import { useContext,useEffect,useState } from "react";
 import { MenuContext } from "@/context/MenuContext";
 import { GetCurrentUser } from "@/hooks/users/useUsers";
 import { FaBell } from "react-icons/fa";
@@ -12,6 +12,8 @@ import { Link } from "react-router-dom";
 import Logout from "./Auth/Logout";
 // Translation
 import { useTranslation } from "react-i18next";
+import { GetAllUnReadNotifications, ReadAllNotifications, ReadNotification } from "@/hooks/notification/useNotification";
+import toast from "react-hot-toast";
 
 const NavBar = () => {
     const { t , i18n } = useTranslation();
@@ -19,6 +21,12 @@ const NavBar = () => {
     const ctxMenu = useContext(MenuContext);
     // current user
     const {data : currentUser} = GetCurrentUser();
+    // unread notifications
+        const {data : unreadNotificationsList , refetch} =  GetAllUnReadNotifications();
+        // read
+        const {mutate : read ,  isSuccess : isSuccessRead} = ReadNotification(); 
+        // read all
+        const { mutate : readAll , isSuccess : isSuccessReadAll } = ReadAllNotifications();
     
     // menu functions and states for show current user info
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -52,7 +60,38 @@ const NavBar = () => {
         { code: 'ar', name: 'العربية', flag: '🇸🇦' },
     ];
 
-    
+        // unread notificaitons menu states and functions
+    const [unreadNotificationsAnchorEl, setUnreadNotificationsAnchorEl] = useState<null | HTMLElement>(null);
+    const unreadNotificationsOpen = Boolean(unreadNotificationsAnchorEl);
+    const handleUnreadNotificationsClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setUnreadNotificationsAnchorEl(event.currentTarget);
+    };
+    const handleUnreadNotificationsClose = () => {
+            setUnreadNotificationsAnchorEl(null);
+    };
+
+
+    async function readNotification (id : string) {
+        await read(id);
+        refetch();
+    }
+    async function readAllNotifications () {
+        await readAll();
+        refetch();
+    }
+
+    useEffect(() => {
+        if(isSuccessRead) {
+            toast.success('تم قراءة الاشعار بنجاح');
+            handleUnreadNotificationsClose()
+    }
+        if(isSuccessReadAll) {
+            toast.success('تم قراءة  جميع الاشعار بنجاح');
+            handleUnreadNotificationsClose()
+    }
+
+},[isSuccessRead])
+
     return (
         <div className="flex justify-between !p-4 text-primary-main">
             <div className="flex">
@@ -109,10 +148,52 @@ const NavBar = () => {
                             </MenuItem>
                         ))}
                     </Menu>
-                    {/* bell */}
-                    <IconButton color="primary">
-                       <Link to='/notifications'><FaBell /></Link>
+                    {/* un read notifications */}
+                    <IconButton 
+                        color="primary"
+                        onClick={handleUnreadNotificationsClick}
+                        aria-controls={unreadNotificationsOpen ? 'unread-notification-menu' : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={unreadNotificationsOpen ? 'true' : undefined}
+                    >
+                        <FaBell />
                     </IconButton>
+                    <Menu
+                        id="language-menu"
+                        anchorEl={unreadNotificationsAnchorEl}
+                        open={unreadNotificationsOpen}
+                        onClose={handleUnreadNotificationsClose}
+                        slotProps={{
+                            list: {
+                                'aria-labelledby': 'unread-notifications-button',
+                            },
+                        }}
+                    >        
+                        {unreadNotificationsList?.map((notification) => (
+                            notification.data.title && (
+                            <div key={notification.id} className="bg-yellow-50 relative w-[250px]">
+                            <MenuItem 
+                            className="flex flex-col"
+                            onClick={() => readNotification(notification.id)}
+                            >
+                                    <Typography>{notification.data.title}</Typography>  
+                                    <Typography className="text-gray-400 !text-sm">{notification.created_at.split('T')[0]}</Typography>
+                                    <Typography className="text-gray-400 !text-sm">{notification.created_at.split('T')[1].slice(0,5)}</Typography>
+                                    <Chip
+                                    className="absolute bottom-[1px] start-[10px]"
+                                        label='جديد'
+                                        size="small"
+                                        color="success"
+                                        />
+                            </MenuItem>
+                               <Divider />
+                               </div>)
+                        ))}
+                         <MenuItem className="w-full" onClick={readAllNotifications}>
+                                <Button className="w-full !text-[16px] !text-white" variant={'contained'}>قراءة جميع الاشعارات</Button>
+                            </MenuItem>
+                    </Menu>
+
 
                     {/* User menu */}
                     <div>
