@@ -47,7 +47,7 @@ const Sidebar = () => {
         </div>}
 
       {/* Navigation with staggered transitions */}
-      <ul className='flex flex-col gap-4 !mt-10'>
+      <ul className='flex flex-col gap-3 !mt-6'>
         {staticLinks.map((link, index) => (
           currentUser?.userType && link.roles.includes(currentUser.userType) && ( 
             <li key={index}>

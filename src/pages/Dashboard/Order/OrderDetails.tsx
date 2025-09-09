@@ -51,14 +51,14 @@ const OrderDetails = () => {
       const localProducts: LocalProduct[] = [
     { name: t('orderDetails.products.braceletLock'), price: getProductPriceByKarat(21), weight : 12 , karat : 21 , quantity: 1 },
     { name: t('orderDetails.products.chainLetterM'), price: getProductPriceByKarat(21), weight : 15,  karat: 21, quantity: 1 },
-    { name: t('orderDetails.products.childrenEarrings'), price: getProductPriceByKarat(18), weight : 2, karat: 18, quantity: 1 },
+    { name: t('orderDetails.products.childrenEarrings'), price: getProductPriceByKarat(18), weight : 2, karat: 18, quantity: 2 },
     { name: t('orderDetails.products.ankletFrank'), price: getProductPriceByKarat(21), weight : 8,karat: 21, quantity: 1 },
     { name: t('orderDetails.products.heavyChain'), price: getProductPriceByKarat(21), weight : 45 , karat: 21, quantity: 1 },
   ]
 
       const totalAmount = useMemo(() => {
         return localProducts.reduce((acc,item) => {
-            return acc + (item.price * item.quantity)
+            return acc + (item.price * item.weight * item.quantity)
         },0)
     } , [localProducts])
 
@@ -168,19 +168,23 @@ const OrderDetails = () => {
             <table className="w-full">
               <thead className="bg-primary-main">
                 <tr>
-                  <th className="!px-6 !py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
+                  <th className="!px-6 !py-3 !text-start text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
                     {t('orderDetails.table.productName')}
                   </th>
-                  <th className="!px-6 !py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
-                    {t('orderDetails.table.price')}
+                  <th className="!px-6 !py-3 !text-start text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
+                    {t('orderDetails.table.weight')}
                   </th>
-                  <th className="!px-6 !py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
+                  <th className="!px-6 !py-3 !text-start text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
+                    {t('orderDetails.table.price')}
+                     <span className="text-secondary-main capitalize !ms-1 !text-[10px] text-normal">1g</span>
+                  </th>
+                  <th className="!px-6 !py-3 !text-start text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
                     {t('orderDetails.table.karat')}
                   </th>
-                  <th className="!px-6 !py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
+                  <th className="!px-6 !py-3 !text-start text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
                     {t('orderDetails.table.quantity')}
                   </th>
-                  <th className="!px-6 !py-3 text-left text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
+                  <th className="!px-6 !py-3 !text-start text-xs font-medium text-white uppercase tracking-wider border-b border-primary-main-200">
                     {t('orderDetails.table.total')}
                   </th>
                 </tr>
@@ -189,8 +193,12 @@ const OrderDetails = () => {
                 {localProducts.map((product, index) => (
                   <tr key={index}>
                     <td className="!px-6 !py-4 whitespace-nowrap text-sm font-medium text-gray-900">{product.name}</td>
+                    <td className="!px-10 !py-4 whitespace-nowrap text-sm text-gray-700">
+                      <span className="font-semibold">{product.weight}</span>
+                    </td>
                     <td className="!px-6 !py-4 whitespace-nowrap text-sm text-gray-700">
-                      <span className="font-semibold text-primary-main">{getProductPriceByKarat(product.karat)}</span>
+                      <span className="font-semibold text-primary-main">{getProductPriceByKarat(product.karat)}
+                      </span>
                     </td>
                     <td className="!px-6 !py-4 whitespace-nowrap text-sm text-gray-700">
                       <span className="bg-primary-main text-white !px-2 !py-1 rounded-full text-xs font-medium">
@@ -199,7 +207,7 @@ const OrderDetails = () => {
                     </td>
                     <td className="!ps-12 !py-4 whitespace-nowrap text-sm text-gray-700">{product.quantity}</td>
                     <td className="!px-6 !py-4 whitespace-nowrap text-sm font-semibold text-primary-main">
-                      ${(product.price * product.quantity).toFixed(3)}
+                      ${(product.price * product.weight * product.quantity).toFixed(3)}
                     </td>
                   </tr>
                 ))}

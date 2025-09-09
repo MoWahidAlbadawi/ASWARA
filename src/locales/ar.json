@@ -4,6 +4,7 @@
     "users": "المستخدمون",
     "categories": "الفئات",
     "products": "المنتجات",
+    "productsReview": "مراجعة المنتجات",
     "orders": "الطلبات",
     "notifications": "الإشعارات",
     "profile": "الملف الشخصي"
@@ -82,6 +83,7 @@
     "grandTotal": "المجموع الكلي",
     "table": {
       "productName": "اسم المنتج",
+      "weight": "الوزن",
       "price": "السعر",
       "karat": "العيار",
       "quantity": "الكمية",

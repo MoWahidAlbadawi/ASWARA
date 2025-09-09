@@ -2,9 +2,7 @@ import { FaBell } from "react-icons/fa";
 import { TbCategoryFilled } from "react-icons/tb";
 import { MdDashboard } from 'react-icons/md';
 import { CgProfile } from "react-icons/cg";
-import { Users, Package, ShoppingCart } from "lucide-react";
-import { useTranslation } from "react-i18next";
-
+import { ClipboardList , Users, Package, ShoppingCart } from "lucide-react";
 interface Link {
     titleKey: string; 
     path: string;
@@ -13,7 +11,7 @@ interface Link {
 }
 
 // Static links configuration with translation keys
-const staticLinks: Link[] = [
+export const staticLinks: Link[] = [
     {
         titleKey: 'navigation.home',
         path: '/home',
@@ -39,6 +37,12 @@ const staticLinks: Link[] = [
         icon: <Package />
     },
     {
+        titleKey: 'navigation.productsReview',
+        path: '/ddd',
+        roles: ['admin', 'product_manager'],
+        icon: <ClipboardList />
+    },
+    {
         titleKey: 'navigation.orders',
         path: '/orders',
         roles: ['admin', 'product_manager'],
@@ -58,23 +62,3 @@ const staticLinks: Link[] = [
     }
 ];
 
-// Hook to get translated links
-export const useTranslatedLinks = () => {
-    const { t } = useTranslation();
-    
-    return staticLinks.map(link => ({
-        ...link,
-        title: t(link.titleKey) 
-    }));
-};
-
-
-export const getTranslatedLinks = (t: (key: string) => string) => {
-    return staticLinks.map(link => ({
-        ...link,
-        title: t(link.titleKey)
-    }));
-};
-
-
-export { staticLinks };

@@ -4,6 +4,7 @@
     "users": "Users",
     "categories": "Categories",
     "products": "Products",
+    "productsReview": "Products Review",
     "orders": "Orders",
     "notifications": "Notifications",
     "profile": "Profile"
@@ -83,6 +84,7 @@
     "table": {
       "productName": "Product Name",
       "price": "Price",
+      "weight": "Weight",
       "karat": "Karat",
       "quantity": "Quantity",
       "total": "Total"
