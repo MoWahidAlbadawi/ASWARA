@@ -1,22 +1,27 @@
-import { GetOrderById } from "@/hooks/order/useOrder"
-import { FaBox, FaMoneyBillWave, FaUser } from "react-icons/fa"
+import { GetOrderById, UpdateOrderStatus } from "@/hooks/order/useOrder"
+import { FaMoneyBillWave, FaUser } from "react-icons/fa"
 import { IoIosTime } from "react-icons/io"
-import { useParams } from "react-router-dom"
-import { Icon , Typography } from "@mui/material"
+import { useNavigate ,  useParams } from "react-router-dom"
+import { Box, Chip, LinearProgress, Button , MenuItem, Select, Typography } from "@mui/material"
 
 import { GetAllUsers } from "@/hooks/users/useUsers"
 import { useContext,  useEffect , useMemo ,  useState } from "react"
 import { GoldPricesContext } from "@/context/GoldPrices"
-import type { Order } from "@/services/types/orders"
+import type { Order, OrderStatus } from "@/services/types/orders"
 import type { LocalProduct } from "@/services/types/products"
 import { useTranslation } from "react-i18next"
+import toast from "react-hot-toast"
 
 const OrderDetails = () => {   
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const { orderId } = useParams();
-    const {data : order} = GetOrderById(orderId || '');
+    const {data : order , isLoading , refetch} = GetOrderById(orderId || '');
     const { data : users } = GetAllUsers();
     const { goldPrices } = useContext(GoldPricesContext);
+
+    const [status , setStatus]  = useState(order?.Status || 'pending');
+    const { mutate : mutateStatus } = UpdateOrderStatus(orderId || '');
     
     const [orderInfo , setOrderInfo] = useState<Order>({
         UserID : order?.UserID || 0,
@@ -43,6 +48,7 @@ const OrderDetails = () => {
          PaymentMethod : order?.PaymentMethod || '',
         order_detials : order?.order_detials || [],
       })
+      setStatus(order.Status || 'pending')
     }
     },[order])
 
@@ -67,29 +73,49 @@ const OrderDetails = () => {
         return itemKaratMatched?.price || 0;
     }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "completed":
-        return "bg-green-100 text-green-800 border-green-200"
-      case "pending":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200"
-      default:
-        return "bg-red-100 text-red-800 border-red-200"
-    }
-  }
+    // Change Order Status
+const orderStatus = [
+          { value: "pending", label: "Pending", color: "warning" },
+          { value: "processing", label: "Processing", color: "info" },
+          { value: "shipped", label: "Shipped", color: "success" },
+          { value: "delivered", label: "Delivered", color: "secondary" },
+          { value: "cancelled", label: "Cancelled", color: "error" },
+     ];
 
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case "completed":
-        return t('orders.status.completed')
-      case "pending":
-        return t('orders.status.pending')
-      case "cancelled":
-        return t('orders.status.cancelled')
-      default:
-        return status
+  function getStatusColor (status : OrderStatus) {
+    switch(status)  {
+      case 'pending' :
+        return 'warning'
+        case 'processing' : 
+        return 'info' 
+        case 'shipped' : 
+        return 'success' 
+        case 'delivered' : 
+        return 'secondary'
+        case 'cancelled' :
+          return 'error'
+          default : 
+          return 'warning'
     }
-  }
+  } 
+  
+  function getStatusText (status : OrderStatus) {
+    switch(status)  {
+      case 'pending' :
+        return 'Pending'
+        case 'processing' : 
+        return 'Processing' 
+        case 'shipped' : 
+        return 'Shipped' 
+        case 'delivered' : 
+        return 'Delivered'
+        case 'cancelled' :
+          return 'Cancelled'
+          default : 
+          return status
+    }
+  } 
+  
 
   function getUserName (UserID : number | string) {
     const user = users?.find(user => user.id === UserID);
@@ -108,13 +134,59 @@ const OrderDetails = () => {
     }
   }
 
+
+    const handleStatusChange = (e: any) => {
+        const newStatus = e.target.value as OrderStatus;
+        setStatus(newStatus);
+        mutateStatus({ Status: newStatus }, {
+            onSuccess: () => {
+                refetch();
+                toast.success('تم تعديل حالة الطلبية بنجاح')
+            },
+            onError: (error) => {
+                console.error("Failed to update status:", error);
+                setStatus(Status);
+            }
+        });
+    };
+
+    if(isLoading) return <Box>
+       <Typography color="secondary" variant="h6" className="flex gap-2 !mb-3 !ms-2">
+          <span>{t('orderDetails.title')}</span>
+        </Typography>
+
+      <LinearProgress color="primary"/>
+    </Box>
+    
+
   return (
     <div>
         <Typography color="secondary" variant="h6" className="flex gap-2 !mb-3 !ms-2">
-          <Icon>
-            <FaBox size={'20'}/>
-          </Icon>
-          <span className="!-mt-[5px]">{t('orderDetails.title')}</span>
+          <span>تعديل حالة الطلبية</span>
+        </Typography>
+        <Select value={status} onChange={handleStatusChange} className="w-[40%] !-mt-2"
+        disabled={status === 'delivered' || status === 'cancelled' }>
+        {orderStatus.map((item) => {
+          const isDisabled = status === 'delivered' || status === 'cancelled';
+          return <MenuItem  key={item.value} value={item.value}>
+            <Chip
+                  label={item.label}
+                  size="small"
+                  color={item.color as any}
+                  className="!rounded-[6px] !p-4 !text-[15px]"
+                  sx={{
+                  ...(isDisabled && {
+                    opacity: 0.6,
+                    color: 'rgba(0, 0, 0, 0.38)', 
+                    backgroundColor: 'rgba(0, 0, 0, 0.12)', 
+                  }),
+          }}
+                      />
+          </MenuItem>
+        })}
+        </Select>
+        <Typography color="secondary" variant="h6" className="flex gap-2 !mb-3 !ms-2">
+          <span className="!mt-5">{t('orderDetails.title')}</span>
         </Typography>
 
       {/* Basic Info Card */}
@@ -134,9 +206,7 @@ const OrderDetails = () => {
 
           <div className="flex items-center gap-2 text-gray-700">
             <span className="font-medium">{t('orderDetails.status')}:</span>
-            <span className={`!px-3 !py-1 rounded-full text-sm font-medium border ${getStatusColor(Status)}`}>
-              {getStatusLabel(Status)}
-            </span>
+            <Chip label={getStatusText(Status)} color={getStatusColor(Status)}/>
           </div>
 
     
@@ -223,6 +293,11 @@ const OrderDetails = () => {
           <span className="text-lg font-medium">{t('orderDetails.grandTotal')}:</span>
           <span className="text-2xl font-bold">${totalAmount}</span>
         </div>
+      </div>
+      {/* Cancel */}
+      <div className="flex justify-end items-center !mt-5">
+        <Button color="error" variant="contained" 
+        onClick={() => navigate('/orders')} className="!capitalize">Cancel</Button>
       </div>
     </div>
   )

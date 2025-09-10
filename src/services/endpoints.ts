@@ -35,9 +35,15 @@ export const MODIFY_PRODUCT = 'updateproduct'
 // orders endpoint
 export const ORDER = 'order'
 export const ORDERS = 'orders'
+export const UPDATE_ORDER = 'updateorder'
 
 // notifications endpoints
 export const NOTIFICATIONS = 'admin/notifications'
 export const UNREAD_NOTIFICATIONS = 'admin/notifications/unread'
 export const READ_NOTIFICATION = 'admin/notifications'
 export const READ_ALL_NOTIFICATIONS = 'admin/notifications/read-all'
+
+// review requests endpoints
+export const REVIEWR_REQUESTS = 'review-requests'
+export const APPROVE_REVIEWR_REQUEST = 'approve'
+export const REJECT_REVIEWR_REQUESTS = 'reject'

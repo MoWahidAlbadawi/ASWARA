@@ -15,14 +15,14 @@ import { ShoppingCart } from "lucide-react"
 import { IoIosSearch } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 // custom react query hooks
-import { GetAllOrders } from "@/hooks/order/useOrder";
+import { GetAllOrders  } from "@/hooks/order/useOrder";
 // table (Manual) 
 import DataTable from "@/components/Dashboard/DataTable/DataTable";
 import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
 // paginate (react paginate)
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
 // filter data
-import { filtersOrderDto , type Order} from "@/services/types/orders";
+import { filtersOrderDto , type Order, type OrderStatus} from "@/services/types/orders";
 import { GetAllUsers } from "@/hooks/users/useUsers";
 import { useNavigate } from "react-router-dom";
 
@@ -30,7 +30,6 @@ const Orders = () => {
 
   const { data , isLoading, isError } = GetAllOrders();
   const { data : users } = GetAllUsers();
-
   const navigate = useNavigate();
 
   const headers: { title: string; key: string }[] = [
@@ -67,11 +66,15 @@ const Orders = () => {
 //   filtered data
 const filteredData = useMemo(() => {
   if (!filters.searchTerm && !filters.status) return data || [];
-  return data?.filter((item) =>
+  return data?.filter((item) => {
+    const matchedName =  
     getUserName(item.UserID)
       .toLocaleLowerCase()
       .trim()
       .includes(filters.searchTerm.toLocaleLowerCase().trim())
+        const matchedStatus = filters.status === 'all' || item.Status === filters.status;
+        return matchedName && matchedStatus;
+  }
   ) || [];
 }, [filters.searchTerm , filters.status , data]);
 
@@ -97,13 +100,50 @@ const filteredData = useMemo(() => {
     navigate(`/orders/${id}`);
   }
 
-// Change Order Status
-const orderStatus = [
+  // Status Options
+const statusOptions = [
           { value: "pending", label: "Pending", color: "warning" },
-          { value: "completed", label: "Completed", color: "success" },
+          { value: "processing", label: "Processing", color: "info" },
+          { value: "shipped", label: "Shipped", color: "success" },
+          { value: "delivered", label: "Delivered", color: "secondary" },
           { value: "cancelled", label: "Cancelled", color: "error" },
      ];
 
+
+  function getStatusColor (status : OrderStatus) {
+    switch(status)  {
+      case 'pending' :
+        return 'warning'
+        case 'processing' : 
+        return 'info' 
+        case 'shipped' : 
+        return 'success' 
+        case 'delivered' : 
+        return 'secondary'
+        case 'cancelled' :
+          return 'error'
+          default : 
+          return 'warning'
+    }
+  } 
+  
+  function getStatusText (status : OrderStatus) {
+    switch(status)  {
+      case 'pending' :
+        return 'Pending'
+        case 'processing' : 
+        return 'Processing' 
+        case 'shipped' : 
+        return 'Shipped' 
+        case 'delivered' : 
+        return 'Delivered'
+        case 'cancelled' :
+          return 'Cancelled'
+          default : 
+          return status
+    }
+  } 
+  
   return (
     <Box>
       {/* Header */}
@@ -132,9 +172,29 @@ const orderStatus = [
             <MenuItem value={25}>25</MenuItem>
           </Select>
         </Grid>
-        <Grid size={{xs : 12 , sm : 6 , md : 3}} className="w-full max-h-[45px]">
-            {/* FILTER BY STAUS HERE  */}
-        </Grid>
+            {/* Status Filter */}
+             <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                  <label className="text-sm text-secondary-main">Filter by Status</label>
+                  <Select
+                    className="w-full max-h-[45px]"
+                    value={filters.status || ""}
+                    onChange={handleFiltersChange}
+                    name="status"
+                    displayEmpty
+                  >
+               <MenuItem value="all">All</MenuItem>
+              {statusOptions.map((item) => {
+                  return <MenuItem  key={item.value} value={item.value}>
+                    <Chip
+                          label={item.label}
+                          size="small"
+                          color={item.color as any}
+                          className="!rounded-[6px] !p-4 !text-[15px]"
+                              />
+                  </MenuItem>
+                })}
+                  </Select>
+                  </Grid>
         <Grid size={{xs : 0  , md : 3}} className="hidden md:block"></Grid>
         {/* Search input */}
         <Grid size={{xs : 12 , sm : 5 , md : 3}}>
@@ -166,22 +226,13 @@ const orderStatus = [
              created_at : (item : Order) => <span>{item.created_at?.slice(0,10) || '--'}</span>,
              updated_at : (item : Order) => <span>{item.updated_at?.slice(0,10) || '--'}</span>,
              UserID : (item : Order) => <span>{getUserName(item.UserID)}</span>,
-             status : (item : Order) => <Select
-                    className="w-full max-h-[40px]"
-                    value={item.Status || ""}
-                    name="status"
-                >
-                  {orderStatus.map((item) => (
-                    <MenuItem key={item.value} value={item.value}>
-                      <Chip
-                        label={item.label}
+             Status : (item : Order) =>  <Chip
+                        label={getStatusText(item.Status)}
                         size="small"
-                        color={item.color as any}
-                        className="!rounded-[6px] !p-1 !text-[13px]"
+                        color={getStatusColor(item.Status)}
+                        className="!rounded-[6px] !p-2 !text-[13px] min-w-[100px]"
                       />
-                    </MenuItem>
-                  ))}
-                </Select>,
+              ,
           actions : (item : any) => <IconButton onClick={() => navigateToOrderDetails(item.OrderID)}><FaEye/></IconButton>
         }}
         showActions={false}

@@ -1,5 +1,5 @@
 import { SlMenu } from "react-icons/sl";
-import { IconButton , Menu , MenuItem , Button , Divider, Typography , Icon , Box, Chip} from "@mui/material";
+import { IconButton , Menu , MenuItem ,Badge ,  Button , Divider, Typography , Icon , Box, Chip} from "@mui/material";
 // context to mange menu 
 import { useContext,useEffect,useState } from "react";
 import { MenuContext } from "@/context/MenuContext";
@@ -149,14 +149,20 @@ const NavBar = () => {
                         ))}
                     </Menu>
                     {/* un read notifications */}
-                    <IconButton 
-                        color="primary"
-                        onClick={handleUnreadNotificationsClick}
-                        aria-controls={unreadNotificationsOpen ? 'unread-notification-menu' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={unreadNotificationsOpen ? 'true' : undefined}
-                    >
-                        <FaBell />
+            <IconButton
+                    color="primary"
+                    onClick={handleUnreadNotificationsClick}
+                    aria-controls={unreadNotificationsOpen ? 'unread-notification-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={unreadNotificationsOpen ? 'true' : undefined}
+                >
+                        <Badge
+                         badgeContent={unreadNotificationsList?.length || 0}
+                            color="error"
+                            >
+                            <FaBell />
+                        </Badge>
+
                     </IconButton>
                     <Menu
                         id="language-menu"

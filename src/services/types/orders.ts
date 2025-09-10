@@ -4,14 +4,14 @@ export class filtersOrderDto {
     searchTerm : string = '';
     pageSize : number = 8;
     pageIndex : number = 1;
-    status : string = '';
+    status : OrderStatus = 'all';
 
 }
 
 export type Order = {
     OrderID : number | string,
     UserID : number | string,
-    Status : string,
+    Status : OrderStatus,
     TotalAmount : string | number,
     ShippingAddress : string,
     PaymentMethod : string,
@@ -29,6 +29,8 @@ export type OrderDetails = {
     created_at : string,
     updated_at : string
 }
+
+export type OrderStatus = 'all' | 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';   
 
 export type OrderById = Order;
 

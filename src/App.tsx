@@ -37,6 +37,7 @@ import OrderDetails from './pages/Dashboard/Order/OrderDetails';
 // Context
 import { MenuContextProvider } from './context/MenuContext.tsx'
 import { GoldPricesContextProvider } from './context/GoldPrices.tsx'
+import ReviewRequests from './pages/Dashboard/ReviewRequest/ReviewRequests.tsx';
 
 const router = createBrowserRouter([
   // Auth routes
@@ -68,6 +69,8 @@ const router = createBrowserRouter([
     // orders pages
     {path : '/orders' , element : <Orders /> },
     {path : '/orders/:orderId' , element : <OrderDetails /> },
+    // review request
+    {path : '/reviewRequests' , element : <ReviewRequests />},
     // notifications page
     {path : '/notifications' , element : <Notifications />},
     // profile

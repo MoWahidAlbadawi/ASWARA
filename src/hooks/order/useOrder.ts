@@ -1,7 +1,7 @@
-import { useQuery } from "react-query";
-import type { ApiResponseGetOrders , ApiResponseGetOrderById} from '@/services/types/orders'
+import { useMutation, useQuery } from "react-query";
+import type { ApiResponseGetOrders , ApiResponseGetOrderById , OrderStatus} from '@/services/types/orders'
 import api from "@/services/axios"
-import { ORDERS , ORDER } from  "@/services/endpoints"
+import { ORDERS , ORDER, UPDATE_ORDER } from  "@/services/endpoints"
 
 // get all orders
 export const GetAllOrders = () => {
@@ -15,5 +15,11 @@ export const GetAllOrders = () => {
 export const GetOrderById = (id : (number | string)) => {
     return useQuery(['show-order',id],() => {
         return api.get<ApiResponseGetOrderById>(`/${ORDER}/${id}`).then(res => res.data.data);
+    })
+}
+
+export const UpdateOrderStatus = (id : number | string) => {
+    return useMutation(['update-order-status',id],(payload :{Status :  OrderStatus}) => {
+        return api.post(`/${UPDATE_ORDER}/${id}`,payload).then(res => res.data.data);
     })
 }

@@ -38,7 +38,7 @@ export const staticLinks: Link[] = [
     },
     {
          titleKey: 'navigation.reviewRequests',
-        path: '/ddd',
+        path: '/reviewRequests',
         roles: ['admin', 'product_manager'],
         icon: <ClipboardList />
     },
