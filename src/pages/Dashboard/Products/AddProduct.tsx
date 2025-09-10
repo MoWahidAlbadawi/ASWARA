@@ -131,7 +131,7 @@ const AddProduct = () => {
     const itemKaratMatched = goldPrices.find((item) => item.karat == data.karat);
     const price = itemKaratMatched?.price;
      
-    if (price) formData.append('Price', String(price));
+    if (price) formData.append('price', String(price));
     if (data.quantity) formData.append('quantity', String(data.quantity));
     if (data.categoryID) formData.append('CategoryID', String(data.categoryID));
 

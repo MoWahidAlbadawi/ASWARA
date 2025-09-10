@@ -1,4 +1,4 @@
-import { useState , useEffect , useMemo } from "react";
+import { useState , useEffect , useMemo, useContext } from "react";
 import { DeleteProduct, GetAllProducts } from "@/hooks/products/useProducts";
 // table (Manual) 
 import DataTable from "@/components/Dashboard/DataTable/DataTable";
@@ -16,6 +16,7 @@ import { filtersProductDto } from '@/services/types/products'
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
 import { getAllCategories } from "@/hooks/categories/useCategories";
 import { useTranslation } from "react-i18next";
+import { GoldPricesContext } from "@/context/GoldPrices";
 
 const Products = () => {
     const { t } = useTranslation();
@@ -23,6 +24,9 @@ const Products = () => {
     const { data , isLoading , isError , refetch} = GetAllProducts();
     const { data : categories } = getAllCategories();
     const { mutate , isSuccess : isSuccessDelete , error : errorDelete} = DeleteProduct();
+
+    // Gold Prices
+    const { goldPrices } = useContext(GoldPricesContext);
 
     const headers = [
         { title: t('products.table.name') , key : 'name'},
@@ -99,6 +103,12 @@ const Products = () => {
     mutate(id);
     }
 
+    // if not have price form server , get price by current karat
+       function getProductPriceByKarat (karat : 18 | 21 | 24) {
+        const itemKaratMatched = goldPrices.find((item) => item.karat == karat);
+        return itemKaratMatched?.price || 0;
+    }
+
     return <Box>
         {/* header  */}
         <Box className='flex justify-between  !mb-6'>
@@ -169,7 +179,7 @@ const Products = () => {
             startIndex={startIndex}
             onDeleteItem={handleDeleteProduct}
             customColumns={{
-                price : (item : any) => <span>{ item.price ? `${item.price}$` : '--' }</span>,
+                price : (item : any) => <span>{ item.price ? `${item.price}$` : `${getProductPriceByKarat(item.karat || 21)}$`}</span>,
                 karat : (item : any) => <span dir="ltr">{item.karat || 21} K</span>,
                 isFeatured : (item : any) => <Icon>
                     {item.isFeatured == 1 ? <FaStar /> : <FaRegStar />}
