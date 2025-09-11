@@ -10,6 +10,29 @@
     "profile": "الملف الشخصي"
   },
   "selectLanguage": "اختر اللغة",
+  "notifications": {
+    "new": "جديد",
+    "readAll": "قراءة جميع الاشعارات",
+    "readSuccess": "تم قراءة الاشعار بنجاح",
+    "readAllSuccess": "تم قراءة جميع الاشعارات بنجاح",
+    "noNotifications": "لا توجد إشعارات",
+
+  "table": {
+    "title": "الإشعار",
+    "createdAt": "تاريخ الإنشاء",
+    "isRead": "الحالة",
+    "actions": "الإجراءات"
+  },
+  "searchPlaceholder": "البحث بالعنوان",
+  "status": {
+    "read": "مقروء",
+    "unread": "غير مقروء"
+  },
+  "actions": {
+    "markAsRead": "تعليم كمقروء"
+  },
+  "readError": "حدث خطأ أثناء قراءة الإشعار"
+  },
   "logout": {
     "title": "تسجيل الخروج",
     "confirmationMessage": "هل أنت متأكد أنك تريد مغادرة ASWARA؟",
@@ -57,21 +80,38 @@
   "orders": {
     "title": "الطلبات",
     "searchByUser": "البحث بالمستخدم",
-    "table": {
-      "user": "المستخدم",
-      "orderDate": "تاريخ الطلب",
-      "status": "الحالة",
-      "totalAmount": "المبلغ الإجمالي",
-      "shippingAddress": "عنوان الشحن",
-      "actions": "الإجراءات"
-    },
-    "status": {
-      "pending": "معلق",
-      "completed": "مكتمل",
-      "cancelled": "ملغي"
-    }
+  "table": {
+    "orderDate": "تاريخ الطلب",
+    "user": "المستخدم",
+    "status": "الحالة",
+    "totalAmount": "المبلغ الإجمالي",
+    "shippingAddress": "عنوان الشحن",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التحديث",
+    "actions": "الإجراءات"
+  },
+  "filters": {
+    "status": "تصفية حسب الحالة",
+    "all": "الكل"
+  },
+  "searchPlaceholder": "البحث بالمستخدم",
+  "status": {
+    "pending": "معلق",
+    "processing": "قيد المعالجة",
+    "shipped": "تم الشحن",
+    "delivered": "تم التسليم",
+    "cancelled": "ملغي"
+  },
+  "actions": {
+    "viewDetails": "عرض تفاصيل الطلب"
+  }
   },
   "orderDetails": {
+  "updateStatus": "تعديل حالة الطلبية",
+  "messages": {
+    "statusUpdateSuccess": "تم تعديل حالة الطلبية بنجاح",
+    "statusUpdateError": "فشل في تعديل حالة الطلبية"
+  },
     "title": "تفاصيل الطلب",
     "userName": "اسم المستخدم",
     "shippingAddress": "عنوان الشحن",
@@ -98,6 +138,32 @@
     }
   },
   "products": {
+  "modifyBreadcrumb": "المنتجات / تعديل منتج",
+  "breadcrumb": "المنتجات / إضافة منتج",
+  "form": {
+    "featured": "منتج مميز",
+    "name": "اسم المنتج",
+    "namePlaceholder": "أدخل اسم المنتج",
+    "nameRequired": "اسم المنتج مطلوب",
+    "description": "الوصف",
+    "descriptionPlaceholder": "أدخل وصف المنتج",
+    "descriptionRequired": "الوصف مطلوب",
+    "karat": "العيار",
+    "karatRequired": "العيار مطلوب",
+    "weight": "الوزن (غ)",
+    "weightPlaceholder": "أدخل الوزن",
+    "weightRequired": "الوزن مطلوب",
+    "weightInvalid": "يجب أن يكون الوزن أكبر من 0",
+    "quantity": "الكمية",
+    "quantityPlaceholder": "أدخل الكمية",
+    "quantityRequired": "الكمية مطلوبة",
+    "quantityInvalid": "يجب أن تكون الكمية موجبة",
+    "category": "الفئة",
+    "selectCategory": "اختر الفئة",
+    "categoryRequired": "الفئة مطلوبة",
+    "image": "صورة المنتج",
+    "imageRequired": "صورة المنتج مطلوبة"
+  },
     "title": "المنتجات",
     "addProduct": "إضافة منتج",
     "searchByName": "البحث بالاسم",
@@ -117,20 +183,246 @@
     },
     "messages": {
       "deleteSuccess": "تم حذف المنتج بنجاح",
-      "deleteError": "حدث خطأ أثناء حذف المنتج"
+      "deleteError": "حدث خطأ أثناء حذف المنتج",
+     "addSuccess": "تم إضافة المنتج بنجاح",
+     "editSuccess": "تم تعديل المنتج بنجاح",
+    "editError": "حدث خطأ أثناء تعديل المنتج",
+    "addError": "حدث خطأ أثناء إضافة المنتج"
+    }
+  },
+  "users": {
+    "title": "المستخدمون",
+    "addUser": "إضافة مستخدم",
+    "searchByName": "البحث بالاسم",
+    "breadcrumb": "المستخدمون / إضافة مستخدم",
+    "modifyBreadcrumb": "المستخدمون / تعديل مستخدم",
+    "table": {
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "phone": "رقم الهاتف",
+      "role": "الدور"
+    },
+    "form": {
+      "userName": "اسم المستخدم",
+      "userNamePlaceholder": "أدخل اسم المستخدم",
+      "userNameRequired": "اسم المستخدم مطلوب",
+      "userEmail": "البريد الإلكتروني للمستخدم",
+      "userEmailPlaceholder": "أدخل البريد الإلكتروني للمستخدم",
+      "userEmailRequired": "البريد الإلكتروني للمستخدم مطلوب",
+      "userEmailInvalid": "يرجى إدخال بريد إلكتروني صحيح للمستخدم",
+      "userPassword": "كلمة مرور المستخدم",
+      "userPasswordPlaceholder": "أدخل كلمة المرور",
+      "userPasswordRequired": "كلمة المرور مطلوبة",
+      "userPasswordMinLength": "يجب أن تكون كلمة المرور 8 أحرف أو أكثر",
+      "userPhone": "رقم هاتف المستخدم",
+      "userPhonePlaceholder": "أدخل رقم هاتف المستخدم",
+      "userPhoneRequired": "رقم هاتف المستخدم مطلوب",
+      "userPhoneInvalid": "يجب أن يبدأ رقم الهاتف بـ 09 ويكون بالضبط 10 أرقام",
+      "userRole": "دور المستخدم",
+      "userRoleRequired": "دور المستخدم مطلوب",
+      "selectRole": "اختر الدور",
+      "addButton": "إضافة"
+    },
+    "roles": {
+      "user": "مستخدم",
+      "productManager": "مدير المنتجات",
+      "admin": "مدير"
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف المستخدم بنجاح",
+      "deleteError": "حدث خطأ أثناء حذف المستخدم",
+      "addSuccess": "تم إضافة المستخدم بنجاح",
+      "addError": "حدث خطأ أثناء إضافة المستخدم",
+      "editSuccess": "تم تعديل المستخدم بنجاح",
+      "editError": "حدث خطأ أثناء تعديل المستخدم"
+    }
+  },
+  "categories": {
+      "modifyBreadcrumb": "الفئات / تعديل فئة",
+    "title": "الفئات",
+    "addCategory": "إضافة فئة",
+    "searchByName": "البحث بالاسم",
+    "breadcrumb": "الفئات / إضافة فئة",
+    "table": {
+      "name": "اسم الفئة",
+      "description": "وصف الفئة",
+      "smithing": "قيمة الصياغة"
+    },
+    "form": {
+      "categoryName": "اسم الفئة",
+      "categoryNamePlaceholder": "أدخل اسم الفئة",
+      "categoryNameRequired": "اسم الفئة مطلوب",
+      "categoryDescription": "وصف الفئة",
+      "categoryDescriptionPlaceholder": "أدخل وصف الفئة",
+      "categoryDescriptionRequired": "وصف الفئة مطلوب",
+      "smithingValue": "قيمة الصياغة",
+      "smithingRequired": "الصياغة مطلوبة",
+      "categoryImage": "صورة الفئة",
+      "imageRequired": "صورة الفئة مطلوبة",
+      "deleteImage": "حذف",
+      "addButton": "إضافة"
+    },
+    "filters": {
+      "smithing": "الصياغة",
+      "selectSmithing": "اختر الصياغة"
+    },
+    "messages": {
+      "deleteSuccess": "تم حذف الفئة بنجاح",
+      "deleteError": "حدث خطأ أثناء حذف الفئة",
+      "addSuccess": "تم إضافة الفئة بنجاح",
+      "addError": "حدث خطأ أثناء إضافة الفئة"
+    }
+  },
+  "profile": {
+    "breadcrumb": "الملف الشخصي / تعديل الملف الشخصي",
+  "fields": {
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "userType": "نوع المستخدم",
+    "createdAt": "تاريخ الإنشاء"
+  },
+  "editButton": "تعديل الملف الشخصي",
+    "form": {
+      "name": "الاسم",
+      "namePlaceholder": "أدخل اسمك",
+      "nameRequired": "الاسم مطلوب",
+      "email": "البريد الإلكتروني",
+      "emailPlaceholder": "أدخل بريدك الإلكتروني",
+      "emailRequired": "البريد الإلكتروني مطلوب",
+      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+      "phone": "رقم الهاتف",
+      "phonePlaceholder": "أدخل رقم هاتفك",
+      "phoneRequired": "رقم الهاتف مطلوب",
+      "phoneInvalid": "يجب أن يبدأ رقم الهاتف بـ 09 ويكون بالضبط 10 أرقام"
+    },
+    "messages": {
+      "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+      "updateError": "حدث خطأ أثناء تحديث الملف الشخصي"
     }
   },
   "common": {
     "dashboard": "لوحة التحكم",
     "management": "الإدارة",
+    "userInitial": "م",
     "settings": "الإعدادات",
-    "cancel": "إلغاء",
+      "number": "#",
+  "actions": "الإجراءات",
+  "loading": "جارٍ التحميل...",
+  "errorTryAgain": "حدث خطأ ما، يرجى المحاولة لاحقًا!",
+  "noDataFound": "لا توجد بيانات",
+  "cancel": "إلغاء",
+  "delete": "حذف",
+    "upload" : "رفع",
     "confirm": "تأكيد",
+    "add" : "إضافة",
+    "save": "حفظ",
     "yes": "نعم",
+    "close" : "إغلاق",
+    "unknownUser" : "مستخدم غير معروف",
     "no": "لا",
     "itemsPerPage": "عدد العناصر في الصفحة",
     "pagination": {
       "showing": "عرض {{start}} إلى {{end}} من {{total}}"
     }
+  },
+  "login": {
+    "logoAlt": "شعار أصورة",
+    "welcomeMessage": "يرجى تسجيل الدخول للمتابعة",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+    "passwordLabel": "كلمة المرور",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "loginButton": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "signUpLink": "إنشاء حساب",
+    "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة!",
+    "genericError": "حدث خطأ ما، يرجى المحاولة لاحقًا!",
+    "jewelryImageAlt": "صورة مجوهرات أنيقة"
+  },
+  "register": {
+    "logoAlt": "شعار أصورة",
+    "createAccount": "أنشئ حسابك",
+    "nameLabel": "الاسم",
+    "namePlaceholder": "أدخل اسمك",
+    "nameRequired": "الاسم مطلوب",
+    "emailLabel": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+    "passwordLabel": "كلمة المرور",
+    "passwordPlaceholder": "أدخل كلمة المرور",
+    "passwordRequired": "كلمة المرور مطلوبة",
+    "passwordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل",
+    "confirmPasswordLabel": "تأكيد كلمة المرور",
+    "confirmPasswordPlaceholder": "أعد إدخال كلمة المرور",
+    "confirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+    "passwordMismatch": "يجب أن تتطابق كلمة المرور",
+    "phoneLabel": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك",
+    "phoneRequired": "رقم الهاتف مطلوب",
+    "phoneInvalid": "يجب أن يبدأ الرقم بـ 09 ويكون مكونًا من 10 أرقام",
+    "registerButton": "تسجيل",
+    "alreadyHaveAccount": "هل لديك حساب بالفعل؟",
+    "signInLink": "تسجيل الدخول",
+    "validationError": "يرجى تصحيح الأخطاء في النموذج",
+    "emailExists": "هذا البريد الإلكتروني مستخدم مسبقًا",
+    "genericError": "حدث خطأ ما، يرجى المحاولة لاحقًا",
+    "jewelryImageAlt": "صورة مجوهرات فاخرة"
+  },
+  "reviewRequests": {
+  "table": {
+    "user": "المستخدم",
+    "name": "اسم المنتج",
+    "description": "الوصف",
+    "weight": "الوزن",
+    "price": "السعر",
+    "status": "الحالة",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التحديث",
+    "actions": "الإجراءات"
+  },
+  "filters": {
+    "status": "تصفية حسب الحالة",
+    "all": "الكل"
+  },
+  "searchPlaceholder": "البحث بالاسم",
+  "status": {
+    "pending": "معلق",
+    "approved": "موافق عليه",
+    "rejected": "مرفوض"
+  },
+  "messages": {
+    "approveSuccess": "تم الموافقة على المنتج بنجاح",
+    "approveError": "حدث خطأ أثناء الموافقة على المنتج",
+    "rejectSuccess": "تم رفض المنتج بنجاح",
+    "rejectError": "حدث خطأ أثناء رفض المنتج"
+  },
+  "actions": {
+    "manage": "إدارة طلب المراجعة",
+    "approve": "موافقة",
+    "reject": "رفض"
+  },
+  "dialog": {
+    "title": "إدارة طلب المراجعة",
+    "approvedDone" : "تمت الموافقة على المنتج",
+    "rejectedDone" : "تم رفض المنتج",
+    "user": "المستخدم",
+    "product": "المنتج",
+    "description": "الوصف",
+    "status": "الحالة",
+    "weight": "الوزن",
+    "price": "السعر",
+    "createdAt": "تاريخ الإنشاء",
+    "updatedAt": "تاريخ التحديث"
   }
+},
+"dataTable": {
+  "confirmDeleteTitle": "هل أنت متأكد أنك تريد حذف هذا العنصر؟",
+  "confirmDeleteMessage": "هذا الإجراء دائم ولا يمكن التراجع عنه. ستفقد الوصول إلى هذا العنصر إلى الأبد."
+}
 }

@@ -24,17 +24,20 @@ import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
 import toast from "react-hot-toast";
 // filter data
 import { filtersUserDto } from "@/services/types/users";
+// Translation
+import { useTranslation } from "react-i18next";
 
 const Users = () => {
+  const { t } = useTranslation();
   const { data , isLoading, isError, refetch } = GetAllUsers();
   const { data : currentUser} = GetCurrentUser();
   const { mutate, isSuccess: isSuccessDelete , error: errorDelete } = DeleteUser();
 
   const headers: { title: string; key: string }[] = [
-    { title: "Name", key: "name" },
-    { title: "Email", key: "email" },
-    { title: "Phone", key: "phone" },
-    { title: "Role", key: "userType" },
+    { title: t('users.table.name'), key: "name" },
+    { title: t('users.table.email'), key: "email" },
+    { title: t('users.table.phone'), key: "phone" },
+    { title: t('users.table.role'), key: "userType" },
   ];
 
   // filters state
@@ -90,13 +93,13 @@ const filteredData = useMemo(() => {
   // handle delete feedback
   useEffect(() => {
     if (isSuccessDelete) {
-      toast.success("The user was deleted successfully");
+      toast.success(t('users.messages.deleteSuccess'));
       refetch();
     }
     if (errorDelete) {
-      toast.error("Error occurred while deleting user");
+      toast.error(t('users.messages.deleteError'));
     }
-  }, [isSuccessDelete, errorDelete]);
+  }, [isSuccessDelete, errorDelete, t]);
 
   // delete user
   function handleDeleteUser(id: number) {
@@ -112,10 +115,10 @@ const filteredData = useMemo(() => {
           <Icon>
             <UsersIcon />
           </Icon>
-          Users
+          {t('users.title')}
         </Typography>
         <Button variant="contained" className="!text-white !capitalize">
-          <Link to="/user/add">Add User</Link>
+          <Link to="/user/add">{t('users.addUser')}</Link>
         </Button>
       </Box>
 
@@ -123,7 +126,7 @@ const filteredData = useMemo(() => {
       <Grid  container className="!mb-3">
         {/* Page size select */}
         <Grid size={{xs : 12 , sm : 5 , md : 3}}>
-          <label className="text-sm text-secondary-main">Items Per Page</label>
+          <label className="text-sm text-secondary-main">{t('common.itemsPerPage')}</label>
           <Select
             className="w-full max-h-[45px]"
             value={filters.pageSize}
@@ -141,7 +144,7 @@ const filteredData = useMemo(() => {
         <Box position={"relative"} className="!mt-6">
           <input
             className={classes["input-search"]}
-            placeholder="search by name"
+            placeholder={t('users.searchByName')}
             value={filters.searchTerm}
             onChange={handleFiltersChange}
             name="searchTerm"
@@ -169,7 +172,11 @@ const filteredData = useMemo(() => {
       {filteredData.length > 0 && (
         <Box className="!mt-3 flex flex-col gap-3 md:gap-0 md:flex-row justify-center md:justify-between items-center">
           <Typography className="text-gray-600">
-            Show {startIndex + 1} to {endIndex} from {filteredData.length}
+            {t('common.pagination.showing', { 
+              start: startIndex + 1, 
+              end: endIndex, 
+              total: filteredData.length 
+            })}
           </Typography>
           <PaginatedItems
             itemsPerPage={filters.pageSize}

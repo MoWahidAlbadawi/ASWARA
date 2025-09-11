@@ -4,12 +4,34 @@
     "users": "Users",
     "categories": "Categories",
     "products": "Products",
-    "reviewRequests": "Review Requests",
+    "reviewRequests": "Customer Requests",
     "orders": "Orders",
     "notifications": "Notifications",
     "profile": "Profile"
   },
   "selectLanguage": "Select Language",
+  "notifications": {
+    "new": "New",
+    "readAll": "Read All Notifications",
+    "readSuccess": "Notification marked as read successfully",
+    "readAllSuccess": "All notifications marked as read successfully",
+    "noNotifications": "No notifications",
+    "table": {
+      "title": "Notification",
+      "createdAt": "Created At",
+      "isRead": "Status",
+      "actions": "Actions"
+    },
+    "searchPlaceholder": "Search by title",
+    "status": {
+      "read": "Read",
+      "unread": "Unread"
+    },
+    "actions": {
+      "markAsRead": "Mark as Read"
+    },
+    "readError": "An error occurred while marking the notification as read"
+  },
   "logout": {
     "title": "Logout",
     "confirmationMessage": "Are you sure you want to leave ASWARA?",
@@ -50,7 +72,7 @@
     "marketStatus": "Market Status",
     "marketActive": "Active",
     "lastUpdated": "Last Updated",
-    "goldKarat": "{{karat}} Karat Gold",
+    "goldKarat": "Gold {{karat}} Karat",
     "perGram": "Per Gram",
     "livePricing": "Live Pricing"
   },
@@ -58,20 +80,37 @@
     "title": "Orders",
     "searchByUser": "Search by User",
     "table": {
-      "user": "User",
       "orderDate": "Order Date",
+      "user": "User",
       "status": "Status",
       "totalAmount": "Total Amount",
       "shippingAddress": "Shipping Address",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
       "actions": "Actions"
     },
+    "filters": {
+      "status": "Filter by Status",
+      "all": "All"
+    },
+    "searchPlaceholder": "Search by User",
     "status": {
       "pending": "Pending",
-      "completed": "Completed",
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
       "cancelled": "Cancelled"
+    },
+    "actions": {
+      "viewDetails": "View Order Details"
     }
   },
   "orderDetails": {
+    "updateStatus": "Update Order Status",
+    "messages": {
+      "statusUpdateSuccess": "Order status updated successfully",
+      "statusUpdateError": "Failed to update order status"
+    },
     "title": "Order Details",
     "userName": "User Name",
     "shippingAddress": "Shipping Address",
@@ -83,21 +122,47 @@
     "grandTotal": "Grand Total",
     "table": {
       "productName": "Product Name",
-      "price": "Price",
       "weight": "Weight",
+      "price": "Price",
       "karat": "Karat",
       "quantity": "Quantity",
       "total": "Total"
     },
     "products": {
       "braceletLock": "Bracelet Lock Model",
-      "chainLetterM": "Chain Letter M",
+      "chainLetterM": "Chain with Letter M",
       "childrenEarrings": "Children’s Earrings",
       "ankletFrank": "Frank Model Anklet",
-      "heavyChain": "Heavy Curb Chain"
+      "heavyChain": "Heavy Link Chain"
     }
   },
   "products": {
+    "modifyBreadcrumb": "Products / Edit Product",
+    "breadcrumb": "Products / Add Product",
+    "form": {
+      "featured": "Featured Product",
+      "name": "Product Name",
+      "namePlaceholder": "Enter product name",
+      "nameRequired": "Product name is required",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter product description",
+      "descriptionRequired": "Description is required",
+      "karat": "Karat",
+      "karatRequired": "Karat is required",
+      "weight": "Weight (g)",
+      "weightPlaceholder": "Enter weight",
+      "weightRequired": "Weight is required",
+      "weightInvalid": "Weight must be greater than 0",
+      "quantity": "Quantity",
+      "quantityPlaceholder": "Enter quantity",
+      "quantityRequired": "Quantity is required",
+      "quantityInvalid": "Quantity must be positive",
+      "category": "Category",
+      "selectCategory": "Select category",
+      "categoryRequired": "Category is required",
+      "image": "Product Image",
+      "imageRequired": "Product image is required"
+    },
     "title": "Products",
     "addProduct": "Add Product",
     "searchByName": "Search by Name",
@@ -113,24 +178,250 @@
     },
     "filters": {
       "category": "Category",
-      "selectCategory": "Select Category"
+      "selectCategory": "Select category"
     },
     "messages": {
       "deleteSuccess": "Product deleted successfully",
-      "deleteError": "An error occurred while deleting the product"
+      "deleteError": "An error occurred while deleting the product",
+      "addSuccess": "Product added successfully",
+      "editSuccess": "Product updated successfully",
+      "editError": "An error occurred while updating the product",
+      "addError": "An error occurred while adding the product"
+    }
+  },
+  "users": {
+    "title": "Users",
+    "addUser": "Add User",
+    "searchByName": "Search by Name",
+    "breadcrumb": "Users / Add User",
+    "modifyBreadcrumb": "Users / Edit User",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone Number",
+      "role": "Role"
+    },
+    "form": {
+      "userName": "Username",
+      "userNamePlaceholder": "Enter username",
+      "userNameRequired": "Username is required",
+      "userEmail": "User Email",
+      "userEmailPlaceholder": "Enter user email",
+      "userEmailRequired": "User email is required",
+      "userEmailInvalid": "Please enter a valid email",
+      "userPassword": "User Password",
+      "userPasswordPlaceholder": "Enter password",
+      "userPasswordRequired": "Password is required",
+      "userPasswordMinLength": "Password must be at least 8 characters",
+      "userPhone": "User Phone Number",
+      "userPhonePlaceholder": "Enter phone number",
+      "userPhoneRequired": "Phone number is required",
+      "userPhoneInvalid": "Phone number must start with 09 and be exactly 10 digits",
+      "userRole": "User Role",
+      "userRoleRequired": "User role is required",
+      "selectRole": "Select role",
+      "addButton": "Add"
+    },
+    "roles": {
+      "user": "User",
+      "productManager": "Product Manager",
+      "admin": "Admin"
+    },
+    "messages": {
+      "deleteSuccess": "User deleted successfully",
+      "deleteError": "An error occurred while deleting the user",
+      "addSuccess": "User added successfully",
+      "addError": "An error occurred while adding the user",
+      "editSuccess": "User updated successfully",
+      "editError": "An error occurred while updating the user"
+    }
+  },
+  "categories": {
+    "modifyBreadcrumb": "Categories / Edit Category",
+    "title": "Categories",
+    "addCategory": "Add Category",
+    "searchByName": "Search by Name",
+    "breadcrumb": "Categories / Add Category",
+    "table": {
+      "name": "Category Name",
+      "description": "Category Description",
+      "smithing": "Smithing Value"
+    },
+    "form": {
+      "categoryName": "Category Name",
+      "categoryNamePlaceholder": "Enter category name",
+      "categoryNameRequired": "Category name is required",
+      "categoryDescription": "Category Description",
+      "categoryDescriptionPlaceholder": "Enter category description",
+      "categoryDescriptionRequired": "Category description is required",
+      "smithingValue": "Smithing Value",
+      "smithingRequired": "Smithing is required",
+      "categoryImage": "Category Image",
+      "imageRequired": "Category image is required",
+      "deleteImage": "Delete",
+      "addButton": "Add"
+    },
+    "filters": {
+      "smithing": "Smithing",
+      "selectSmithing": "Select smithing"
+    },
+    "messages": {
+      "deleteSuccess": "Category deleted successfully",
+      "deleteError": "An error occurred while deleting the category",
+      "addSuccess": "Category added successfully",
+      "addError": "An error occurred while adding the category"
+    }
+  },
+  "profile": {
+    "breadcrumb": "Profile / Edit Profile",
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "userType": "User Type",
+      "createdAt": "Created At"
+    },
+    "editButton": "Edit Profile",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "Enter your name",
+      "nameRequired": "Name is required",
+      "email": "Email",
+      "emailPlaceholder": "Enter your email",
+      "emailRequired": "Email is required",
+      "emailInvalid": "Please enter a valid email",
+      "phone": "Phone",
+      "phonePlaceholder": "Enter your phone number",
+      "phoneRequired": "Phone number is required",
+      "phoneInvalid": "Phone number must start with 09 and be exactly 10 digits"
+    },
+    "messages": {
+      "updateSuccess": "Profile updated successfully",
+      "updateError": "An error occurred while updating the profile"
     }
   },
   "common": {
     "dashboard": "Dashboard",
     "management": "Management",
+    "userInitial": "U",
     "settings": "Settings",
+    "number": "#",
+    "actions": "Actions",
+    "loading": "Loading...",
+    "errorTryAgain": "Something went wrong, please try again later!",
+    "noDataFound": "No data found",
     "cancel": "Cancel",
+    "delete": "Delete",
+    "upload": "Upload",
     "confirm": "Confirm",
+    "add": "Add",
+    "save": "Save",
     "yes": "Yes",
+    "close": "Close",
+    "unknownUser": "Unknown User",
     "no": "No",
     "itemsPerPage": "Items per page",
     "pagination": {
       "showing": "Showing {{start}} to {{end}} of {{total}}"
     }
+  },
+  "login": {
+    "logoAlt": "Aswara Logo",
+    "welcomeMessage": "Please log in to continue",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "passwordRequired": "Password is required",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "loginButton": "Log In",
+    "noAccount": "Don’t have an account?",
+    "signUpLink": "Sign Up",
+    "invalidCredentials": "Invalid username or password!",
+    "genericError": "Something went wrong, please try again later!",
+    "jewelryImageAlt": "Elegant Jewelry Image"
+  },
+  "register": {
+    "logoAlt": "Aswara Logo",
+    "createAccount": "Create Your Account",
+    "nameLabel": "Name",
+    "namePlaceholder": "Enter your name",
+    "nameRequired": "Name is required",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "passwordRequired": "Password is required",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "confirmPasswordLabel": "Confirm Password",
+    "confirmPasswordPlaceholder": "Re-enter your password",
+    "confirmPasswordRequired": "Confirm password is required",
+    "passwordMismatch": "Passwords must match",
+    "phoneLabel": "Phone",
+    "phonePlaceholder": "Enter your phone number",
+    "phoneRequired": "Phone number is required",
+    "phoneInvalid": "Phone number must start with 09 and be 10 digits",
+    "registerButton": "Register",
+    "alreadyHaveAccount": "Already have an account?",
+    "signInLink": "Sign In",
+    "validationError": "Please correct the errors in the form",
+    "emailExists": "This email is already in use",
+    "genericError": "Something went wrong, please try again later",
+    "jewelryImageAlt": "Luxury Jewelry Image"
+  },
+  "reviewRequests": {
+    "table": {
+      "user": "User",
+      "name": "Product Name",
+      "description": "Description",
+      "weight": "Weight",
+      "price": "Price",
+      "status": "Status",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At",
+      "actions": "Actions"
+    },
+    "filters": {
+      "status": "Filter by Status",
+      "all": "All"
+    },
+    "searchPlaceholder": "Search by Name",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+    "messages": {
+      "approveSuccess": "Product approved successfully",
+      "approveError": "An error occurred while approving the product",
+      "rejectSuccess": "Product rejected successfully",
+      "rejectError": "An error occurred while rejecting the product"
+    },
+    "actions": {
+      "manage": "Manage Review Request",
+      "approve": "Approve",
+      "reject": "Reject"
+    },
+    "dialog": {
+      "title": "Manage Review Request",
+      "user": "User",
+      "approvedDone" : "Product Approved Done",
+      "rejectedDone" : "Product Rejected Done",
+      "product": "Product",
+      "description": "Description",
+      "status": "Status",
+      "weight": "Weight",
+      "price": "Price",
+      "createdAt": "Created At",
+      "updatedAt": "Updated At"
+    }
+  },
+  "dataTable": {
+    "confirmDeleteTitle": "Are you sure you want to delete this item?",
+    "confirmDeleteMessage": "This action is permanent and cannot be undone. You will lose access to this item forever."
   }
 }

@@ -7,8 +7,11 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import Err404 from "@/pages/Errors/Err404";
 import { Users } from 'lucide-react';
+// Translation
+import { useTranslation } from "react-i18next";
 
 const ModifyUser = () => {
+    const { t } = useTranslation();
     const { userId } = useParams();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams(); 
@@ -40,7 +43,7 @@ const ModifyUser = () => {
     useEffect(() => {
         const controller = new AbortController();
         if(isSuccessSet) {
-            toast.success('the user edited successfully');
+            toast.success(isProfileMode ? t('profile.messages.updateSuccess') : t('users.messages.editSuccess'));
             reset();
             setTimeout(() => {
                 // You can modify the navigation based on the `isProfileMode`
@@ -49,12 +52,12 @@ const ModifyUser = () => {
             }, 2000);
         }
         if(errorSet) {
-            toast.error('error happens while editing user');
+            toast.error(isProfileMode ? t('profile.messages.updateError') : t('users.messages.editError'));
         }
         return () => {
             controller.abort();
         }
-    },[isSuccessSet,errorSet])
+    },[isSuccessSet, errorSet, isProfileMode, t])
 
     // add
     function onSubmit (data : ModifyUserInterface) {
@@ -74,7 +77,7 @@ const ModifyUser = () => {
     
     // Now you can use the `isProfileMode` variable to conditionally render or change logic
     // For example, changing the header text or disabling certain fields.
-    const pageTitle = isProfileMode ? 'Profile / Edit Profile' : 'Users / Modify User';
+    const pageTitle = isProfileMode ? t('profile.breadcrumb') : t('users.modifyBreadcrumb');
 
     return (
         <div>
@@ -91,12 +94,15 @@ const ModifyUser = () => {
                     <div className={isProfileMode ? 'grid grid-cols-1 gap-3' : 'grid grid-cols-1 md:grid-cols-2 gap-3'}>
                         {/* user name */}
                         <div className="flex flex-col gap-2">
-                            <label className="text-secondary-main">{isProfileMode ? 'Name' :  'User Name'}<span className="text-red-600">*</span></label>
+                            <label className="text-secondary-main">
+                                {isProfileMode ? t('profile.form.name') : t('users.form.userName')}
+                                <span className="text-red-600">*</span>
+                            </label>
                             <TextField 
-                                placeholder="Enter user name"
+                                placeholder={isProfileMode ? t('profile.form.namePlaceholder') : t('users.form.userNamePlaceholder')}
                                 variant="outlined"
                                 {...register('name',{
-                                    required : 'user name is required'
+                                    required : isProfileMode ? t('profile.form.nameRequired') : t('users.form.userNameRequired')
                                 })}
                                 error={!!errors.name}
                                 helperText={errors.name?.message}
@@ -104,14 +110,17 @@ const ModifyUser = () => {
                         </div>
                         {/* user email*/}
                         <div className="flex flex-col gap-2">
-                            <label className="text-secondary-main">{isProfileMode ? 'Email' : 'User Email'}<span className="text-red-600">*</span></label>
+                            <label className="text-secondary-main">
+                                {isProfileMode ? t('profile.form.email') : t('users.form.userEmail')}
+                                <span className="text-red-600">*</span>
+                            </label>
                             <TextField 
-                                placeholder="Enter user email"
+                                placeholder={isProfileMode ? t('profile.form.emailPlaceholder') : t('users.form.userEmailPlaceholder')}
                                 variant="outlined"
                                 {...register('email',{
-                                    required : 'user email is required',
+                                    required : isProfileMode ? t('profile.form.emailRequired') : t('users.form.userEmailRequired'),
                                     validate : (value : string) => {
-                                        return value.includes('@') || 'please enter a valid user email'
+                                        return value.includes('@') || (isProfileMode ? t('profile.form.emailInvalid') : t('users.form.userEmailInvalid'))
                                     }   
                                 })}
                                 error={!!errors.email}
@@ -120,15 +129,18 @@ const ModifyUser = () => {
                         </div>
                         {/* user phone */}
                         <div className="flex flex-col gap-2">
-                            <label className="text-secondary-main">{isProfileMode ? 'Phone' : 'User Phone'}<span className="text-red-600">*</span></label>
+                            <label className="text-secondary-main">
+                                {isProfileMode ? t('profile.form.phone') : t('users.form.userPhone')}
+                                <span className="text-red-600">*</span>
+                            </label>
                             <TextField 
-                                placeholder="Enter user phone number"
+                                placeholder={isProfileMode ? t('profile.form.phonePlaceholder') : t('users.form.userPhonePlaceholder')}
                                 variant="outlined"
                                 {...register('phone',{
-                                    required : 'user phone is required',
+                                    required : isProfileMode ? t('profile.form.phoneRequired') : t('users.form.userPhoneRequired'),
                                     pattern : {
                                         value: /^09\d{8}$/,
-                                        message: 'phone number must start with 09 and be exactly 10 digits',
+                                        message: isProfileMode ? t('profile.form.phoneInvalid') : t('users.form.userPhoneInvalid'),
                                     },
                                 })}
                                 error={!!errors.phone}
@@ -139,11 +151,13 @@ const ModifyUser = () => {
                         {/* You could conditionally hide this field if isProfileMode is true */}
                         {isProfileMode ? null : (
                             <div className="flex flex-col gap-2">
-                                <label className="text-secondary-main">User Role<span className="text-red-600">*</span></label>
+                                <label className="text-secondary-main">
+                                    {t('users.form.userRole')}<span className="text-red-600">*</span>
+                                </label>
                                 <Controller
                                     name="userType"
                                     control={control}
-                                    rules={{ required: 'user role is required' }}
+                                    rules={{ required: t('users.form.userRoleRequired') }}
                                     render={({ field }) => (
                                         <Select
                                             {...field}
@@ -152,9 +166,9 @@ const ModifyUser = () => {
                                             displayEmpty
                                             error={!!errors.userType}
                                         >
-                                            <MenuItem value="user">User</MenuItem>
-                                            <MenuItem value="product_manager">Product Manager</MenuItem>
-                                            <MenuItem value="admin">Admin</MenuItem>
+                                            <MenuItem value="user">{t('users.roles.user')}</MenuItem>
+                                            <MenuItem value="product_manager">{t('users.roles.productManager')}</MenuItem>
+                                            <MenuItem value="admin">{t('users.roles.admin')}</MenuItem>
                                         </Select>
                                     )}
                                 />
@@ -164,9 +178,11 @@ const ModifyUser = () => {
                     {/* actions */}
                     <div className="flex gap-3 !my-8">
                         <Button type="submit" variant="contained" className="!text-white !capitalize">
-                            {isLoadingSet ? <CircularProgress color="secondary" size={24} /> : 'Save'}
+                            {isLoadingSet ? <CircularProgress color="secondary" size={24} /> : t('common.save')}
                         </Button>
-                        <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}} onClick={cancelAddUser}>Cancel</Button>
+                        <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}} onClick={cancelAddUser}>
+                            {t('common.cancel')}
+                        </Button>
                     </div>
                 </form>
             }

@@ -1,6 +1,5 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// components from mui
 import {
   Box,
   IconButton,
@@ -11,14 +10,12 @@ import {
   Dialog,
   DialogActions,
 } from "@mui/material";
-// action icons
 import { FaRegEdit } from "react-icons/fa";
 import { IoWarningOutline } from "react-icons/io5";
 import { RiDeleteBin5Fill } from "react-icons/ri";
-// css
 import classes from "./dataTable.module.css";
-// for transition dialog
 import type { TransitionProps } from "@mui/material/transitions";
+import { useTranslation } from "react-i18next"; // 👈 Added
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -35,13 +32,12 @@ interface Props {
   isLoading: boolean;
   isError: boolean;
   data: any;
-  startIndex : number,
+  startIndex: number;
   onDeleteItem?: (itemId: number) => void;
-  // custom content 
-    customColumns?: {
+  customColumns?: {
     [key: string]: (item: any) => React.ReactNode;
-  },
-  showActions : boolean,
+  };
+  showActions: boolean;
 }
 
 const DataTable = ({
@@ -55,11 +51,10 @@ const DataTable = ({
   customColumns,
   showActions,
 }: Props) => {
-  // dialog state
+  const { t } = useTranslation(); // 👈 Initialize translation
   const [open, setOpen] = useState<boolean>(false);
   const [deleteElementId, setDeleteElementId] = useState<number>(0);
 
-  // dialog handlers
   function handleClickOpen(id: number) {
     setOpen(true);
     setDeleteElementId(id);
@@ -69,68 +64,67 @@ const DataTable = ({
     setOpen(false);
   }
 
-  // delete handler
   function handleDeleteItem() {
-    if(onDeleteItem) {
-    onDeleteItem(deleteElementId);
-    handleClose();
+    if (onDeleteItem) {
+      onDeleteItem(deleteElementId);
+      handleClose();
     }
   }
 
   return (
     <Box>
-      {/* table */}
+      {/* Table */}
       <Box sx={{ overflowX: "auto" }} className="rounded-md shadow-md">
         <table className={classes["dashboard-table"]}>
           <thead>
             <tr className={classes["dashboard-table-tr-head"]}>
-              <th className={classes["dashboard-table-th"]}>Number</th>
+              <th className={classes["dashboard-table-th"]}>{t("common.number")}</th>
               {headers.map((head) => (
                 <th key={head.key} className={classes["dashboard-table-th"]}>
                   {head.title}
                 </th>
               ))}
-              {showActions && <th className={classes["dashboard-table-th"]}>Actions</th>}
+              {showActions && <th className={classes["dashboard-table-th"]}>{t("common.actions")}</th>}
             </tr>
           </thead>
           <tbody>
-            {/* loading */}
+            {/* Loading */}
             {isLoading && (
               <tr>
                 <td
                   className={classes["dashboard-table-td"]}
                   colSpan={headers.length + 2}
                 >
-                  Loading...
+                  {t("common.loading")}
                 </td>
               </tr>
             )}
 
-            {/* error */}
+            {/* Error */}
             {isError && (
               <tr>
                 <td
                   className={classes["dashboard-table-td"]}
                   colSpan={headers.length + 2}
                 >
-                  Something went wrong, please try again!
+                  {t("common.errorTryAgain")}
                 </td>
               </tr>
             )}
 
-            {/* no data */}
+            {/* No Data */}
             {!isLoading && !isError && data.length === 0 && (
               <tr>
                 <td
                   className={classes["dashboard-table-td"]}
                   colSpan={headers.length + 2}
                 >
-                  No data found
+                  {t("common.noDataFound")}
                 </td>
               </tr>
             )}
 
-            {/* rows */}
+            {/* Rows */}
             {!isLoading && !isError && data &&
               data.map((item: any, index: number) => (
                 <tr key={index} className={classes["dashboard-table-tr"]}>
@@ -138,81 +132,82 @@ const DataTable = ({
                     {startIndex + index + 1}
                   </td>
                   {headers.map((head, i) => (
-                        <td key={i} className={classes["dashboard-table-td"]}>
-                        {customColumns && customColumns[head.key]
-                          ? customColumns[head.key](item)
-                          : item[head.key]}
-                      </td>
+                    <td key={i} className={classes["dashboard-table-td"]}>
+                      {customColumns && customColumns[head.key]
+                        ? customColumns[head.key](item)
+                        : item[head.key]}
+                    </td>
                   ))}
-                  {showActions && <td>
-                    <Box className="flex justify-center">
-                      <IconButton color="secondary">
-                        <Link to={table == 'users' ? `/${table}/${item.id}?profileMode=false` : `/${table}/${item.id}`  }>
-                          <FaRegEdit />
-                        </Link>
-                      </IconButton>
-                      <IconButton
-                        color="error"
-                        onClick={() => handleClickOpen(item.id)}
-                      >
-                        <RiDeleteBin5Fill />
-                      </IconButton>
-                    </Box>
-                  </td>}
+                  {showActions && (
+                    <td>
+                      <Box className="flex justify-center">
+                        <IconButton color="secondary">
+                          <Link to={table == 'users' ? `/${table}/${item.id}?profileMode=false` : `/${table}/${item.id}`}>
+                            <FaRegEdit />
+                          </Link>
+                        </IconButton>
+                        <IconButton
+                          color="error"
+                          onClick={() => handleClickOpen(item.id)}
+                        >
+                          <RiDeleteBin5Fill />
+                        </IconButton>
+                      </Box>
+                    </td>
+                  )}
                 </tr>
               ))}
           </tbody>
         </table>
       </Box>
 
-      {/* delete confirmation dialog */}
-      <Box>
-        <Dialog
-          open={open}
-          slots={{
-            transition: Transition,
-          }}
-          keepMounted
-          onClose={handleClose}
-          aria-describedby="alert-dialog-slide-description"
-            PaperProps={{
-              sx: {
-                py : 1,
-                px : 2,
-                borderRadius: 3,
-                 width : '80%',
-              },
-            }}
-        >
-          <Box className="text-center text-gray-700">
-            <Icon sx={{ fontSize: "8rem" }} color="error">
-              <IoWarningOutline />
-            </Icon>
-            <Typography>
-              Are you sure you want to delete this item?
-            </Typography>
-              This action is permanent and cannot be undone. You will lose
-              access to this item forever.
-              </Box>
-          <DialogActions>
-            <Button
-              onClick={handleClose}
-              sx={{ textTransform: "capitalize" }}
-              variant="outlined"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={handleDeleteItem}
-              color="error"
-              sx={{ textTransform: "capitalize" }}
-              variant="contained"
-            >
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </Box>
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={open}
+        slots={{
+          transition: Transition,
+        }}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+        PaperProps={{
+          sx: {
+            py: 1,
+            px: 2,
+            borderRadius: 3,
+            width: '80%',
+          },
+        }}
+      >
+        <Box className="text-center text-gray-700">
+          <Icon sx={{ fontSize: "8rem" }} color="error">
+            <IoWarningOutline />
+          </Icon>
+          <Typography variant="h6" className="!my-3">
+            {t("dataTable.confirmDeleteTitle")}
+          </Typography>
+          <Typography variant="body1" className="!mb-4">
+            {t("dataTable.confirmDeleteMessage")}
+          </Typography>
+        </Box>
+        <DialogActions>
+          <Button
+            onClick={handleClose}
+            sx={{ textTransform: "capitalize" }}
+            variant="outlined"
+          >
+            {t("common.cancel")}
+          </Button>
+          <Button
+            onClick={handleDeleteItem}
+            color="error"
+            sx={{ textTransform: "capitalize" }}
+            variant="contained"
+          >
+            {t("common.delete")}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

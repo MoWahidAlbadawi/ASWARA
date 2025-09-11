@@ -24,8 +24,11 @@ import logo from '@/assets/Logo.webp'
   // from react
   import { useState , useEffect} from 'react';
 import { useRegister } from '@/hooks/useAuth';
+// translation
+import { useTranslation } from 'react-i18next';
 
   const Register = () => {
+    const { t } = useTranslation();
     // states
     const [ showPassword , setShowPassword ] = useState(false);
     const [ showConfirmPassword , setShowConfirmPassword ] = useState(false);
@@ -54,128 +57,133 @@ import { useRegister } from '@/hooks/useAuth';
     const onSubmit = (data: RegisterData) => {
       mutate(data);
     };
-    return (
-      <Container className='min-h-screen grid items-center'>
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 place-items-center'>
-          {/* Form section */}  
-          <div className='bg-gradient-to-b from-white to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md !py-4 !px-6 sm:!px-12'>
-            <div className='flex justify-center items-center'>
-              <img src={logo} width={150} />
-            </div>
-            <h3 className='font-bold text-primary-main'>Create Your Account</h3>
-          <form onSubmit={handleSubmit(onSubmit)}>
-                <TextField
-                  className='!my-2'
-                  fullWidth
-                  label="Name"
-                  placeholder='Enter your name'
-                  {...register('name', { required: 'name is required' })}
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
-                />
-                <TextField
-                  className='!mb-2'
-                  fullWidth
-                  label="Email"
-                  type="email"
-                  placeholder='Enter your email'
-                  {...register('email', { required: 'email is required' , 
-                    validate : (value : string) => {
-                      return value.includes('@') || 'please enter a valid email';
-                    }
-                   })}
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
-                />
-                <TextField
-                  className='!mb-2'
-                  fullWidth
-                  label="Password"
-                  type={showPassword ? 'text' : 'password'}
-                  placeholder='Enter your password'
-                  {...register('password', { required: 'password is required' ,
-                    validate : (value : string) => {
-                      return value.length >=8 || 'password must be 8 characters  or more';
-                    }
-                  })}
-                  error={!!errors.password}
-                  helperText={errors.password?.message}
-                  InputProps={{
-                    endAdornment : (
-                      <InputAdornment position='end'>
-                        <IconButton onClick={() => setShowPassword(prev => !prev)}>
-                          {showPassword ? <FaEyeSlash/> : <FaEye />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                />
-                <TextField
-                className='!mb-2'
-                  fullWidth
-                  label="Confirm Password"
-                  type={showConfirmPassword ? 'text' : 'password'}
-                  placeholder='Confirm the password'
-                  {...register('password_confirmation', {
-                    required: 'confirm password is required',
-                    validate: (value : string) => {
-                      return value === watch('password') || 'value must be same the original password'
-                    }
-                    })}
-                  error={!!errors.password_confirmation}
-                  helperText={errors.password_confirmation?.message}
-                    InputProps={{
-                    endAdornment : (
-                      <InputAdornment position='end'>
-                        <IconButton onClick={() => setShowConfirmPassword(prev => !prev)}>
-                          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                />
-                <TextField
-                  fullWidth
-                  label="Phone"
-                  placeholder="Enter your phone number"
-                  {...register('phone', {
-                    required: 'phone number is required',
-                    pattern: {
-                      value: /^09\d{8}$/,
-                      message: 'phone number must start with 09 and be exactly 10 digits',
-                    },
-                  })}
-                  error={!!errors.phone}
-                  helperText={errors.phone?.message}
-                />
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  sx={{ mt: 3, mb : 1 , color : 'white'}}
-                >
-                    { isLoading ? <CircularProgress color='secondary'/> : 'Register' }
-                </Button>
-                  <Typography variant='body2'  className='text-center text-gray-500'>
-                    Already have an account ? 
-                    <Link to='/login' className='hover:text-gray-800'>Sign in</Link>
-                  </Typography>
 
-                  {error && (
-                  <Alert severity="error" variant="filled" className='!mt-4 rounded'>
-                 {error?.status == 401 ? 'username or password incorrect!' : 'something went wrong , please try again later!'}
+  return (
+    <Container className='min-h-screen grid items-center !text-start'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-16 place-items-center'>
+        {/* Form section */}
+        <div className='bg-gradient-to-b from-white to-primary-light max-w-lg lg:max-w-md xl:max-w-lg rounded-xl shadow-md !py-4 !px-6 sm:!px-12'>
+          <div className='flex justify-center items-center'>
+            <img src={logo} alt={t('register.logoAlt')} width={150} />
+          </div>
+          <h3 className='font-bold text-primary-main'>{t('register.createAccount')}</h3>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextField
+              className='!my-2'
+              fullWidth
+              label={t('register.nameLabel')}
+              placeholder={t('register.namePlaceholder')}
+              {...register('name', { required: t('register.nameRequired') })}
+              error={!!errors.name}
+              helperText={errors.name?.message}
+            />
+            <TextField
+              className='!mb-2'
+              fullWidth
+              label={t('register.emailLabel')}
+              type="email"
+              placeholder={t('register.emailPlaceholder')}
+              {...register('email', {
+                required: t('register.emailRequired'),
+                validate: (value: string) => value.includes('@') || t('register.emailInvalid')
+              })}
+              error={!!errors.email}
+              helperText={errors.email?.message}
+            />
+            <TextField
+              className='!mb-2'
+              fullWidth
+              label={t('register.passwordLabel')}
+              type={showPassword ? 'text' : 'password'}
+              placeholder={t('register.passwordPlaceholder')}
+              {...register('password', {
+                required: t('register.passwordRequired'),
+                validate: (value: string) => value.length >= 8 || t('register.passwordTooShort')
+              })}
+              error={!!errors.password}
+              helperText={errors.password?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton onClick={() => setShowPassword(prev => !prev)}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <TextField
+              className='!mb-2'
+              fullWidth
+              label={t('register.confirmPasswordLabel')}
+              type={showConfirmPassword ? 'text' : 'password'}
+              placeholder={t('register.confirmPasswordPlaceholder')}
+              {...register('password_confirmation', {
+                required: t('register.confirmPasswordRequired'),
+                validate: (value: string) => value === watch('password') || t('register.passwordMismatch')
+              })}
+              error={!!errors.password_confirmation}
+              helperText={errors.password_confirmation?.message}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton onClick={() => setShowConfirmPassword(prev => !prev)}>
+                      {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
+            />
+            <TextField
+              fullWidth
+              label={t('register.phoneLabel')}
+              placeholder={t('register.phonePlaceholder')}
+              {...register('phone', {
+                required: t('register.phoneRequired'),
+                pattern: {
+                  value: /^09\d{8}$/,
+                  message: t('register.phoneInvalid')
+                },
+              })}
+              error={!!errors.phone}
+              helperText={errors.phone?.message}
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              sx={{ mt: 3, mb: 1, color: 'white' }}
+            >
+              {isLoading ? <CircularProgress color='secondary' size={24} /> : t('register.registerButton')}
+            </Button>
+            <Typography variant='body2' className='text-center text-gray-500'>
+              {t('register.alreadyHaveAccount')}{' '}
+              <Link to='/login' className='hover:text-gray-800'>
+                {t('register.signInLink')}
+              </Link>
+            </Typography>
+
+            {error && (
+              <Alert severity="error" variant="filled" className='!mt-4 rounded'>
+                {error?.status === 422
+                  ? t('register.validationError')
+                  : error?.status === 409
+                    ? t('register.emailExists')
+                    : t('register.genericError')
+                }
               </Alert>
-              )}
+            )}
           </form>
-          </div>
-          {/* Image section */}
-          <div className='hidden lg:block'>
-            <img src={Jewelry_Image} alt='Jewelry Auth' width={600}/>
-          </div>
         </div>
-        </Container>
-    );
-  };
+
+        {/* Image section */}
+        <div className='hidden lg:block'>
+          <img src={Jewelry_Image} alt={t('register.jewelryImageAlt')} width={600} />
+        </div>
+      </div>
+    </Container>
+  );
+};
 
 export default Register;

@@ -8,54 +8,43 @@ import {
   FormGroup,
   FormControlLabel,
   Autocomplete,
-  Select ,
+  Select,
   FormControl,
   MenuItem,
   LinearProgress,
-  FormHelperText
+  FormHelperText,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-// product
 import type { ModifyProductInterface } from "@/services/types/products";
 import { GetProductById, UpdateProduct } from "@/hooks/products/useProducts";
-// import { useCategories } from "@/hooks/categories/useCategories"; // You need this
 import React, { useContext, useEffect, useRef, useState } from "react";
-// assets
 import Inbox from '@/assets/inbox-icon.webp';
-// toast
 import toast from 'react-hot-toast';
-// icons
 import { TbPhotoEdit } from "react-icons/tb";
 import { Package } from "lucide-react";
-// import { BsPercent } from "react-icons/bs";
-// get all
 import { getAllCategories } from "@/hooks/categories/useCategories";
-// 404 not found page
 import Err404 from "@/pages/Errors/Err404";
 import { GoldPricesContext } from "@/context/GoldPrices";
-// // Interface for category option in autocomplete
+import { useTranslation } from "react-i18next"; // 👈 Added
+
 interface CategoryOption {
   id: number;
   name: string;
 }
 
 const ModifyProduct = () => {
-  // gold price from context
+  const { t } = useTranslation(); // 👈 Initialize translation
   const { goldPrices } = useContext(GoldPricesContext);
   const navigate = useNavigate();
   const { productId } = useParams();
 
-  // Fetch categories for autocomplete
   const { data: categories = [] } = getAllCategories();
-
-  // Transform to options
   const categoryOptions: CategoryOption[] = categories.map(cat => ({
     id: cat.id,
     name: cat.name,
   }));
 
-  // react-hook-form setup
   const {
     register,
     reset,
@@ -68,16 +57,13 @@ const ModifyProduct = () => {
   });
   const { errors } = formState;
 
-  // react-query
-  const { data : productInfo ,  isLoading : isLoadingGet , error : errorGet } = GetProductById(productId ?? '');
-  const { mutate : update , isLoading : isLoadingSet , error : errorSet , isSuccess : isSuccessSet} = UpdateProduct(productId ?? '');
+  const { data: productInfo, isLoading: isLoadingGet, error: errorGet } = GetProductById(productId ?? '');
+  const { mutate: update, isLoading: isLoadingSet, error: errorSet, isSuccess: isSuccessSet } = UpdateProduct(productId ?? '');
 
-  // Image upload state and refs
   const fileInput = useRef<HTMLInputElement>(null);
   const [productImagePreview, setProductImagePreview] = useState<string | null>(null);
 
-  // Handlers
-  const clickFileInput = (e : React.MouseEvent) => {
+  const clickFileInput = (e: React.MouseEvent) => {
     e.preventDefault();
     fileInput.current?.click();
   };
@@ -90,45 +76,43 @@ const ModifyProduct = () => {
     }
   };
 
-  const deleteProductImage = (e : React.MouseEvent) => {
+  const deleteProductImage = (e: React.MouseEvent) => {
     e.preventDefault();
     setValue('productFile', null);
     setProductImagePreview(null);
-  }
-          useEffect(() => {
-          if(productInfo) {
-              reset({
-                  name: productInfo.name,
-                  description: productInfo.decription,
-                  price: productInfo.price,
-                  productFile: productInfo.productFile,
-                  categoryID: productInfo.categoryid,
-                  isFeatured : productInfo.isFeatured,
-                  quantity: productInfo.quantity,
-              });
-              setProductImagePreview(productInfo.productFile.toString());
-          }
-      },[productInfo])
-  
+  };
 
-  // Handle success/error
+  useEffect(() => {
+    if (productInfo) {
+      reset({
+        name: productInfo.name,
+        description: productInfo.decription,
+        price: productInfo.price,
+        productFile: productInfo.productFile,
+        categoryID: productInfo.categoryid,
+        isFeatured: productInfo.isFeatured,
+        quantity: productInfo.quantity,
+        karat: productInfo.karat
+      });
+      setProductImagePreview(productInfo.productFile?.toString() || null);
+    }
+  }, [productInfo]);
+
   useEffect(() => {
     if (isSuccessSet) {
-      toast.success('The product was added successfully');
-      setProductImagePreview(null);
+      toast.success(t('products.messages.editSuccess'));
       setTimeout(() => {
         navigate('/products');
       }, 2000);
     }
     if (errorSet) {
-      toast.error('An error occurred while adding the product');
+      toast.error(t('products.messages.editError')); 
     }
-  }, [isSuccessSet, errorSet, reset, navigate]);
+  }, [isSuccessSet, errorSet, navigate, t]);
 
-  // Submit handler
-  const onSubmit = (data: ModifyProductInterface) => {
+  const onSubmit = ( data : ModifyProductInterface) => {
     if (!data.productFile) {
-      toast.error('Product image is required');
+      toast.error(t('products.form.imageRequired')); 
       return;
     }
 
@@ -141,17 +125,15 @@ const ModifyProduct = () => {
 
     const itemKaratMatched = goldPrices.find((item) => item.karat == data.karat);
     const price = itemKaratMatched?.price;
-     
+
     if (price) formData.append('Price', String(price));
-     
     if (data.quantity) formData.append('quantity', String(data.quantity));
     if (data.categoryID) formData.append('CategoryID', String(data.categoryID));
+    formData.append('IsFeatured', String(data.isFeatured));
 
-        formData.append('IsFeatured', String(data.isFeatured));
-
-      if (data.productFile instanceof File) {
-        formData.append('ProductFile', data.productFile);
-      }
+    if (data.productFile instanceof File) {
+      formData.append('ProductFile', data.productFile);
+    }
 
     update(formData);
   };
@@ -162,201 +144,231 @@ const ModifyProduct = () => {
     setProductImagePreview(null);
   };
 
-      // Product id not found
-        if(errorGet) {
-            return <Err404 />
-        }
-    return (
-    <div>        
-            {/* header  */}
-           <Typography color='secondary' variant="h5" className="!mb-5 flex justify-start items-center gap-1">
-                <Icon><Package /></Icon> 
-                <span>Products / Modify Product</span>
-                </Typography>
-            {/* form */}
-        {isLoadingGet ? 
-         <LinearProgress color="primary" /> : 
+  if (errorGet) {
+    return <Err404 />;
+  }
+
+  return (
+    <div>
+      {/* Header */}
+      <Typography color="secondary" variant="h5" className="!mb-5 flex justify-start items-center gap-1">
+        <Icon><Package /></Icon>
+        <span>{t('products.modifyBreadcrumb')}</span> {/* 👈 Translated */}
+      </Typography>
+
+      {/* Form */}
+      {isLoadingGet ? (
+        <LinearProgress color="primary" />
+      ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
-            {/* fields */}
-        <div className="grid grid-cols-1 gap-3">
-          {/* Product Name */}
-          <div className="flex justify-end items-center !m-0">
-        <Controller
-          name="isFeatured"
-          control={control}
-          render={({ field }) => (
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={field.value === 1} 
-                    onChange={(_,newValue) => field.onChange(newValue ? 1 : 0)}
-                    color="primary"
-                  />
-                }
-                label="Featured Product"
-                labelPlacement="start"
-              />
-            </FormGroup>
-          )}
-        />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Product Name<span className="text-red-600">*</span></label>
-            <TextField
-              placeholder="Enter product name"
-              variant="outlined"
-              fullWidth
-              error={!!errors.name}
-              helperText={errors.name?.message}
-              {...register('name', {
-                required: 'Product name is required',
-              })}
-            />
-          </div>
-
-          {/* Description */}
-          <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Description<span className="text-red-600">*</span></label>
-            <TextField
-              placeholder="Enter product description"
-              variant="outlined"
-              multiline
-              rows={3}
-              fullWidth
-              error={!!errors.description}
-              helperText={errors.description?.message}
-              {...register('description', {
-                required: 'Description is required',
-              })}
-            />
-          </div>
-
-          {/* Price & Weight */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {/* FIXED KARAT SELECT */}
-            <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Karat<span className="text-red-600">*</span></label>
+          <div className="grid grid-cols-1 gap-3">
+            {/* Featured Toggle */}
+            <div className="flex justify-end items-center !m-0">
               <Controller
-                name="karat"
+                name="isFeatured"
                 control={control}
-                rules={{ required: 'Karat is required' }}
-                render={({ field, fieldState }) => (
-                  <FormControl fullWidth error={!!fieldState.error}>
-                    <Select
-                      {...field}
-                      value={field.value || 24}
-                      displayEmpty
-                      variant="outlined"
-                    >
-                      <MenuItem value={18}>18K</MenuItem>
-                      <MenuItem value={21}>21K</MenuItem>
-                      <MenuItem value={24}>24K</MenuItem>
-                    </Select>
-                    {fieldState.error && (
-                      <FormHelperText>{fieldState.error.message}</FormHelperText>
-                    )}
-                  </FormControl>
+                render={({ field }) => (
+                  <FormGroup>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={field.value === 1}
+                          onChange={(_, newValue) => field.onChange(newValue ? 1 : 0)}
+                          color="primary"
+                        />
+                      }
+                      label={t('products.form.featured')} // 👈 Translated
+                      labelPlacement="start"
+                    />
+                  </FormGroup>
                 )}
               />
             </div>
 
-
+            {/* Product Name */}
             <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Weight (g)<span className="text-red-600">*</span></label>
+              <label className="text-secondary-main">
+                {t('products.form.name')}<span className="text-red-600">*</span>
+              </label>
               <TextField
-                type="number"
-                placeholder="Enter weight"  
+                placeholder={t('products.form.namePlaceholder')}
                 variant="outlined"
                 fullWidth
-                error={!!errors.weight}
-                helperText={errors.weight?.message}
-                {...register('weight', {
-                 required : 'weight is required',
-                validate: v => Number(v) > 0 || 'weight must be greater than 0',
+                error={!!errors.name}
+                helperText={errors.name?.message}
+                {...register('name', {
+                  required: t('products.form.nameRequired'),
                 })}
               />
             </div>
-          </div>
 
-          {/* Quantity & IsFeatured */}
+            {/* Description */}
             <div className="flex flex-col gap-2">
-              <label className="text-secondary-main">Quantity<span className="text-red-600">*</span></label>
+              <label className="text-secondary-main">
+                {t('products.form.description')}<span className="text-red-600">*</span>
+              </label>
+              <TextField
+                placeholder={t('products.form.descriptionPlaceholder')}
+                variant="outlined"
+                multiline
+                rows={3}
+                fullWidth
+                error={!!errors.description}
+                helperText={errors.description?.message}
+                {...register('description', {
+                  required: t('products.form.descriptionRequired'),
+                })}
+              />
+            </div>
+
+            {/* Karat & Weight */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {/* Karat */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary-main">
+                  {t('products.form.karat')}<span className="text-red-600">*</span>
+                </label>
+                <Controller
+                  name="karat"
+                  control={control}
+                  rules={{ required: t('products.form.karatRequired') }}
+                  render={({ field, fieldState }) => (
+                    <FormControl fullWidth error={!!fieldState.error}>
+                      <Select
+                        {...field}
+                        value={field.value || 24}
+                        displayEmpty
+                        variant="outlined"
+                      >
+                        <MenuItem value={18}>18K</MenuItem>
+                        <MenuItem value={21}>21K</MenuItem>
+                        <MenuItem value={24}>24K</MenuItem>
+                      </Select>
+                      {fieldState.error && (
+                        <FormHelperText>{fieldState.error.message}</FormHelperText>
+                      )}
+                    </FormControl>
+                  )}
+                />
+              </div>
+
+              {/* Weight */}
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary-main">
+                  {t('products.form.weight')}<span className="text-red-600">*</span>
+                </label>
+                <TextField
+                  type="number"
+                  placeholder={t('products.form.weightPlaceholder')}
+                  variant="outlined"
+                  fullWidth
+                  error={!!errors.weight}
+                  helperText={errors.weight?.message}
+                  {...register('weight', {
+                    required: t('products.form.weightRequired'),
+                    validate: v => Number(v) > 0 || t('products.form.weightInvalid'),
+                  })}
+                />
+              </div>
+            </div>
+
+            {/* Quantity */}
+            <div className="flex flex-col gap-2">
+              <label className="text-secondary-main">
+                {t('products.form.quantity')}<span className="text-red-600">*</span>
+              </label>
               <TextField
                 type="number"
-                placeholder="Enter quantity"
+                placeholder={t('products.form.quantityPlaceholder')}
                 variant="outlined"
                 fullWidth
                 error={!!errors.quantity}
                 helperText={errors.quantity?.message}
                 {...register('quantity', {
-                    required : 'quantity is required',
-                  validate: v => Number(v) >= 0 || 'quantity must be positive',
+                  required: t('products.form.quantityRequired'),
+                  validate: v => Number(v) >= 0 || t('products.form.quantityInvalid'),
                 })}
               />
             </div>
 
-          {/* Category Autocomplete  */}
-          <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category<span className="text-red-600">*</span></label>
-            <Controller
-              name="categoryID"
-              control={control}
-              rules={{ required: 'Category is required' }}
-              render={({ field, fieldState }) => (
-                <Autocomplete
-                  options={categoryOptions}
-                  getOptionLabel={option => option.name}
-                  isOptionEqualToValue={(option, value) => option.id === value?.id}
-                  value={categoryOptions.find(opt => opt.id === field.value) || null}
-                  onChange={(_, newValue) => {
-                    field.onChange(newValue?.id || null);
-                  }}
-                  renderInput={params => (
-                    <TextField
-                      {...params}
-                      placeholder="Select a category"
-                      variant="outlined"
-                      error={!!fieldState.error}
-                      helperText={fieldState.error?.message}
-                    />
-                  )}
-                />
-              )}
-            />
-          </div>
+            {/* Category */}
+            <div className="flex flex-col gap-2">
+              <label className="text-secondary-main">
+                {t('products.form.category')}<span className="text-red-600">*</span>
+              </label>
+              <Controller
+                name="categoryID"
+                control={control}
+                rules={{ required: t('products.form.categoryRequired') }}
+                render={({ field, fieldState }) => (
+                  <Autocomplete
+                    options={categoryOptions}
+                    getOptionLabel={option => option.name}
+                    isOptionEqualToValue={(option, value) => option.id === value?.id}
+                    value={categoryOptions.find(opt => opt.id === field.value) || null}
+                    onChange={(_, newValue) => {
+                      field.onChange(newValue?.id || null);
+                    }}
+                    renderInput={params => (
+                      <TextField
+                        {...params}
+                        placeholder={t('products.form.selectCategory')}
+                        variant="outlined"
+                        error={!!fieldState.error}
+                        helperText={fieldState.error?.message}
+                      />
+                    )}
+                  />
+                )}
+              />
+            </div>
 
-          {/* Product Image Uploader */}
-                    <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Product Image<span className="text-red-600">*</span></label>
-            <input 
-            className="hidden"
-            ref={fileInput}
-            type="file"
-            accept="image/*"  
-            onChange={handleProductFileChange}
-            />
-            <div className="flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
-                {productImagePreview ? <div className="relative"> <img src={productImagePreview} width={200} /> 
-                <div className="absolute inset-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity transition-300 ease-in-out bg-black flex flex-col gap-4 justify-center items-center text-white">
-                    <button className="cursor-pointer text-xl" onClick={deleteProductImage}>X</button>
-                    <button className="cursor-pointer text-3xl" onClick={clickFileInput}><TbPhotoEdit /></button>
-                </div>
-                </div> :
-                 <img src={Inbox} width={100} className="cursor-pointer" onClick={clickFileInput}/>}
+            {/* Product Image */}
+            <div className="flex flex-col gap-2">
+              <label className="text-secondary-main">
+                {t('products.form.image')}<span className="text-red-600">*</span>
+              </label>
+              <input
+                className="hidden"
+                ref={fileInput}
+                type="file"
+                accept="image/*"
+                onChange={handleProductFileChange}
+              />
+              <div className="flex justify-center items-center !mt-3 !py-5 border-2 border-primary-main border-dashed rounded-xl">
+                {productImagePreview ? (
+                  <div className="relative">
+                    <img src={productImagePreview} width={200} alt={t('products.form.image')} />
+                    <div className="absolute inset-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity bg-black flex flex-col gap-4 justify-center items-center text-white">
+                      <button className="cursor-pointer text-xl" onClick={deleteProductImage}>X</button>
+                      <button className="cursor-pointer text-3xl" onClick={clickFileInput}>
+                        <TbPhotoEdit />
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <img src={Inbox} width={100} className="cursor-pointer" onClick={clickFileInput} alt={t('common.upload')} />
+                )}
+              </div>
+              {errors.productFile && (
+                <span className="text-red-500 text-[13px] !ms-3 !-mt-2">{errors.productFile.message}</span>
+              )}
             </div>
-            </div>
-        {/* Actions */}
+
+            {/* Actions */}
             <div className="flex gap-3 !my-5">
-                <Button type="submit" variant="contained" className="!text-white !capitalize">
-                    {isLoadingSet ? <CircularProgress color="secondary" size={24} /> : 'Save'}
-                </Button>
-                <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
-                onClick={cancelModifyProduct}>Cancel</Button>
+              <Button type="submit" variant="contained" className="!text-white !capitalize">
+                {isLoadingSet ? <CircularProgress color="secondary" size={24} /> : t('common.save')}
+              </Button>
+              <Button variant="contained" color="error" sx={{ textTransform: 'capitalize' }} onClick={cancelModifyProduct}>
+                {t('common.cancel')}
+              </Button>
             </div>
-            </div>
-      </form>}
+          </div>
+        </form>
+      )}
     </div>
-            );
-}
+  );
+};
+
 export default ModifyProduct;

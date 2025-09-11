@@ -12,16 +12,19 @@ import toast from "react-hot-toast";
 import { filtersCategoryDto } from "@/services/types/categories";
 // pagination (react paginate)
 import PaginatedItems from "@/components/Dashboard/DataTable/Pagination";
+// Translation
+import { useTranslation } from "react-i18next";
 
 const Categories = () => {
+    const { t } = useTranslation();
     
     const { data , isLoading , isError , refetch} = getAllCategories();
     const { mutate , isSuccess : isSuccessDelete , error : errorDelete} = DeleteCategory();
 
     const headers = [
-        { title: 'Category Name' , key : 'name'},
-        { title: 'Category Description' , key : 'description'},
-        { title: 'Smithing Value' , key : 'smithing'},
+        { title: t('categories.table.name') , key : 'name'},
+        { title: t('categories.table.description') , key : 'description'},
+        { title: t('categories.table.smithing') , key : 'smithing'},
     ]
 
     const smithingOptions = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
@@ -77,14 +80,14 @@ const Categories = () => {
      // handle delete feedback
             useEffect(() => {
                     if(isSuccessDelete) {
-                     toast.success('the category deleted successfully');
+                     toast.success(t('categories.messages.deleteSuccess'));
                         // get all categories after deleting
                         refetch();
                     }
                     if(errorDelete) {
-                        toast.error('error happens while deleting category');
+                        toast.error(t('categories.messages.deleteError'));
                     }
-            },[isSuccessDelete,errorDelete])
+            },[isSuccessDelete, errorDelete, t])
     
     // delete category fucntion
     function handleDeleteCategory (id : number) {
@@ -96,17 +99,17 @@ const Categories = () => {
         <Box className='flex justify-between  !mb-6'>
             <Typography color='secondary' variant="h5" className="flex justify-between items-center gap-1">
                 <Icon><TbCategoryFilled/></Icon> 
-                <span>Categories</span>
+                <span>{t('categories.title')}</span>
                 </Typography>
             <Button variant='contained' className='!text-white !capitalize'>
-                <Link to='/category/add'>Add Category</Link>
+                <Link to='/category/add'>{t('categories.addCategory')}</Link>
             </Button>
         </Box>
         
       {/* Filters */}
       <Grid container spacing={1} className="!mb-3">
         <Grid size={{xs : 12 , sm : 6 , md : 3}}>
-          <label className="text-sm text-secondary-main">Smithing</label>
+          <label className="text-sm text-secondary-main">{t('categories.filters.smithing')}</label>
          {/* Page size select */}
           <Select
             className="w-full max-h-[45px]"
@@ -114,7 +117,7 @@ const Categories = () => {
             onChange={handleFiltersChange}
             name="smithingValue"
           >
-            <MenuItem value={0}>Select Smithing</MenuItem>
+            <MenuItem value={0}>{t('categories.filters.selectSmithing')}</MenuItem>
             { smithingOptions.map((option) => {
               return (
                   <MenuItem key={option} 
@@ -128,7 +131,7 @@ const Categories = () => {
           </Grid>
          {/* Page size select */}
          <Grid size={{xs : 12 , sm : 6 , md : 3}}>
-          <label className="text-sm text-secondary-main">Items Per Page</label>
+          <label className="text-sm text-secondary-main">{t('common.itemsPerPage')}</label>
           <Select
             className="w-full max-h-[45px]"
             value={filters.pageSize}
@@ -146,7 +149,7 @@ const Categories = () => {
         <Box position={"relative"}>
           <input
             className={`${classes["input-search"]} pe-12`}
-            placeholder="search by name"
+            placeholder={t('categories.searchByName')}
             value={filters.searchTerm}
             onChange={handleFiltersChange}
             name="searchTerm"
@@ -176,7 +179,11 @@ const Categories = () => {
                   {filteredData.length > 0 && (
                  <Box className="!mt-3 flex flex-col gap-3 md:gap-0 md:flex-row justify-center md:justify-between items-center">
                       <Typography className="text-gray-600">
-                        Show {startIndex + 1} to {endIndex} from {filteredData.length}
+                        {t('common.pagination.showing', { 
+                          start: startIndex + 1, 
+                          end: endIndex, 
+                          total: filteredData.length 
+                        })}
                       </Typography>
                       <PaginatedItems
                         itemsPerPage={filters.pageSize}

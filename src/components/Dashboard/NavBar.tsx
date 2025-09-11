@@ -82,15 +82,15 @@ const NavBar = () => {
 
     useEffect(() => {
         if(isSuccessRead) {
-            toast.success('تم قراءة الاشعار بنجاح');
+            toast.success(t('notifications.readSuccess', 'تم قراءة الاشعار بنجاح'));
             handleUnreadNotificationsClose()
     }
         if(isSuccessReadAll) {
-            toast.success('تم قراءة  جميع الاشعار بنجاح');
+            toast.success(t('notifications.readAllSuccess', 'تم قراءة جميع الاشعار بنجاح'));
             handleUnreadNotificationsClose()
     }
 
-},[isSuccessRead])
+},[isSuccessRead, t])
 
     return (
         <div className="flex justify-between !p-4 text-primary-main">
@@ -126,7 +126,7 @@ const NavBar = () => {
                     >
                         <MenuItem disabled>
                             <Typography variant="subtitle2" color="textSecondary">
-                                {t('selectLanguage', 'Select Language')}
+                                {t('selectLanguage')}
                             </Typography>
                         </MenuItem>
                         <Divider />
@@ -187,7 +187,7 @@ const NavBar = () => {
                                     <Typography className="text-gray-400 !text-sm">{notification.created_at.split('T')[1].slice(0,5)}</Typography>
                                     <Chip
                                     className="absolute bottom-[1px] start-[10px]"
-                                        label='جديد'
+                                        label={t('notifications.new')}
                                         size="small"
                                         color="success"
                                         />
@@ -196,7 +196,9 @@ const NavBar = () => {
                                </div>)
                         ))}
                          <MenuItem className="w-full" onClick={readAllNotifications}>
-                                <Button className="w-full !text-[16px] !text-white" variant={'contained'}>قراءة جميع الاشعارات</Button>
+                                <Button className="w-full !text-[16px] !text-white" variant={'contained'}>
+                                    {t('notifications.readAll')}
+                                </Button>
                             </MenuItem>
                     </Menu>
 

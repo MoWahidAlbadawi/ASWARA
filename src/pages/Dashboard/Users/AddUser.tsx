@@ -9,10 +9,14 @@ import { useEffect, useState } from "react";
 import toast  from "react-hot-toast";
 import { Users } from 'lucide-react';
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
+// Translation
+import { useTranslation } from "react-i18next";
 
 const AddUser = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    
     // react hook form
     const { register , reset , handleSubmit , formState , control} = useForm<AddUserInterface>({
         mode : 'all',
@@ -25,25 +29,27 @@ const AddUser = () => {
         }
     });
     const { errors } = formState;
+    
     // react query
     const { mutate : addNewUser , isLoading , error , isSuccess } = AddNewUser();
 
     // handle finishing the request
     useEffect(() => {
             if(isSuccess) {
-             toast.success('the user added successfully');
+             toast.success(t('users.messages.addSuccess'));
                 reset();
                 navigate('/users');
             }
             if(error) {
-                toast.error('error happens while adding user');
+                toast.error(t('users.messages.addError'));
             }
-    },[isSuccess,error])
+    },[isSuccess, error, t])
 
     // add
     function onSubmit (data : AddUserInterface) {
         addNewUser(data);
     }
+    
     // cancel
     function cancelAddUser () {
         navigate('/users');
@@ -56,7 +62,7 @@ const AddUser = () => {
           <Icon>
             <Users />
           </Icon>
-          Users / Add User
+          {t('users.breadcrumb')}
         </Typography>
             {/* form */}
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -64,13 +70,15 @@ const AddUser = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {/* user name */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Name<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('users.form.userName')}<span className="text-red-600">*</span>
+            </label>
             <TextField 
             margin="normal"
-            placeholder="Enter user name"
+            placeholder={t('users.form.userNamePlaceholder')}
             variant="outlined"
             {...register('name',{
-                required : 'user name is reqiured'
+                required : t('users.form.userNameRequired')
             })}
             error={!!errors.name}
             helperText={errors.name?.message}
@@ -78,15 +86,17 @@ const AddUser = () => {
         </div>
         {/* user email*/}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Email<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('users.form.userEmail')}<span className="text-red-600">*</span>
+            </label>
             <TextField 
             margin="normal"
-            placeholder="Enter user email"
+            placeholder={t('users.form.userEmailPlaceholder')}
             variant="outlined"
             {...register('email',{
-                required : 'user email is required',
+                required : t('users.form.userEmailRequired'),
                 validate : (value : string) => {
-                    return value.includes('@') || 'please enter a valid user email'
+                    return value.includes('@') || t('users.form.userEmailInvalid')
                 }
             })}
             error={!!errors.email}
@@ -95,16 +105,18 @@ const AddUser = () => {
         </div>
         {/* user password */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Password<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('users.form.userPassword')}<span className="text-red-600">*</span>
+            </label>
             <TextField
                 className="!m-0"
               margin="normal"
               fullWidth
               type={showPassword ? 'text' : 'password'}
-              placeholder="Enter your password"
+              placeholder={t('users.form.userPasswordPlaceholder')}
               {...register('password', {
-                required: 'Password is required',
-                validate: (value: string) => value.length >= 8 || 'Password must be 8 characters or more'
+                required: t('users.form.userPasswordRequired'),
+                validate: (value: string) => value.length >= 8 || t('users.form.userPasswordMinLength')
               })}
               error={!!errors.password}
               helperText={errors.password?.message}
@@ -122,15 +134,17 @@ const AddUser = () => {
         </div>
         {/* user phone */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">User Phone<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('users.form.userPhone')}<span className="text-red-600">*</span>
+            </label>
             <TextField 
-            placeholder="Enter user phone number"
+            placeholder={t('users.form.userPhonePlaceholder')}
             variant="outlined"
             {...register('phone',{
-                required : 'user phone is required',
+                required : t('users.form.userPhoneRequired'),
                 pattern : {
                     value: /^09\d{8}$/,
-                     message: 'phone number must start with 09 and be exactly 10 digits',
+                     message: t('users.form.userPhoneInvalid'),
             },
             })}
             error={!!errors.phone}
@@ -139,11 +153,13 @@ const AddUser = () => {
         </div>
         {/* user role */}
         <div className="flex flex-col gap-2">
-    <label className="text-secondary-main">User Role<span className="text-red-600">*</span></label>
+    <label className="text-secondary-main">
+        {t('users.form.userRole')}<span className="text-red-600">*</span>
+    </label>
            <Controller
                 name="userType"
                 control={control}
-                rules={{ required: 'user role is required' }}
+                rules={{ required: t('users.form.userRoleRequired') }}
                 render={({ field }) => (
                     <Select
                         {...field}
@@ -151,10 +167,10 @@ const AddUser = () => {
                         displayEmpty
                         error={!!errors.userType}
                     >
-                        <MenuItem value="" disabled>Select role</MenuItem>
-                        <MenuItem value="user">User</MenuItem>
-                        <MenuItem value="product_manager">Product Manager</MenuItem>
-                        <MenuItem value="admin">Admin</MenuItem>
+                        <MenuItem value="" disabled>{t('users.form.selectRole')}</MenuItem>
+                        <MenuItem value="user">{t('users.roles.user')}</MenuItem>
+                        <MenuItem value="product_manager">{t('users.roles.productManager')}</MenuItem>
+                        <MenuItem value="admin">{t('users.roles.admin')}</MenuItem>
                     </Select>
                 )}
         />
@@ -163,10 +179,10 @@ const AddUser = () => {
         {/* actions */}
             <div className="flex gap-3 !my-8">
                 <Button type="submit" variant="contained" className="!text-white !capitalize">
-                    {isLoading ? <CircularProgress color="secondary" size={24} /> : 'Add'}
+                    {isLoading ? <CircularProgress color="secondary" size={24} /> : t('users.form.addButton')}
                 </Button>
                 <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
-                onClick={cancelAddUser}>Cancel</Button>
+                onClick={cancelAddUser}>{t('common.cancel')}</Button>
             </div>
         </form>
     </div>

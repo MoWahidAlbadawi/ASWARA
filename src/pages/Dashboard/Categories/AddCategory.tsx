@@ -12,9 +12,13 @@ import toast from 'react-hot-toast';
 // icons
 import { TbPhotoEdit } from "react-icons/tb";
 import { TbCategoryFilled } from "react-icons/tb";
+// Translation
+import { useTranslation } from "react-i18next";
 
 const AddCategory = () => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
+    
     // react hook form
     const { register , reset , handleSubmit , formState , setValue , control} = useForm<AddCategoryInterface>({
         mode : 'all',
@@ -26,8 +30,10 @@ const AddCategory = () => {
         }
     });
     const { errors } = formState;
+    
     // react query
     const { mutate : addNewCategory , isLoading , error , isSuccess } = AddNewCategory();
+    
     // Image refs and states and fns
     const fileInput = useRef<HTMLInputElement>(null);
     const [categoryImagePreview , setCategoryImagePreview] = useState<string | null>(null);
@@ -38,6 +44,7 @@ const AddCategory = () => {
             fileInput.current.click();
         }   
     }
+    
     function hanldeCategoryFileChange (e : React.ChangeEvent<HTMLInputElement>) {
         const file = e.target.files?.[0];
         if(file) {
@@ -45,6 +52,7 @@ const AddCategory = () => {
             setCategoryImagePreview(URL.createObjectURL(file));
         }
     }
+    
     function deleteCategoryImage (e : React.MouseEvent) {
         e.preventDefault();
         setValue('categoryFile',null);
@@ -54,21 +62,21 @@ const AddCategory = () => {
     // handle finishing the request
     useEffect(() => {
             if(isSuccess) {
-             toast.success('the category added successfully');
+             toast.success(t('categories.messages.addSuccess'));
                 reset();
                 navigate('/categories');
             }
             if(error) {
-                toast.error('error happens while adding category');
+                toast.error(t('categories.messages.addError'));
             }
-    },[isSuccess,error])
+    },[isSuccess, error, t])
 
-        const smithingOptions = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+    const smithingOptions = [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
 
     // add
     function onSubmit (data : AddCategoryInterface) {
         if(!data.categoryFile) {
-            toast.error('category file image is required');
+            toast.error(t('categories.form.imageRequired'));
             return;
         }
         const formData = new FormData();
@@ -79,35 +87,37 @@ const AddCategory = () => {
             formData.append('CategoryFile', data.categoryFile);
     }
         addNewCategory(formData);
-            }
+    }
 
     // cancel
     function cancelAddCategory () {
         navigate('/categories');
         reset();
-    setCategoryImagePreview(null);
-}
+        setCategoryImagePreview(null);
+    }
 
     return <div>        
             {/* header  */}
            <Typography color='secondary' variant="h5" className="!mb-5 flex justify-start items-center gap-1">
                 <Icon><TbCategoryFilled/></Icon> 
-                <span>Categories / Add Category</span>
+                <span>{t('categories.breadcrumb')}</span>
                 </Typography>
             {/* form */}
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* fields */}
             <div className="grid grid-cols-1 gap-3">
-        {/* category name & simithing*/}
+        {/* category name & smithing*/}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {/* category name */} 
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category Name<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('categories.form.categoryName')}<span className="text-red-600">*</span>
+            </label>
             <TextField 
-            placeholder="Enter category name"
+            placeholder={t('categories.form.categoryNamePlaceholder')}
             variant="outlined"
             {...register('name',{
-                required : 'category name is reqiured'
+                required : t('categories.form.categoryNameRequired')
             })}
             error={!!errors.name}
             helperText={errors.name?.message}
@@ -115,11 +125,13 @@ const AddCategory = () => {
         </div>
                 {/* smithing */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Smithing Value<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('categories.form.smithingValue')}<span className="text-red-600">*</span>
+            </label>
                <Controller
                 name="smithing"
                 control={control}
-                rules={{ required: 'smithing is required' }}
+                rules={{ required: t('categories.form.smithingRequired') }}
                 render={({ field, fieldState }) => (
                   <FormControl fullWidth error={!!fieldState.error}>
                     <Select
@@ -142,15 +154,17 @@ const AddCategory = () => {
         </div>
         {/* category description */}
         <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category Description<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('categories.form.categoryDescription')}<span className="text-red-600">*</span>
+            </label>
             <TextField
-            placeholder="Enter category description"
+            placeholder={t('categories.form.categoryDescriptionPlaceholder')}
             variant="outlined"
             multiline
               rows={3}
               fullWidth
             {...register('description',{
-                required : 'category description is reqiured'
+                required : t('categories.form.categoryDescriptionRequired')
             })}
             error={!!errors.description}
             helperText={errors.description?.message}
@@ -158,7 +172,9 @@ const AddCategory = () => {
         </div>
             {/* category file */}
           <div className="flex flex-col gap-2">
-            <label className="text-secondary-main">Category Image<span className="text-red-600">*</span></label>
+            <label className="text-secondary-main">
+                {t('categories.form.categoryImage')}<span className="text-red-600">*</span>
+            </label>
             <input 
             className="hidden"
             ref={fileInput}
@@ -171,7 +187,7 @@ const AddCategory = () => {
                 {categoryImagePreview ? <div className="relative"> <img src={categoryImagePreview} width={200} /> 
                 <div className="absolute inset-0 w-full h-full opacity-0 hover:opacity-80 transition-opacity transition-300 ease-in-out bg-black flex flex-col gap-4 justify-center items-center text-white">
                     <button className="cursor-pointer text-xl"
-                     onClick={deleteCategoryImage}>X</button>
+                     onClick={deleteCategoryImage}>{t('categories.form.deleteImage')}</button>
                     <button className="cursor-pointer text-3xl" 
                     onClick={clickFileInput}><TbPhotoEdit /></button>
                 </div>
@@ -186,10 +202,10 @@ const AddCategory = () => {
         {/* actions */}
             <div className="flex gap-3 !my-8">
                 <Button type="submit" variant="contained" className="!text-white !capitalize">
-                    {isLoading ? <CircularProgress color="secondary" size={24} /> : 'Add'}
+                    {isLoading ? <CircularProgress color="secondary" size={24} /> : t('categories.form.addButton')}
                 </Button>
                 <Button variant="contained" color='error' sx={{textTransform : 'capitalize'}}
-                onClick={cancelAddCategory}>Cancel</Button>
+                onClick={cancelAddCategory}>{t('common.cancel')}</Button>
             </div>
         </form>
     </div>
