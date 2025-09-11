@@ -67,7 +67,6 @@ const ReviewRequests = () => {
     { title: t("reviewRequests.table.name"), key: "ProductName" },
     { title: t("reviewRequests.table.description"), key: "ProductDescription" },
     { title: t("reviewRequests.table.weight"), key: "ProductWeight" },
-    { title: t("reviewRequests.table.price"), key: "ProductPrice" },
     { title: t("reviewRequests.table.status"), key: "Status" },
     { title: t("reviewRequests.table.createdAt"), key: "created_at" },
     { title: t("reviewRequests.table.updatedAt"), key: "updated_at" },
