@@ -407,6 +407,8 @@
       "reject": "Reject"
     },
     "dialog": {
+          "phone" : "Phone Number",
+    "email" : "Email",
       "title": "Manage Review Request",
       "user": "User",
       "approvedDone" : "Product Approved Done",

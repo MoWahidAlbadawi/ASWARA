@@ -32,7 +32,7 @@ import {
   type ReviewRequest,
   type ReviewRequestStatus,
 } from "@/services/types/review-requests";
-import { GetAllUsers } from "@/hooks/users/useUsers";
+import { GetAllUsers, GetUserById } from "@/hooks/users/useUsers";
 import DefaultImage from "@/assets/Jewelry_Auth.webp";
 import { BASE_URL } from "@/services/endpoints";
 import { useTranslation } from "react-i18next"; 
@@ -55,6 +55,9 @@ const ReviewRequests = () => {
   const { data: users } = GetAllUsers();
 
   const [selectedItem, setSelectedItem] = useState<ReviewRequest | null>(null);
+  
+  const { data : userDetails } = GetUserById(selectedItem?.UserID || 0)
+
   const { mutate: approve, isLoading: isLoadingApprove } = ApproveReviewRequest(
     selectedItem?.ReviewID || ""
   );
@@ -359,6 +362,12 @@ const ReviewRequests = () => {
               </Box>
               {/* Info */}
               <Box className="grid grid-cols-2 gap-5 !-mt-5">
+                <Typography variant="subtitle1">
+                  <strong>{t("reviewRequests.dialog.phone")}:</strong> <span dir="rtl">{userDetails?.phone}</span>
+                </Typography>
+                <Typography variant="subtitle1">
+                  <strong>{t("reviewRequests.dialog.email")}:</strong> {userDetails?.email}
+                </Typography>
                 <Typography variant="subtitle1">
                   <strong>{t("reviewRequests.dialog.user")}:</strong> {getUserName(selectedItem.UserID)}
                 </Typography>
