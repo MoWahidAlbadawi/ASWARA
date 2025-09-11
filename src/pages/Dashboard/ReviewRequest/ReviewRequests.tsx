@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import React , { useState, useMemo  } from "react";
 import DataTable from "@/components/Dashboard/DataTable/DataTable";
 import classes from "@/components/Dashboard/DataTable/dataTable.module.css";
 import {
@@ -36,6 +36,18 @@ import { GetAllUsers } from "@/hooks/users/useUsers";
 import DefaultImage from "@/assets/Jewelry_Auth.webp";
 import { BASE_URL } from "@/services/endpoints";
 import { useTranslation } from "react-i18next"; 
+// for transition dialog
+import Slide from "@mui/material/Slide";
+import type { TransitionProps } from "@mui/material/transitions";
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const ReviewRequests = () => {
   const { t } = useTranslation(); 
@@ -316,10 +328,11 @@ const ReviewRequests = () => {
 
       {/* Manage Review Request Dialog */}
       <Dialog
-        open={openDialog}
+       open={openDialog}
         onClose={handleCloseDialog}
         maxWidth="sm"
         fullWidth
+        TransitionComponent={Transition}
       >
        <DialogTitle className="text-center !my-2">
           <p className={
